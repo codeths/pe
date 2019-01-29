@@ -197,6 +197,10 @@ span.icons {
   text-align: center;
 }
 
+#footer .fas {
+  display: inline;
+}
+
 .icons i {
   display: none;
 }
