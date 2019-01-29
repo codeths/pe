@@ -112,7 +112,6 @@ function get() {
   var bellUrl = "https://api.ethsbell.xyz/data" + mocktime;
 
   ajax(bellUrl, function(data) {
-    console.log(data);
     data = JSON.parse(data);
 
     currentPeriod = data.theSlot;
