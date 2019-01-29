@@ -53,8 +53,10 @@ function twoDigit(i) {
 
 //BEGIN BIG OLE' FUNCTION
 function reload() {
-  //Fill left column
+
+  var mocktime = getParameterByName("mock_time");
   var date = new Date();
+  //Fill left column
   var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   var dayOfWeek = days[date.getDay()];
