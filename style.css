@@ -106,6 +106,7 @@ span {
   width: 80vw;
   height: 90vh;
   font-size: 0;
+  background-color: #f6f6f6;
 }
 
 #wrapper {
@@ -132,11 +133,15 @@ span {
 #ethsbell {
   height: 75vh;
   background-color: #1A2741;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #ethsbell table tbody tr td {
   vertical-align: middle;
   height: 75vh;
+  width: 20vw;
 }
 
 span, p {
@@ -162,6 +167,7 @@ span, p {
 #wildkit {
   width: 15vw;
   padding-bottom: 1vw;
+  margin: 0 auto;
 }
 
 .divider {
@@ -192,7 +198,7 @@ span.icons {
 }
 
 .icons i {
-  opacity: 0;
+  display: none;
 }
 
 .uniform {
@@ -205,4 +211,16 @@ span.icons {
 
 .laptop {
   color: #30B2C9;
+}
+
+#main {
+  text-align: center;
+}
+
+#message {
+  font-size: 7.5vw;
+  line-height: 90vh;
+  vertical-align: middle;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
 }

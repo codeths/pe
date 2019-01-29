@@ -2,6 +2,7 @@
 
 var PERIODS_PER_DAY = 10;
 var slotList = ["Early Bird", "1st Period", "2nd Period", "3rd Period", "4th Period", "5th Period", "6th Period", "7th Period", "8th Period", "9th Period"];
+var DELAY = 15;
 
 // GLOBAL VARIABLES
 
@@ -52,15 +53,7 @@ function twoDigit(i) {
 
 //BEGIN BIG OLE' FUNCTION
 function reload() {
-  //Reset icon opacity
-  var cellArray = document.querySelectorAll('.cell');
-  for (var j = 0; j < cellArray.length; j++) {
-    cellArray[j].querySelector('.icons .uniform').style.opacity = '';
-    cellArray[j].querySelector('.icons .heart').style.opacity = '';
-    cellArray[j].querySelector('.icons .laptop').style.opacity = '';
-  }
-
-//Fill left column
+  //Fill left column
   var date = new Date();
   var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -125,9 +118,12 @@ function get() {
     currentPeriod = data.theSlot;
     timeLeft = data.timeLeftInPeriod;
 
-
-    sel('#showing').innerHTML = 'Showing locations for ' + currentPeriod + ' period.';
-    sel('#timeleft').innerHTML = currentPeriod + ' ends in ' + timeLeft + ' minutes.';
+    if (currentPeriod == null) {
+      sel('#showing').innerHTML = '';
+    } else {
+      sel('#showing').innerHTML = 'Showing locations for ' + currentPeriod + ' period.';
+      sel('#timeleft').innerHTML = currentPeriod + ' ends in ' + timeLeft + ' minutes.';
+    }
 
     ajax(sheetURL, run);
   });
@@ -214,29 +210,40 @@ function table(data) {
 }
 
 function putData(data) {
-  var periodArray = [];
-  var periodNumber = slotList.indexOf(currentPeriod);
-  for (var i = 0; i < teacherData[periodNumber].length; i++) {
-    if (teacherData[periodNumber][i].location !== "null") {
-      periodArray.push(teacherData[periodNumber][i]);
+  if (currentPeriod == null) {
+    sel('#main').innerHTML = '<span id="message">Have a nice day!</span>';
+  } else {
+    var periodArray = [];
+    var periodNumber = slotList.indexOf(currentPeriod);
+    for (var i = 0; i < teacherData[periodNumber].length; i++) {
+      if (teacherData[periodNumber][i].location !== "null") {
+        periodArray.push(teacherData[periodNumber][i]);
+      }
     }
-  }
 
-  var cellArray = document.querySelectorAll('.cell');
-  for (var j = 0; j < periodArray.length; j++) {
-    cellArray[j].querySelector('.name').innerHTML = periodArray[j].name;
-    cellArray[j].querySelector('.location').innerHTML = periodArray[j].location;
-    if (periodArray[j].uniform) {
-      cellArray[j].querySelector('.icons .uniform').style.opacity = 1;
-    }
-    if (periodArray[j].heart) {
-      cellArray[j].querySelector('.icons .heart').style.opacity = 1;
-    }
-    if (periodArray[j].chromebook) {
-      cellArray[j].querySelector('.icons .laptop').style.opacity = 1;
+    var cellArray = document.querySelectorAll('.cell');
+    for (var j = 0; j < periodArray.length; j++) {
+      cellArray[j].querySelector('.icons .uniform').style.display = '';
+      cellArray[j].querySelector('.icons .heart').style.display = '';
+      cellArray[j].querySelector('.icons .laptop').style.display = '';
+      cellArray[j].querySelector('.name').innerHTML = periodArray[j].name;
+      cellArray[j].querySelector('.location').innerHTML = periodArray[j].location;
+      if (periodArray[j].uniform) {
+        cellArray[j].querySelector('.icons .uniform').style.display = 'inline';
+      }
+      if (periodArray[j].heart) {
+        cellArray[j].querySelector('.icons .heart').style.display = 'inline';
+      }
+      if (periodArray[j].chromebook) {
+        cellArray[j].querySelector('.icons .laptop').style.display = 'inline';
+      }
     }
   }
 }
 
 var sheetURL =
   "https://spreadsheets.google.com/feeds/list/1T-HUAINDX69-UYUHhOO1jVjZ_Aq0Zqi1z08my0KHzqU/1/public/values?alt=json";
+
+//Reload interval
+
+var interval = setInterval(reload, DELAY * 1000);
