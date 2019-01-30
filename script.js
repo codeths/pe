@@ -228,7 +228,11 @@ function putData(data) {
       cellArray[j].querySelector('.icons .heart').style.display = '';
       cellArray[j].querySelector('.icons .laptop').style.display = '';
       cellArray[j].querySelector('.name').innerHTML = periodArray[j].name;
-      cellArray[j].querySelector('.location').innerHTML = periodArray[j].location;
+      if (periodArray[j].location == 0) {
+        cellArray[j].querySelector('.location').innerHTML = 'No location specified';
+      } else {
+        cellArray[j].querySelector('.location').innerHTML = periodArray[j].location;
+      }
       if (periodArray[j].uniform) {
         cellArray[j].querySelector('.icons .uniform').style.display = 'inline';
       }
