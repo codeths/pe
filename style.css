@@ -69,6 +69,8 @@ span {
   padding-top: 2vh;
   height: 30vh;
   background-color: #f6f6f6;
+  padding-left: 2vh;
+  padding-right: 2vh;
 }
 
 #left {
