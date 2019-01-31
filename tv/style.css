@@ -2,7 +2,6 @@
    v2.0 | 20110126
    License: none (public domain)
 */
-
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -33,7 +32,6 @@ footer, header, hgroup, menu, nav, section {
 body {
   line-height: 1;
   overflow: hidden;
-  background-color: #f6f6f6;
 }
 
 ol, ul {
@@ -61,7 +59,7 @@ span {
 }
 
 .col {
-  width: 25vw;
+  width: 20vw;
   height: 90vh;
   display: inline-block;
   font-size: 0;
@@ -69,38 +67,22 @@ span {
 
 .cell {
   padding-top: 2vh;
-  height: 25vh;
+  height: 30vh;
   background-color: #f6f6f6;
   padding-left: 2vh;
   padding-right: 2vh;
-  width: 175px;
-  display:inline-block;
-  margin-left: 0;
-  margin-right: 0;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-#top {
-  width: 100vw;
-  height: 15vh;
-  min-height: 15vh;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 
 #left {
   height: 100vh;
   max-height: 100vh;
-  display:none;
 }
 
 #footer p {
   text-align: center;
-  width: 100vw;
+  width: 80vw;
   display: block;
-  font-size: 1.75vh;
+  font-size: 1.75vw;
   line-height: 5vh;
 }
 
@@ -110,11 +92,11 @@ span {
 }
 
 #footer {
-  width: 100vw;
+  width: 80vw;
   height: 10vh;
   position: absolute;
   top: 100%;
-  left: 0vw;
+  left: 20vw;
   -webkit-transform: translateY(-100%);
   transform: translateY(-100%);
   font-size: 0;
@@ -122,16 +104,11 @@ span {
 }
 
 #main {
-  background-color: #f6f6f6;
   display: inline-block;
-  width: 100vw;
-  height: 75vh;
-  min-height: 75vh;
+  width: 80vw;
+  height: 90vh;
   font-size: 0;
   background-color: #f6f6f6;
-  position: static;
-  margin-top: 15vh;
-  overflow-y: scroll;
 }
 
 #wrapper {
@@ -141,35 +118,32 @@ span {
 }
 
 #date, #time {
-  font-size: 3vh;
+  font-size: 3vw;
 }
 
 #datetime {
+  height: 25vh;
   background-color: #C34614;
   text-align: center;
-  width: 100vw;
-  height: 15vh;
 }
 
 #datetime table tbody tr td {
   vertical-align: middle;
-  width: 100vw;
-  height: 15vh;
+  height: 25vh;
 }
 
 #ethsbell {
-  height: 15vh;
+  height: 75vh;
   background-color: #1A2741;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
-  display:none;
 }
 
 #ethsbell table tbody tr td {
   vertical-align: middle;
   height: 75vh;
-  width: 100vw;
+  width: 20vw;
 }
 
 span, p {
@@ -184,8 +158,8 @@ span, p {
   font-weight: bold;
 }
 
-#ethsbell span:not(.arrow) {
-  font-size: 2.25vh;
+#ethsbell span {
+  font-size: 2.25vw;
   margin: .25vw;
 }
 
@@ -198,43 +172,32 @@ span, p {
   text-align: center;
 }
 
-#wildkitdiv {
-  display: none;
-}
-
 #wildkit {
   width: 15vw;
   padding-bottom: 1vw;
   margin: 0 auto;
 }
 
-#showing {
-  line-height:2.25vh;
-  vertical-align: middle;
-  font-size:2.25vh;
-}
-
 .divider {
   width: 2vw;
   position: relative;
   left: 50%;
-  height: 0px;
   -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
   border-bottom: 2px solid #cdcdcd;
-  margin: 1vw 0;
+  margin-bottom: 1vw;
 }
 
 span.name {
-  font-size: 30px;
+  font-size: 4vw;
   margin-bottom: .5vw;
   font-weight: bold;
 }
 
 span.location {
-  font-size: 20px;
+  font-size: 2vw;
   margin-bottom: .5vw;
-  max-width: 100%;
+  max-width: 20vw;
   word-wrap: normal;
   max-height: 10vh;
   min-height: 7.5vh;
@@ -242,7 +205,7 @@ span.location {
 }
 
 span.icons {
-  font-size: 25px;
+  font-size: 2.25vw;
 }
 
 .cell span {
@@ -275,149 +238,9 @@ span.icons {
 }
 
 #message {
-  font-size: 7.5vh;
+  font-size: 7.5vw;
   line-height: 90vh;
   vertical-align: middle;
   text-align: center;
   font-family: 'Roboto', sans-serif;
-}
-
-#selectperiod {
-  display: inline;
-  border: 1px solid white;
-  border-radius: .75vw;
-  background-color: rgba(0, 0, 0, 0.25);
-  font-size: 1.75vh;
-  width: 15vw;
-  padding: .25vw;
-  vertical-align: middle;
-}
-
-.dropdown {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  padding: .125vw;
-  background-color: transparent;
-  color: white;
-  cursor: pointer;
-  border: 0;
-  font-size:1.75vh;
-}
-
-.dropdown:focus {
-  outline: 0;
-}
-
-#selctperiod option {
-  font-size:1.75vh;
-}
-
-#selectperiod::after {
-  content: "\25BE";
-  font-size: 1.75vh;
-  color: white;
-}
-
-.down-arrow {
-	border-color: white transparent;
-	border-style: solid;
-	border-width: 1vw 1vw 0 1vw;
-	height: 0px;
-	width: 0px;
-  font-size: 0px;
-  vertical-align: middle;
-}
-
-.up-arrow {
-	border-color: white transparent;
-	border-style: solid;
-	border-width: 0px 1vw 1vw 1vw;
-	height: 0px;
-	width: 0px;
-  font-size: 0px;
-  vertical-align: middle;
-}
-
-#search {
-  background-color: white;
-  border: 0;
-  outline: 0;
-  color: black;
-  font-family: 'Roboto', sans-serif;
-  font-size:1vw;
-  width: 15vw;
-  height: 1.25vh;
-  padding: 10px;
-  border-radius: 10px;
-}
-
-#search::-webkit-input-placeholder {
-  color: black;
-  font-family: 'Roboto', sans-serif;
-}
-
-#search::-ms-input-placeholder {
-  color: black;
-  font-family: 'Roboto', sans-serif;
-}
-
-#search::placeholder {
-  color: black;
-  font-family: 'Roboto', sans-serif;
-}
-
-@media only screen and (min-width : 768px) {
-  #datetime table tbody tr td {
-    width: 20vw;
-    height: 100vh;
-  }
-  #datetime {
-    width: 20vw;
-    height: 100vh;
-  }
-  #footer {
-    width: 80vw;
-    left: 20vw;
-    right: 0;
-  }
-  #footer table tbody tr td p {
-    width: 80vw;
-  }
-  #main {
-    width: 80vw;
-    height: 90vh;
-    left: 20vw;
-    right: 0;
-    top: 0;
-    position: relative;
-    margin-top: 0;
-    overflow: hidden;
-
-  }
-  .cell {
-    margin-top: 3vh;
-    width: 25%;
-  }
-  body {
-    overflow: hidden;
-    width: 100vw;
-    height: 100vh;
-  }
-  span.location {
-    font-size: 2vw;
-  }
-  span.name {
-    font-size: 4vw;
-  }
-  span.icons {
-    font-size: 3vw;
-  }
-  #wildkitdiv {
-    display: block;
-  }
-
-  #search {
-    margin-top: 1vh;
-  }
 }

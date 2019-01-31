@@ -1,10 +1,8 @@
 //CONSTANTS
 
 var PERIODS_PER_DAY = 10;
-var slotList = ["Early Bird", "1st Period", "2nd Period", "3rd Period", "4th Period", "5th Period", "6th Period", "7th Period", "8th Period", "9th Period", null];
+var slotList = ["Early Bird", "1st Period", "2nd Period", "3rd Period", "4th Period", "5th Period", "6th Period", "7th Period", "8th Period", "9th Period"];
 var DELAY = 15;
-
-var ddHTML = '<span id="selectperiod"><select class="dropdown" onchange="reload();"><option value="p0">Early Bird</option><option value="p1">1st Period</option><option value="p2">2nd Period</option><option value="p3">3rd Period</option><option value="p4">4th Period</option><option value="p5">5th Period</option><option value="p6">6th Period</option><option value="p7">7th Period</option><option value="p8">8th Period</option><option value="p9">9th Period</option><option value="select">Select Period</option></select></span>';
 
 // GLOBAL VARIABLES
 
@@ -121,15 +119,12 @@ function get() {
     currentPeriod = data.theSlot;
     timeLeft = data.timeLeftInPeriod;
 
-    if (sel('#showing').innerHTML == 'Loading data from ETHSBell...') {
-      sel('#showing').innerHTML = 'Showing locations for ' + ddHTML + '';
-      if (currentPeriod == null) {
-        sel('#selectperiod select').selectedIndex = 10;
-      }
+    if (currentPeriod == null) {
+      sel('#showing').innerHTML = '';
+    } else {
+      sel('#showing').innerHTML = 'Showing locations for ' + currentPeriod + ' period.';
+      sel('#timeleft').innerHTML = currentPeriod + ' ends in ' + timeLeft + ' minutes.';
     }
-    currentPeriod = slotList[sel('#selectperiod select').selectedIndex];
-    //sel('#timeleft').innerHTML = currentPeriod + ' ends in ' + timeLeft + ' minutes.';
-
 
     ajax(sheetURL, run);
   });
@@ -216,24 +211,24 @@ function table(data) {
 }
 
 function putData(data) {
-  var periodArray = [];
-  var periodNumber = slotList.indexOf(currentPeriod);
-
-
   var cellArray = document.querySelectorAll('.cell');
-  for (var k = 0; k < cellArray.length; k++) {
-    cellArray[k].querySelector('.icons .uniform').style.display = '';
-    cellArray[k].querySelector('.icons .heart').style.display = '';
-    cellArray[k].querySelector('.icons .laptop').style.display = '';
-    cellArray[k].querySelector('.name').innerHTML = '';
-    cellArray[k].querySelector('.location').innerHTML = '';
-  }
-  if (periodNumber !== 10) {
+  if (currentPeriod == null) {
+    for (var k = 0; k < cellArray.length; k++) {
+      cellArray[k].querySelector('.icons .uniform').style.display = '';
+      cellArray[k].querySelector('.icons .heart').style.display = '';
+      cellArray[k].querySelector('.icons .laptop').style.display = '';
+      cellArray[k].querySelector('.name').innerHTML = '';
+      cellArray[k].querySelector('.location').innerHTML = '';
+    }
+  } else {
+    var periodArray = [];
+    var periodNumber = slotList.indexOf(currentPeriod);
     for (var i = 0; i < teacherData[periodNumber].length; i++) {
       if (teacherData[periodNumber][i].location !== "null") {
         periodArray.push(teacherData[periodNumber][i]);
       }
     }
+
     for (var j = 0; j < periodArray.length; j++) {
       cellArray[j].querySelector('.icons .uniform').style.display = '';
       cellArray[j].querySelector('.icons .heart').style.display = '';
@@ -253,17 +248,6 @@ function putData(data) {
       if (periodArray[j].chromebook) {
         cellArray[j].querySelector('.icons .laptop').style.display = 'inline';
       }
-    }
-  }
-}
-
-function search() {
-  var cellArray = document.querySelectorAll('.cell');
-  for (var k = 0; k < cellArray.length; k++) {
-    if (sel('#search').value == '' || cellArray[k].querySelector('.name').innerHTML.toLowerCase().search(sel('#search').value.toLowerCase()) !== -1 || cellArray[k].querySelector('.location').innerHTML.toLowerCase().search(sel('#search').value.toLowerCase()) !== -1) {
-      cellArray[k].style.display = "inline-block";
-    } else {
-      cellArray[k].style.display = "none";
     }
   }
 }
