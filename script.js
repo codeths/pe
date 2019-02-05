@@ -124,7 +124,7 @@ function get() {
     if (sel('#showing').innerHTML == 'Loading data from ETHSBell...') {
       sel('#showing').innerHTML = 'Showing locations for ' + ddHTML + '';
       sel('#selectperiod select').selectedIndex = slotList.indexOf(currentPeriod);
-      if (currentPeriod == null) {
+      if (currentPeriod == null || slotList.indexOf(currentPeriod) == -1) {
         sel('#selectperiod select').selectedIndex = 10;
       }
     }
