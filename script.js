@@ -1,14 +1,35 @@
+/*
+
+I'm working on decoding Albert's functions
+
+-Asher
+
+*/
+
 //CONSTANTS
 
-var PERIODS_PER_DAY = 10;
-var slotList = ["Early Bird", "1st Period", "2nd Period", "3rd Period", "4th Period", "5th Period", "6th Period", "7th Period", "8th Period", "9th Period", null];
-var DELAY = 15;
+var PERIODS_PER_DAY = 10; //number of periods in a day, including early bird
+var slotList = [
+                "Early Bird", 
+                "1st Period", 
+                "2nd Period", 
+                "3rd Period", 
+                "4th Period", 
+                "5th Period", 
+                "6th Period", 
+                "7th Period", 
+                "8th Period", 
+                "9th Period", 
+                null //unsure, maybe bug protection?
+]; //exactly what it sounds like
+
+var DELAY = 15; //refresh delay in seconds
 
 var ddHTML = '<span id="selectperiod"><select class="dropdown" onchange="reload();"><option value="p0">Early Bird</option><option value="p1">1st Period</option><option value="p2">2nd Period</option><option value="p3">3rd Period</option><option value="p4">4th Period</option><option value="p5">5th Period</option><option value="p6">6th Period</option><option value="p7">7th Period</option><option value="p8">8th Period</option><option value="p9">9th Period</option><option value="select">Select Period</option></select></span>';
 
 // GLOBAL VARIABLES
 
-var currentlyShowing, currentPeriod, timeLeft;
+var currentlyShowing, currentPeriod, timeLeft; //VERY IMPORTANT VARS, DO NOT TOUCH! Names tell you what they mean.
 
 
 //QUICK SELECT
@@ -19,7 +40,7 @@ function sel(query) {
 
 //DATE AND TIME
 //functions
-function numSuffix(i) {
+function numSuffix(i) {//finds the suffix for a given number, i.e. 1 -> 1st, 2 -> 2nd, 3 -> 3rd, 4 -> 4th, etc
   var j = i % 10,
     k = i % 100;
   if (j == 1 && k != 11) {
@@ -34,7 +55,7 @@ function numSuffix(i) {
   return i + "th";
 }
 
-function toBool(str) {
+function toBool(str) {//I feel like this can be removed with some spaghetti code later, but I'm not going to do it now.
   if (str == "TRUE") {
     return true;
   } else if (str == "FALSE") {
@@ -44,7 +65,7 @@ function toBool(str) {
   }
 }
 
-function twoDigit(i) {
+function twoDigit(i) {//returns numbers as double digits, used mostly to fix date text
   if (i.toString().length === 1) {
     return ('0' + i);
   } else {
@@ -54,9 +75,10 @@ function twoDigit(i) {
 
 
 //BEGIN BIG OLE' FUNCTION
+//THAT'S NOT DISCRIPTIVE **AT ALL**
 function reload() {
 
-  var mocktime = getParameterByName("mock_time");
+  var mocktime = getParameterByName("mock_time");//
   var date = new Date();
   //Fill left column
   var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -66,14 +88,14 @@ function reload() {
   var day = date.getDate();
   var year = date.getFullYear();
   var hour = (date.getHours() > 12) ? date.getHours() - 12 : date.getHours();
-  if (hour == 0) {
+  if (hour == 0) {//fixes java time beig weird
     hour = 12;
   }
-  var period = (date.getHours() < 12) ? "AM" : "PM";
+  var period = (date.getHours() < 12) ? "AM" : "PM"; //finds out if it's the morning or the afternoon
   var minute = date.getMinutes();
   var fullDate = dayOfWeek + ', ' + month + ' ' + numSuffix(day);
   var fullTime = hour + ':' + twoDigit(minute) + " " + period;
-
+  // \/  Return the dates \/
   sel('#date').innerHTML = fullDate;
   sel('#time').innerHTML = fullTime;
   get();
@@ -81,7 +103,7 @@ function reload() {
 reload();
 //ETHSBELL
 
-function ajax(theUrl, callback) {
+function ajax(theUrl, callback) {//Using AJAX to pull http
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = function() {
     if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
@@ -91,7 +113,7 @@ function ajax(theUrl, callback) {
   xmlHttp.send(null);
 }
 
-function getParameterByName(name, url) {
+function getParameterByName(name, url) {//parses URL for mock time query streams
   if (!url) url = window.location.href;
   name = name.replace(/[\[\]]/g, "\\$&");
   var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
@@ -101,7 +123,7 @@ function getParameterByName(name, url) {
   return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-function get() {
+function get() {//there actual function that runs an HTTP GET request
 
 
   var mocktime = getParameterByName("mock_time");
@@ -121,7 +143,7 @@ function get() {
     currentPeriod = data.theSlot;
     timeLeft = data.timeLeftInPeriod;
 
-    if (sel('#showing').innerHTML == 'Loading data from ETHSBell...') {
+    if (sel('#showing').innerHTML == 'Loading data from ETHSBell...') {//displays loading text
       sel('#showing').innerHTML = 'Showing locations for ' + ddHTML + '';
       sel('#selectperiod select').selectedIndex = slotList.indexOf(currentPeriod);
       if (currentPeriod == null || slotList.indexOf(currentPeriod) == -1) {
@@ -135,8 +157,8 @@ function get() {
     ajax(sheetURL, run);
   });
 }
-//
-function run(msg) {
+
+function run(msg) {//I don't know what this does tbh
   var datadiv = document.getElementById("data");
   var data = JSON.parse(msg);
   var responseObj = {};
@@ -185,7 +207,7 @@ function run(msg) {
 var teacherArray = [];
 var teacherData = {};
 
-function table(data) {
+function table(data) {//converts raw data to arrays
   var currentJson = [];
   var currentName;
   var currentArray = [];
@@ -216,7 +238,7 @@ function table(data) {
   putData(teacherData);
 }
 
-function putData(data) {
+function putData(data) {//turns arrays into HTML
   var periodArray = [];
   var periodNumber = slotList.indexOf(currentPeriod);
 
@@ -274,4 +296,4 @@ var sheetURL =
 
 //Reload interval
 
-var interval = setInterval(reload, DELAY * 1000);
+var interval = setInterval(reload, DELAY * 1000);//reloads the page after a delay
