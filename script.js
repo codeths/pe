@@ -10,17 +10,17 @@ I'm working on decoding Albert's functions
 
 var PERIODS_PER_DAY = 10; //number of periods in a day, including early bird
 var slotList = [
-                "Early Bird", 
-                "1st Period", 
-                "2nd Period", 
-                "3rd Period", 
-                "4th Period", 
-                "5th Period", 
-                "6th Period", 
-                "7th Period", 
-                "8th Period", 
-                "9th Period", 
-                null //unsure, maybe bug protection?
+  "Early Bird",
+  "1st Period",
+  "2nd Period",
+  "3rd Period",
+  "4th Period",
+  "5th Period",
+  "6th Period",
+  "7th Period",
+  "8th Period",
+  "9th Period",
+  null //unsure, maybe bug protection?
 ]; //exactly what it sounds like
 
 var DELAY = 15; //refresh delay in seconds
@@ -40,7 +40,7 @@ function sel(query) {
 
 //DATE AND TIME
 //functions
-function numSuffix(i) {//finds the suffix for a given number, i.e. 1 -> 1st, 2 -> 2nd, 3 -> 3rd, 4 -> 4th, etc
+function numSuffix(i) { //finds the suffix for a given number, i.e. 1 -> 1st, 2 -> 2nd, 3 -> 3rd, 4 -> 4th, etc
   var j = i % 10,
     k = i % 100;
   if (j == 1 && k != 11) {
@@ -55,7 +55,7 @@ function numSuffix(i) {//finds the suffix for a given number, i.e. 1 -> 1st, 2 -
   return i + "th";
 }
 
-function toBool(str) {//I feel like this can be removed with some spaghetti code later, but I'm not going to do it now.
+function toBool(str) { //I feel like this can be removed with some spaghetti code later, but I'm not going to do it now.
   if (str == "TRUE") {
     return true;
   } else if (str == "FALSE") {
@@ -65,7 +65,7 @@ function toBool(str) {//I feel like this can be removed with some spaghetti code
   }
 }
 
-function twoDigit(i) {//returns numbers as double digits, used mostly to fix date text
+function twoDigit(i) { //returns numbers as double digits, used mostly to fix date text
   if (i.toString().length === 1) {
     return ('0' + i);
   } else {
@@ -78,7 +78,7 @@ function twoDigit(i) {//returns numbers as double digits, used mostly to fix dat
 //THAT'S NOT DISCRIPTIVE **AT ALL**
 function reload() {
 
-  var mocktime = getParameterByName("mock_time");//
+  var mocktime = getParameterByName("mock_time"); //
   var date = new Date();
   //Fill left column
   var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -88,7 +88,7 @@ function reload() {
   var day = date.getDate();
   var year = date.getFullYear();
   var hour = (date.getHours() > 12) ? date.getHours() - 12 : date.getHours();
-  if (hour == 0) {//fixes java time beig weird
+  if (hour == 0) { //fixes java time beig weird
     hour = 12;
   }
   var period = (date.getHours() < 12) ? "AM" : "PM"; //finds out if it's the morning or the afternoon
@@ -103,7 +103,7 @@ function reload() {
 reload();
 //ETHSBELL
 
-function ajax(theUrl, callback) {//Using AJAX to pull http
+function ajax(theUrl, callback) { //Using AJAX to pull http
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = function() {
     if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
@@ -113,7 +113,7 @@ function ajax(theUrl, callback) {//Using AJAX to pull http
   xmlHttp.send(null);
 }
 
-function getParameterByName(name, url) {//parses URL for mock time query streams
+function getParameterByName(name, url) { //parses URL for mock time query streams
   if (!url) url = window.location.href;
   name = name.replace(/[\[\]]/g, "\\$&");
   var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
@@ -123,7 +123,7 @@ function getParameterByName(name, url) {//parses URL for mock time query streams
   return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-function get() {//there actual function that runs an HTTP GET request
+function get() { //there actual function that runs an HTTP GET request
 
 
   var mocktime = getParameterByName("mock_time");
@@ -143,7 +143,7 @@ function get() {//there actual function that runs an HTTP GET request
     currentPeriod = data.theSlot;
     timeLeft = data.timeLeftInPeriod;
 
-    if (sel('#showing').innerHTML == 'Loading data from ETHSBell...') {//displays loading text
+    if (sel('#showing').innerHTML == 'Loading data from ETHSBell...') { //displays loading text
       sel('#showing').innerHTML = 'Showing locations for ' + ddHTML + '';
       sel('#selectperiod select').selectedIndex = slotList.indexOf(currentPeriod);
       if (currentPeriod == null || slotList.indexOf(currentPeriod) == -1) {
@@ -158,7 +158,7 @@ function get() {//there actual function that runs an HTTP GET request
   });
 }
 
-function run(msg) {//I don't know what this does tbh
+function run(msg) { //I don't know what this does tbh
   var datadiv = document.getElementById("data");
   var data = JSON.parse(msg);
   var responseObj = {};
@@ -207,7 +207,7 @@ function run(msg) {//I don't know what this does tbh
 var teacherArray = [];
 var teacherData = {};
 
-function table(data) {//converts raw data to arrays
+function table(data) { //converts raw data to arrays
   var currentJson = [];
   var currentName;
   var currentArray = [];
@@ -238,7 +238,7 @@ function table(data) {//converts raw data to arrays
   putData(teacherData);
 }
 
-function putData(data) {//turns arrays into HTML
+function putData(data) { //turns arrays into HTML
   var periodArray = [];
   var periodNumber = slotList.indexOf(currentPeriod);
 
@@ -253,7 +253,7 @@ function putData(data) {//turns arrays into HTML
   }
   if (periodNumber !== 10) {
     for (var i = 0; i < teacherData[periodNumber].length; i++) {
-      if (teacherData[periodNumber][i].location !== "null") {
+      if (teacherData[periodNumber][i].location !== 0) {
         periodArray.push(teacherData[periodNumber][i]);
       }
     }
@@ -296,4 +296,4 @@ var sheetURL =
 
 //Reload interval
 
-var interval = setInterval(reload, DELAY * 1000);//reloads the page after a delay
+var interval = setInterval(reload, DELAY * 1000); //reloads the page after a delay
