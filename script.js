@@ -1,3 +1,4 @@
+/*jshint -W054 */
 /*
 
 I'm working on decoding Albert's functions
@@ -211,34 +212,53 @@ var teacherArray = [];
 var teacherData = {};
 
 function table(data) { //converts raw data to arrays
-  var currentJson = [];
-  var currentName;
-  var currentArray = [];
-  var current;
-  data = data.rows;
-  var teacherLength = data.length - 1;
-  for (var k = 0; k < PERIODS_PER_DAY; k++) {
-    teacherData[k] = [];
-  }
-  for (var i = 0; i <= teacherLength; i++) {
-    current = {};
-    currentArray = [];
-    currentArray = Object.values(data[i]);
-    teacherArray.push(currentArray);
-    currentName = currentArray[0];
-    currentJson = [];
-    currentJson.push(currentName);
-    for (var j = 0; j < PERIODS_PER_DAY; j++) {
-      current = {};
-      current.name = currentName;
-      current.location = currentArray[4 * j + 1 + 0];
-      current.uniform = toBool(currentArray[4 * j + 1 + 1]);
-      current.heart = toBool(currentArray[4 * j + 1 + 2]);
-      current.chromebook = toBool(currentArray[4 * j + 1 + 3]);
-      teacherData[j].push(current);
-    }
-  }
-  putData(teacherData);
+  /*ajax(settingsUrl, function(json) {
+    var override = JSON.parse(json).feed.entry[3].content.$t;
+    if (override !== "") {
+      var cellArray = document.querySelectorAll('.cell');
+      for (var l = 0; l < cellArray.length; l++) {
+        cellArray[l].querySelector('.icons .uniform').style.display = '';
+        cellArray[l].querySelector('.icons .heart').style.display = '';
+        cellArray[l].querySelector('.icons .laptop').style.display = '';
+        cellArray[l].querySelector('.name').innerHTML = '';
+        cellArray[l].querySelector('.location').innerHTML = '';
+      }
+      var overrideEl = document.getElementById('override');
+      overrideEl.style.display = '';
+      overrideEl.innerHTML = override;
+
+    } else {*/
+      //document.getElementById('override').style.display = 'none';
+      var currentJson = [];
+      var currentName;
+      var currentArray = [];
+      var current;
+      data = data.rows;
+      var teacherLength = data.length - 1;
+      for (var k = 0; k < PERIODS_PER_DAY; k++) {
+        teacherData[k] = [];
+      }
+      for (var i = 0; i <= teacherLength; i++) {
+        current = {};
+        currentArray = [];
+        currentArray = Object.values(data[i]);
+        teacherArray.push(currentArray);
+        currentName = currentArray[0];
+        currentJson = [];
+        currentJson.push(currentName);
+        for (var j = 0; j < PERIODS_PER_DAY; j++) {
+          current = {};
+          current.name = currentName;
+          current.location = currentArray[4 * j + 1 + 0];
+          current.uniform = toBool(currentArray[4 * j + 1 + 1]);
+          current.heart = toBool(currentArray[4 * j + 1 + 2]);
+          current.chromebook = toBool(currentArray[4 * j + 1 + 3]);
+          teacherData[j].push(current);
+        }
+      }
+      putData(teacherData);
+    /*}
+  });*/
 }
 
 function putData(data) { //turns arrays into HTML
@@ -298,6 +318,10 @@ var sheetURL =
   "https://spreadsheets.google.com/feeds/list/1T-HUAINDX69-UYUHhOO1jVjZ_Aq0Zqi1z08my0KHzqU/";
 var sheetUrlEnd = "/public/values?alt=json";
 
+var settingsUrl = "https://spreadsheets.google.com/feeds/cells/1T-HUAINDX69-UYUHhOO1jVjZ_Aq0Zqi1z08my0KHzqU/3/public/values?alt=json";
+var settingsQueries = { //NOT USED
+  override: "data.feed.entry[3].content.$t"
+};
 //Reload interval
 
 var interval = setInterval(reload, DELAY * 1000); //reloads the page after a delay

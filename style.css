@@ -420,3 +420,16 @@ span.icons {
     margin-top: 1vh;
   }
 }
+
+#override {
+  font-size: 5vh;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  left: 0;
+  text-align: center;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  font-family: 'Roboto', sans-serif;
+}
