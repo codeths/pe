@@ -22,6 +22,9 @@ var slotList = [
   "9th Period",
   null //unsure, maybe bug protection?
 ]; //exactly what it sounds like
+var weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+var sheetStart = 4;
+var currentDay;
 
 var DELAY = 15; //refresh delay in seconds
 
@@ -84,6 +87,7 @@ function reload() {
   var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   var dayOfWeek = days[date.getDay()];
+  currentDay = weekdays.indexOf(dayOfWeek) + 1; //For sheet selection
   var month = months[date.getMonth()];
   var day = date.getDate();
   var year = date.getFullYear();
@@ -153,8 +157,7 @@ function get() { //there actual function that runs an HTTP GET request
     currentPeriod = slotList[sel('#selectperiod select').selectedIndex];
     //sel('#timeleft').innerHTML = currentPeriod + ' ends in ' + timeLeft + ' minutes.';
 
-
-    ajax(sheetURL, run);
+    ajax(sheetURL + (currentDay + sheetStart) + sheetUrlEnd, run);
   });
 }
 
@@ -292,7 +295,8 @@ function search() {
 }
 
 var sheetURL =
-  "https://spreadsheets.google.com/feeds/list/1T-HUAINDX69-UYUHhOO1jVjZ_Aq0Zqi1z08my0KHzqU/1/public/values?alt=json";
+  "https://spreadsheets.google.com/feeds/list/1T-HUAINDX69-UYUHhOO1jVjZ_Aq0Zqi1z08my0KHzqU/";
+var sheetUrlEnd = "/public/values?alt=json";
 
 //Reload interval
 
