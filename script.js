@@ -228,36 +228,36 @@ function table(data) { //converts raw data to arrays
       overrideEl.innerHTML = override;
 
     } else {*/
-      //document.getElementById('override').style.display = 'none';
-      var currentJson = [];
-      var currentName;
-      var currentArray = [];
-      var current;
-      data = data.rows;
-      var teacherLength = data.length - 1;
-      for (var k = 0; k < PERIODS_PER_DAY; k++) {
-        teacherData[k] = [];
-      }
-      for (var i = 0; i <= teacherLength; i++) {
-        current = {};
-        currentArray = [];
-        currentArray = Object.values(data[i]);
-        teacherArray.push(currentArray);
-        currentName = currentArray[0];
-        currentJson = [];
-        currentJson.push(currentName);
-        for (var j = 0; j < PERIODS_PER_DAY; j++) {
-          current = {};
-          current.name = currentName;
-          current.location = currentArray[4 * j + 1 + 0];
-          current.uniform = toBool(currentArray[4 * j + 1 + 1]);
-          current.heart = toBool(currentArray[4 * j + 1 + 2]);
-          current.chromebook = toBool(currentArray[4 * j + 1 + 3]);
-          teacherData[j].push(current);
-        }
-      }
-      putData(teacherData);
-    /*}
+  //document.getElementById('override').style.display = 'none';
+  var currentJson = [];
+  var currentName;
+  var currentArray = [];
+  var current;
+  data = data.rows;
+  var teacherLength = data.length - 1;
+  for (var k = 0; k < PERIODS_PER_DAY; k++) {
+    teacherData[k] = [];
+  }
+  for (var i = 0; i <= teacherLength; i++) {
+    current = {};
+    currentArray = [];
+    currentArray = Object.values(data[i]);
+    teacherArray.push(currentArray);
+    currentName = currentArray[0];
+    currentJson = [];
+    currentJson.push(currentName);
+    for (var j = 0; j < PERIODS_PER_DAY; j++) {
+      current = {};
+      current.name = currentName;
+      current.location = currentArray[4 * j + 1 + 0];
+      current.uniform = toBool(currentArray[4 * j + 1 + 1]);
+      current.heart = toBool(currentArray[4 * j + 1 + 2]);
+      current.chromebook = toBool(currentArray[4 * j + 1 + 3]);
+      teacherData[j].push(current);
+    }
+  }
+  putData(teacherData);
+  /*}
   });*/
 }
 

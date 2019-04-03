@@ -4,6 +4,10 @@ var PERIODS_PER_DAY = 10;
 var slotList = ["Early Bird", "1st Period", "2nd Period", "3rd Period", "4th Period", "5th Period", "6th Period", "7th Period", "8th Period", "9th Period"];
 var DELAY = 15;
 
+var weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+var sheetStart = 4;
+var currentDay;
+
 // GLOBAL VARIABLES
 
 var currentlyShowing, currentPeriod, timeLeft;
@@ -60,6 +64,7 @@ function reload() {
   var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   var dayOfWeek = days[date.getDay()];
+  currentDay = weekdays.indexOf(dayOfWeek) + 1; //For sheet selection
   var month = months[date.getMonth()];
   var day = date.getDate();
   var year = date.getFullYear();
@@ -115,18 +120,41 @@ function get() {
 
   ajax(bellUrl, function(data) {
     data = JSON.parse(data);
-
+    var d;
     currentPeriod = data.theSlot;
+    realCurrent = currentPeriod;
     timeLeft = data.timeLeftInPeriod;
+    if (timeLeft <= 5) {
+      var next = data.theNextSlot;
+      console.log(next);
+      if (next !== "Early Bird") {
+        currentPeriod = next;
+
+        for (d = 0; d < document.querySelectorAll('.locker').length; d++) {
+          document.querySelectorAll('.locker')[d].style.display = 'block';
+        }
+      } else {
+        for (d = 0; d < document.querySelectorAll('.locker').length; d++) {
+          document.querySelectorAll('.locker')[d].style.display = 'none';
+        }
+      }
+    }
 
     if (currentPeriod == null) {
       sel('#showing').innerHTML = '';
     } else {
-      sel('#showing').innerHTML = 'Showing locations for ' + currentPeriod + ' period.';
-      sel('#timeleft').innerHTML = currentPeriod + ' ends in ' + timeLeft + ' minutes.';
+      sel('#showing').innerHTML = 'Showing locations for ' + currentPeriod + '.';
+      sel('#timeleft').innerHTML = realCurrent + ' ends in ' + timeLeft + ' minutes.';
     }
 
-    ajax(sheetURL, run);
+    var lockerRoom = data.timeSinceLastPeriod;
+    if (lockerRoom < 15) {
+      sel('#lockers').innerHTML = 'Locker rooms close in <b><u>' + (15 - lockerRoom) + '</u></b> minutes.';
+    } else {
+      sel('#lockers').innerHTML = 'Locker rooms are closed.';
+    }
+
+    ajax(sheetURL + (currentDay + sheetStart) + sheetUrlEnd, run);
   });
 }
 //
@@ -210,8 +238,11 @@ function table(data) {
   putData(teacherData);
 }
 
+var cellArray;
+var periodArray;
+
 function putData(data) {
-  var cellArray = document.querySelectorAll('.cell');
+  cellArray = document.querySelectorAll('.cell');
   if (currentPeriod == null) {
     for (var k = 0; k < cellArray.length; k++) {
       cellArray[k].querySelector('.icons .uniform').style.display = '';
@@ -221,10 +252,10 @@ function putData(data) {
       cellArray[k].querySelector('.location').innerHTML = '';
     }
   } else {
-    var periodArray = [];
+    periodArray = [];
     var periodNumber = slotList.indexOf(currentPeriod);
     for (var i = 0; i < teacherData[periodNumber].length; i++) {
-      if (teacherData[periodNumber][i].location !== "null") {
+      if (teacherData[periodNumber][i].location !== 0) {
         periodArray.push(teacherData[periodNumber][i]);
       }
     }
@@ -234,7 +265,7 @@ function putData(data) {
       cellArray[j].querySelector('.icons .heart').style.display = '';
       cellArray[j].querySelector('.icons .laptop').style.display = '';
       cellArray[j].querySelector('.name').innerHTML = periodArray[j].name;
-      if (periodArray[j].location == 0) {
+      if (periodArray[j].location == "") {
         cellArray[j].querySelector('.location').innerHTML = 'No location specified';
       } else {
         cellArray[j].querySelector('.location').innerHTML = periodArray[j].location;
@@ -253,7 +284,8 @@ function putData(data) {
 }
 
 var sheetURL =
-  "https://spreadsheets.google.com/feeds/list/1T-HUAINDX69-UYUHhOO1jVjZ_Aq0Zqi1z08my0KHzqU/1/public/values?alt=json";
+  "https://spreadsheets.google.com/feeds/list/1T-HUAINDX69-UYUHhOO1jVjZ_Aq0Zqi1z08my0KHzqU/";
+var sheetUrlEnd = "/public/values?alt=json";
 
 //Reload interval
 
