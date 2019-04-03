@@ -5,7 +5,7 @@ var slotList = ["Early Bird", "1st Period", "2nd Period", "3rd Period", "4th Per
 var DELAY = 15;
 
 var weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-var sheetStart = 2;
+var sheetStart = 1;
 var currentDay;
 
 // GLOBAL VARIABLES
