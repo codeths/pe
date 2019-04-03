@@ -24,7 +24,7 @@ var slotList = [
   null //unsure, maybe bug protection?
 ]; //exactly what it sounds like
 var weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-var sheetStart = 4;
+var sheetStart = 1;
 var currentDay;
 
 var DELAY = 15; //refresh delay in seconds
