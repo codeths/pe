@@ -276,7 +276,7 @@ function putData(data) { //turns arrays into HTML
   }
   if (periodNumber !== 10) {
     for (var i = 0; i < teacherData[periodNumber].length; i++) {
-      if (teacherData[periodNumber][i].location !== 0) {
+      if (teacherData[periodNumber][i].location !== "FALSE" && teacherData[periodNumber][i].location !== false && teacherData[periodNumber][i].location !== "0" && teacherData[periodNumber][i].location !== 0) {
         periodArray.push(teacherData[periodNumber][i]);
       }
     }
