@@ -147,14 +147,12 @@ function get() {
       sel('#timeleft').innerHTML = realCurrent + ' ends in ' + timeLeft + ' minutes.';
     }
 
-    var timeSince = data.timeSinceLastPeriod;
-    if (timeLeft < 20 && timeLeft > 6) {
-      sel('#lockers').innerHTML = 'Locker rooms are closed. Please report to W112.';
-    } else if (timeLeft > 20) {
-      sel('#lockers').innerHTML = 'Locker rooms close in <b><u>' + (timeLeft - 20) + '</u></b> minutes.';
+    var lockerRoom = data.timeSinceLastPeriod;
+    if (lockerRoom < 15) {
+      sel('#lockers').innerHTML = 'Locker rooms close in <b><u>' + (15 - lockerRoom) + '</u></b> minutes.';
     } else {
-      sel('#lockers').innerHTML = 'Locker rooms are open.';
-
+      sel('#lockers').innerHTML = 'Locker rooms are closed.';
+    }
 
     ajax(sheetURL + (currentDay + sheetStart) + sheetUrlEnd, run);
   });
