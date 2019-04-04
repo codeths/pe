@@ -255,7 +255,7 @@ function putData(data) {
     periodArray = [];
     var periodNumber = slotList.indexOf(currentPeriod);
     for (var i = 0; i < teacherData[periodNumber].length; i++) {
-      if (teacherData[periodNumber][i].location !== "FALSE") {
+      if (teacherData[periodNumber][i].location !== "FALSE" && teacherData[periodNumber][i].location !== false && teacherData[periodNumber][i].location !== "0" && teacherData[periodNumber][i].location !== 0) {
         periodArray.push(teacherData[periodNumber][i]);
       }
     }
