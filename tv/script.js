@@ -148,8 +148,10 @@ function get() {
     }
 
     var lockerRoom = data.timeSinceLastPeriod;
-    if (lockerRoom < 15) {
-      sel('#lockers').innerHTML = 'Locker rooms close in <b><u>' + (15 - lockerRoom) + '</u></b> minutes.';
+    if (timeLeft > 20) {
+      sel('#lockers').innerHTML = 'Locker rooms close in <b><u>' + (timeLeft - 20) + '</u></b> minutes.';
+    } else if (timeLeft < 6) {
+      sel('#lockers').innerHTML = 'Locker rooms are open.';
     } else {
       sel('#lockers').innerHTML = 'Locker rooms are closed.';
     }
