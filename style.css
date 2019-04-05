@@ -2,7 +2,6 @@
    v2.0 | 20110126
    License: none (public domain)
 */
-
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -74,7 +73,7 @@ span {
   padding-left: 2vh;
   padding-right: 2vh;
   width: 175px;
-  display:inline-block;
+  display: inline-block;
   margin-left: 0;
   margin-right: 0;
   -webkit-box-sizing: border-box;
@@ -93,7 +92,7 @@ span {
 #left {
   height: 100vh;
   max-height: 100vh;
-  display:none;
+  display: none;
 }
 
 #footer p {
@@ -163,7 +162,7 @@ span {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
-  display:none;
+  display: none;
 }
 
 #ethsbell table tbody tr td {
@@ -209,9 +208,9 @@ span, p {
 }
 
 #showing {
-  line-height:2.25vh;
+  line-height: 2.25vh;
   vertical-align: middle;
-  font-size:2.25vh;
+  font-size: 2.25vh;
 }
 
 .divider {
@@ -301,7 +300,7 @@ span.icons {
   background-color: transparent;
   cursor: pointer;
   border: 0;
-  font-size:1.75vh;
+  font-size: 1.75vh;
 }
 
 .dropdown:focus {
@@ -309,7 +308,7 @@ span.icons {
 }
 
 #selctperiod option {
-  font-size:1.75vh;
+  font-size: 1.75vh;
 }
 
 #selectperiod::after {
@@ -319,21 +318,21 @@ span.icons {
 }
 
 .down-arrow {
-	border-color: white transparent;
-	border-style: solid;
-	border-width: 1vw 1vw 0 1vw;
-	height: 0px;
-	width: 0px;
+  border-color: white transparent;
+  border-style: solid;
+  border-width: 1vw 1vw 0 1vw;
+  height: 0px;
+  width: 0px;
   font-size: 0px;
   vertical-align: middle;
 }
 
 .up-arrow {
-	border-color: white transparent;
-	border-style: solid;
-	border-width: 0px 1vw 1vw 1vw;
-	height: 0px;
-	width: 0px;
+  border-color: white transparent;
+  border-style: solid;
+  border-width: 0px 1vw 1vw 1vw;
+  height: 0px;
+  width: 0px;
   font-size: 0px;
   vertical-align: middle;
 }
@@ -344,7 +343,7 @@ span.icons {
   outline: 0;
   color: black;
   font-family: 'Roboto', sans-serif;
-  font-size:1.25vh;
+  font-size: 12px;
   width: 15vw;
   height: 1.25vh;
   padding: 10px;
@@ -371,18 +370,22 @@ span.icons {
     width: 20vw;
     height: 100vh;
   }
+
   #datetime {
     width: 20vw;
     height: 100vh;
   }
+
   #footer {
     width: 80vw;
     left: 20vw;
     right: 0;
   }
+
   #footer table tbody tr td p {
     width: 80vw;
   }
+
   #main {
     width: 80vw;
     height: 90vh;
@@ -392,12 +395,13 @@ span.icons {
     position: relative;
     margin-top: 0;
     overflow: hidden;
-
   }
+
   .cell {
     margin-top: 3vh;
     width: 25%;
   }
+
   body {
     overflow: hidden;
     width: 100vw;
@@ -406,24 +410,31 @@ span.icons {
 
   img.icons {
     width: auto;
-    height: 2.25vw;
+    height: 25px;
     display: none;
   }
+
   span.location {
     font-size: 2vw;
   }
+
   span.name {
     font-size: 4vw;
   }
+
   span.icons {
     font-size: 3vw;
   }
+
   #wildkitdiv {
     display: block;
   }
 
   #search {
     margin-top: 1vh;
+  }
+  span.icons {
+    font-size: 25px;
   }
 }
 
@@ -436,6 +447,16 @@ span.icons {
   left: 0;
   text-align: center;
   -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
+  transform: translateY(-50%);
   font-family: 'Roboto', sans-serif;
+}
+
+span.icons {
+  font-size: 25px;
+}
+
+img.icons {
+  width: auto;
+  height: 25px;
+  display: none;
 }
