@@ -271,6 +271,7 @@ function putData(data) { //turns arrays into HTML
     cellArray[k].querySelector('.icons .uniform').style.display = '';
     cellArray[k].querySelector('.icons .heart').style.display = '';
     cellArray[k].querySelector('.icons .laptop').style.display = '';
+    cellArray[k].querySelector('.icons .noshirt').style.display = '';
     cellArray[k].querySelector('.name').innerHTML = '';
     cellArray[k].querySelector('.location').innerHTML = '';
   }
@@ -284,6 +285,7 @@ function putData(data) { //turns arrays into HTML
       cellArray[j].querySelector('.icons .uniform').style.display = '';
       cellArray[j].querySelector('.icons .heart').style.display = '';
       cellArray[j].querySelector('.icons .laptop').style.display = '';
+      cellArray[j].querySelector('.icons .noshirt').style.display = '';
       cellArray[j].querySelector('.name').innerHTML = periodArray[j].name;
       if (periodArray[j].location == 0) {
         cellArray[j].querySelector('.location').innerHTML = 'No location specified';
@@ -292,6 +294,8 @@ function putData(data) { //turns arrays into HTML
       }
       if (periodArray[j].uniform) {
         cellArray[j].querySelector('.icons .uniform').style.display = 'inline';
+      } else {
+        cellArray[j].querySelector('.icons .noshirt').style.display = 'inline';
       }
       if (periodArray[j].heart) {
         cellArray[j].querySelector('.icons .heart').style.display = 'inline';

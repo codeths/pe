@@ -210,6 +210,7 @@ var teacherArray = [];
 var teacherData = {};
 
 function table(data) {
+  teacherArray = [];
   var currentJson = [];
   var currentName;
   var currentArray = [];
@@ -244,16 +245,18 @@ var cellArray;
 var periodArray;
 
 function putData(data) {
+
   cellArray = document.querySelectorAll('.cell');
-  if (currentPeriod == null) {
-    for (var k = 0; k < cellArray.length; k++) {
-      cellArray[k].querySelector('.icons .uniform').style.display = '';
-      cellArray[k].querySelector('.icons .heart').style.display = '';
-      cellArray[k].querySelector('.icons .laptop').style.display = '';
-      cellArray[k].querySelector('.name').innerHTML = '';
-      cellArray[k].querySelector('.location').innerHTML = '';
-    }
-  } else {
+  for (var k = 0; k < cellArray.length; k++) {
+    cellArray = document.querySelectorAll('.cell');
+    cellArray[k].querySelector('.icons .uniform').style.display = '';
+    cellArray[k].querySelector('.icons .heart').style.display = '';
+    cellArray[k].querySelector('.icons .laptop').style.display = '';
+    cellArray[k].querySelector('.icons .noshirt').style.display = '';
+    cellArray[k].querySelector('.name').innerHTML = '';
+    cellArray[k].querySelector('.location').innerHTML = '';
+  }
+  if (currentPeriod != null) {
     periodArray = [];
     var periodNumber = slotList.indexOf(currentPeriod);
     for (var i = 0; i < teacherData[periodNumber].length; i++) {
@@ -266,6 +269,10 @@ function putData(data) {
       cellArray[j].querySelector('.icons .uniform').style.display = '';
       cellArray[j].querySelector('.icons .heart').style.display = '';
       cellArray[j].querySelector('.icons .laptop').style.display = '';
+      cellArray[j].querySelector('.icons .noshirt').style.display = '';
+      cellArray[j].querySelector('.name').innerHTML = '';
+      cellArray[j].querySelector('.location').innerHTML = '';
+
       cellArray[j].querySelector('.name').innerHTML = periodArray[j].name;
       if (periodArray[j].location == "") {
         cellArray[j].querySelector('.location').innerHTML = 'No location specified';
@@ -274,6 +281,8 @@ function putData(data) {
       }
       if (periodArray[j].uniform) {
         cellArray[j].querySelector('.icons .uniform').style.display = 'inline';
+      } else {
+        cellArray[j].querySelector('.icons .noshirt').style.display = 'inline';
       }
       if (periodArray[j].heart) {
         cellArray[j].querySelector('.icons .heart').style.display = 'inline';

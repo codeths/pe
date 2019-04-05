@@ -403,6 +403,12 @@ span.icons {
     width: 100vw;
     height: 100vh;
   }
+
+  img.icons {
+    width: auto;
+    height: 2.25vw;
+    display: none;
+  }
   span.location {
     font-size: 2vw;
   }

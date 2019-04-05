@@ -59,14 +59,14 @@ span {
 }
 
 .col {
-  width: 20vw;
+  width: 16.6vw;
   height: 90vh;
   display: inline-block;
   font-size: 0;
 }
 
 .cell {
-  padding-top: 2vh;
+  padding-top: 1vh;
   height: 30vh;
   background-color: #f6f6f6;
   padding-left: 2vh;
@@ -92,11 +92,11 @@ span {
 }
 
 #footer {
-  width: 80vw;
+  width: 83.8vw;
   height: 10vh;
   position: absolute;
   top: 100%;
-  left: 20vw;
+  left: 16.8vw;
   -webkit-transform: translateY(-100%);
   transform: translateY(-100%);
   font-size: 0;
@@ -105,10 +105,13 @@ span {
 
 #main {
   display: inline-block;
-  width: 80vw;
+  width: 83vw;
   height: 90vh;
   font-size: 0;
   background-color: #f6f6f6;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 #wrapper {
@@ -189,13 +192,13 @@ span, p {
 }
 
 span.name {
-  font-size: 4vw;
+  font-size: 3vw;
   margin-bottom: .5vw;
   font-weight: bold;
 }
 
 span.location {
-  font-size: 2vw;
+  font-size: 1.5vw;
   margin-bottom: .5vw;
   max-width: 20vw;
   word-wrap: normal;
@@ -215,6 +218,12 @@ span.icons {
 
 #footer .fas {
   display: inline;
+}
+
+img.icons {
+  width: auto;
+  height: 2.25vw;
+  display: none;
 }
 
 .icons i {
