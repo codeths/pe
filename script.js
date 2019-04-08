@@ -9,6 +9,7 @@ I'm working on decoding Albert's functions
 
 //CONSTANTS
 
+
 var PERIODS_PER_DAY = 10; //number of periods in a day, including early bird
 var slotList = [
   "Early Bird",
@@ -164,6 +165,8 @@ function get() { //there actual function that runs an HTTP GET request
     //sel('#timeleft').innerHTML = currentPeriod + ' ends in ' + timeLeft + ' minutes.';
 
     ajax(sheetURL + (currentDay + sheetStart) + sheetUrlEnd, run);
+    ajax(sheetURL + 8 + sheetUrlEnd, run, overrideCheck);
+
   });
 }
 
@@ -322,6 +325,23 @@ function search() {
     }
   }
 }
+
+function overrideCheck(data) {
+  
+  if (data.columns._cpzh4[1] == null || data.columns._cpzh4[1] == "-") {
+    console.log("no override");
+    sel("#main-body").style.display = "block";
+    sel("#overRide").style.display = "none";
+  } else {
+    console.log('there is an override');
+    var currentOverride = data.columns._cpzh4[1];
+    console.log(currentOverride);
+    sel("#main-body").style.display = "none";
+    sel("#overRideP").innerHTML = data.columns._cpzh4[1];
+    sel("#overRide").style.display = "block";
+  }
+}
+
 
 var sheetURL =
   "https://spreadsheets.google.com/feeds/list/1T-HUAINDX69-UYUHhOO1jVjZ_Aq0Zqi1z08my0KHzqU/";
