@@ -240,7 +240,7 @@ span.location {
   overflow: hidden;
 }
 
-span.icons {
+span.icons, span span.icons, .fa-stack-2x, .fa-stack-1x {
   font-size: 25px;
 }
 
@@ -422,7 +422,7 @@ span.icons {
     font-size: 4vw;
   }
 
-  span.icons {
+  span.icons, span span.icons, .fa-stack-2x, .fa-stack-1x {
     font-size: 3vw;
   }
 
@@ -433,25 +433,16 @@ span.icons {
   #search {
     margin-top: 1vh;
   }
-  span.icons {
+  span.icons, span span.icons, .fa-stack-2x, .fa-stack-1x {
     font-size: 25px;
   }
 }
 
-#override {
-  font-size: 5vh;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  top: 50%;
-  left: 0;
-  text-align: center;
-  -webkit-transform: translateY(-50%);
-  transform: translateY(-50%);
+#overRide {
   font-family: 'Roboto', sans-serif;
 }
 
-span.icons {
+span.icons, span span.icons, .fa-stack-2x, .fa-stack-1x {
   font-size: 25px;
 }
 

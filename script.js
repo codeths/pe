@@ -82,8 +82,13 @@ function twoDigit(i) { //returns numbers as double digits, used mostly to fix da
 //THAT'S NOT DISCRIPTIVE **AT ALL**
 function reload() {
 
-  var mocktime = getParameterByName("mock_time"); //
-  var date = new Date();
+  var mocktime = getParameterByName("mock_time");
+  var date;
+  if (mocktime) {
+    date = new Date(mocktime * 1000);
+  } else {
+    date = new Date();
+  }
   //Fill left column
   var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];

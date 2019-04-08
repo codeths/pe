@@ -7,6 +7,7 @@ var DELAY = 15;
 var weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 var sheetStart = 1;
 var currentDay;
+var dayOfWeek;
 
 // GLOBAL VARIABLES
 
@@ -59,11 +60,16 @@ function twoDigit(i) {
 function reload() {
 
   var mocktime = getParameterByName("mock_time");
-  var date = new Date();
+  var date;
+  if (mocktime) {
+    date = new Date(mocktime * 1000);
+  } else {
+    date = new Date();
+  }
   //Fill left column
   var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  var dayOfWeek = days[date.getDay()];
+  dayOfWeek = days[date.getDay()];
   currentDay = weekdays.indexOf(dayOfWeek) + 1; //For sheet selection
   var month = months[date.getMonth()];
   var day = date.getDate();
@@ -84,11 +90,11 @@ function reload() {
 reload();
 //ETHSBELL
 
-function ajax(theUrl, callback) {
+function ajax(theUrl, callback, nextFunc) {
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = function() {
     if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-      callback(xmlHttp.responseText);
+      callback(xmlHttp.responseText, nextFunc);
   };
   xmlHttp.open("GET", theUrl, true); // true for asynchronous
   xmlHttp.send(null);
@@ -124,6 +130,9 @@ function get() {
     currentPeriod = data.theSlot;
     realCurrent = currentPeriod;
     timeLeft = data.timeLeftInPeriod;
+    if (currentPeriod == 'AM Support') {
+      currentPeriod = '1st Period';
+    }
     if (timeLeft <= 5) {
       var next = data.theNextSlot;
       console.log(next);
@@ -156,11 +165,12 @@ function get() {
       sel('#lockers').innerHTML = 'Locker rooms are closed.';
     }
 
-    ajax(sheetURL + (currentDay + sheetStart) + sheetUrlEnd, run);
+    ajax(sheetURL + (currentDay + sheetStart) + sheetUrlEnd, run, table);
+    ajax(sheetURL + 8 + sheetUrlEnd, run, overrideCheck);
   });
 }
 //
-function run(msg) {
+function run(msg, next) {
   var datadiv = document.getElementById("data");
   var data = JSON.parse(msg);
   var responseObj = {};
@@ -203,7 +213,7 @@ function run(msg) {
   if (true) {
     responseObj.rows = rows;
   }
-  table(responseObj);
+  next(responseObj);
 }
 
 var teacherArray = [];
@@ -253,6 +263,8 @@ function putData(data) {
     cellArray[k].querySelector('.icons .heart').style.display = '';
     cellArray[k].querySelector('.icons .laptop').style.display = '';
     cellArray[k].querySelector('.icons .noshirt').style.display = '';
+    cellArray[k].querySelector('.icons .noshirt1').style.display = '';
+    cellArray[k].querySelector('.icons .noshirt2').style.display = '';
     cellArray[k].querySelector('.name').innerHTML = '';
     cellArray[k].querySelector('.location').innerHTML = '';
   }
@@ -270,6 +282,8 @@ function putData(data) {
       cellArray[j].querySelector('.icons .heart').style.display = '';
       cellArray[j].querySelector('.icons .laptop').style.display = '';
       cellArray[j].querySelector('.icons .noshirt').style.display = '';
+      cellArray[j].querySelector('.icons .noshirt1').style.display = '';
+      cellArray[j].querySelector('.icons .noshirt2').style.display = '';
       cellArray[j].querySelector('.name').innerHTML = '';
       cellArray[j].querySelector('.location').innerHTML = '';
 
@@ -282,7 +296,9 @@ function putData(data) {
       if (periodArray[j].uniform) {
         cellArray[j].querySelector('.icons .uniform').style.display = 'inline';
       } else {
-        cellArray[j].querySelector('.icons .noshirt').style.display = 'inline';
+        cellArray[j].querySelector('.icons .noshirt').style.display = 'inline-block';
+        cellArray[j].querySelector('.icons .noshirt1').style.display = 'inline';
+        cellArray[j].querySelector('.icons .noshirt2').style.display = 'inline';
       }
       if (periodArray[j].heart) {
         cellArray[j].querySelector('.icons .heart').style.display = 'inline';
@@ -291,6 +307,23 @@ function putData(data) {
         cellArray[j].querySelector('.icons .laptop').style.display = 'inline';
       }
     }
+  }
+}
+
+function overrideCheck(data) {
+  if (data.columns._cpzh4[1] == null) {
+    console.log("no override");
+    sel("#main").style.display = "block";
+    sel("#footer").style.display = "block";
+    sel("#overRide").style.display = "none";
+  } else {
+    console.log('there is an override');
+    var currentOverride = data.columns._cpzh4[1];
+    console.log(currentOverride);
+    sel("#main").style.display = "none";
+    sel("#footer").style.display = "none";
+    sel("#overRideP").innerHTML = data.columns._cpzh4[1];
+    sel("#overRide").style.display = "block";
   }
 }
 
