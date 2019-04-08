@@ -311,7 +311,7 @@ function putData(data) {
 }
 
 function overrideCheck(data) {
-  if (data.columns._cpzh4[1] == null) {
+  /*if (data.columns._cpzh4[1] == null) {
     console.log("no override");
     sel("#main").style.display = "block";
     sel("#footer").style.display = "block";
@@ -322,9 +322,9 @@ function overrideCheck(data) {
     console.log(currentOverride);
     sel("#main").style.display = "none";
     sel("#footer").style.display = "none";
-    sel("#overRideP").innerHTML = data.columns._cpzh4[1];
+    sel("#overRideP").innerHTML = currentOverride;
     sel("#overRide").style.display = "block";
-  }
+  }*/
 }
 
 var sheetURL =

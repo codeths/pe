@@ -261,3 +261,9 @@ img.icons {
 #overRide {
   font-family: 'Roboto', sans-serif;
 }
+
+.noshirt2 {
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
