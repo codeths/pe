@@ -114,11 +114,11 @@ function reload() {
 reload();
 //ETHSBELL
 
-function ajax(theUrl, callback) { //Using AJAX to pull http
+function ajax(theUrl, callback, nextFunc) {
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = function() {
     if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-      callback(xmlHttp.responseText);
+      callback(xmlHttp.responseText, nextFunc);
   };
   xmlHttp.open("GET", theUrl, true); // true for asynchronous
   xmlHttp.send(null);
@@ -170,7 +170,7 @@ function get() { //there actual function that runs an HTTP GET request
   });
 }
 
-function run(msg) { //I don't know what this does tbh
+function run(msg, next) {
   var datadiv = document.getElementById("data");
   var data = JSON.parse(msg);
   var responseObj = {};
@@ -213,7 +213,7 @@ function run(msg) { //I don't know what this does tbh
   if (true) {
     responseObj.rows = rows;
   }
-  table(responseObj);
+  next(responseObj);
 }
 
 var teacherArray = [];
