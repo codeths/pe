@@ -274,3 +274,8 @@ img.icons {
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
 }
+
+.col.info {
+  height: 88vh;
+  margin-top: 2vh;
+}
