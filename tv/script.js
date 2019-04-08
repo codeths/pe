@@ -317,12 +317,10 @@ function overrideCheck(data) {
     sel("#overRide").style.display = "none";
   } else {
     console.log('there is an override');
-    var currentOverride = data.columns._cpzh4[1];
-    console.log(currentOverride);
     sel("#main-body").style.display = "none";
     sel("#overRideP").innerHTML = data.columns._cpzh4[1];
     sel("#overRide").style.display = "block";
-  }*/
+  }
 }
 
 var sheetURL =
