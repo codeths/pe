@@ -311,17 +311,15 @@ function putData(data) {
 }
 
 function overrideCheck(data) {
-  if (data.columns._cpzh4[1] == null) {
+  if (data.columns._cpzh4[1] == null || data.columns._cpzh4[1] == "-") {
     console.log("no override");
-    sel("#main").style.display = "block";
-    sel("#footer").style.display = "block";
+    sel("#main-body").style.display = "block";
     sel("#overRide").style.display = "none";
   } else {
     console.log('there is an override');
     var currentOverride = data.columns._cpzh4[1];
     console.log(currentOverride);
-    sel("#main").style.display = "none";
-    sel("#footer").style.display = "none";
+    sel("#main-body").style.display = "none";
     sel("#overRideP").innerHTML = data.columns._cpzh4[1];
     sel("#overRide").style.display = "block";
   }
