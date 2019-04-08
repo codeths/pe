@@ -118,7 +118,11 @@ function ajax(theUrl, callback, nextFunc) {
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = function() {
     if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-      callback(xmlHttp.responseText, nextFunc);
+      if (nextFunc) {
+        callback(xmlHttp.responseText, nextFunc);
+      } else {
+        callback(xmlHttp.responseText);
+      }
   };
   xmlHttp.open("GET", theUrl, true); // true for asynchronous
   xmlHttp.send(null);
@@ -164,13 +168,13 @@ function get() { //there actual function that runs an HTTP GET request
     currentPeriod = slotList[sel('#selectperiod select').selectedIndex];
     //sel('#timeleft').innerHTML = currentPeriod + ' ends in ' + timeLeft + ' minutes.';
 
-    ajax(sheetURL + (currentDay + sheetStart) + sheetUrlEnd, run);
+    ajax(sheetURL + (currentDay + sheetStart) + sheetUrlEnd, run, table);
     ajax(sheetURL + 8 + sheetUrlEnd, run, overrideCheck);
 
   });
 }
 
-function run(msg, next) {
+function run(msg, runNext) {
   var datadiv = document.getElementById("data");
   var data = JSON.parse(msg);
   var responseObj = {};
@@ -213,7 +217,8 @@ function run(msg, next) {
   if (true) {
     responseObj.rows = rows;
   }
-  next(responseObj);
+  console.log(responseObj);
+  runNext(responseObj);
 }
 
 var teacherArray = [];
@@ -280,6 +285,8 @@ function putData(data) { //turns arrays into HTML
     cellArray[k].querySelector('.icons .heart').style.display = '';
     cellArray[k].querySelector('.icons .laptop').style.display = '';
     cellArray[k].querySelector('.icons .noshirt').style.display = '';
+    cellArray[k].querySelector('.icons .noshirt1').style.display = '';
+    cellArray[k].querySelector('.icons .noshirt2').style.display = '';
     cellArray[k].querySelector('.name').innerHTML = '';
     cellArray[k].querySelector('.location').innerHTML = '';
   }
@@ -294,16 +301,24 @@ function putData(data) { //turns arrays into HTML
       cellArray[j].querySelector('.icons .heart').style.display = '';
       cellArray[j].querySelector('.icons .laptop').style.display = '';
       cellArray[j].querySelector('.icons .noshirt').style.display = '';
+      cellArray[j].querySelector('.icons .noshirt1').style.display = '';
+      cellArray[j].querySelector('.icons .noshirt2').style.display = '';
       cellArray[j].querySelector('.name').innerHTML = periodArray[j].name;
       if (periodArray[j].location == 0) {
         cellArray[j].querySelector('.location').innerHTML = 'No location specified';
+        cellArray[j].style.display = 'none';
+
       } else {
+        cellArray[j].style.display = '';
         cellArray[j].querySelector('.location').innerHTML = periodArray[j].location;
       }
       if (periodArray[j].uniform) {
         cellArray[j].querySelector('.icons .uniform').style.display = 'inline';
+        cellArray[j].querySelector('.icons .noshirt').style.display = 'none';
       } else {
-        cellArray[j].querySelector('.icons .noshirt').style.display = 'inline';
+        cellArray[j].querySelector('.icons .noshirt').style.display = 'inline-block';
+        cellArray[j].querySelector('.icons .noshirt1').style.display = 'inline';
+        cellArray[j].querySelector('.icons .noshirt2').style.display = 'inline';
       }
       if (periodArray[j].heart) {
         cellArray[j].querySelector('.icons .heart').style.display = 'inline';
@@ -327,7 +342,7 @@ function search() {
 }
 
 function overrideCheck(data) {
-  
+
   if (data.columns._cpzh4[1] == null || data.columns._cpzh4[1] == "-") {
     console.log("no override");
     sel("#main-body").style.display = "block";

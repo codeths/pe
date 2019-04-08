@@ -59,7 +59,7 @@ span {
 }
 
 .col {
-  width: 16.6vw;
+  width: 20vw;
   height: 90vh;
   display: inline-block;
   font-size: 0;
@@ -67,7 +67,7 @@ span {
 
 .cell {
   padding-top: 1vh;
-  height: 30vh;
+  height: 22.5vh;
   background-color: #f6f6f6;
   padding-left: 2vh;
   padding-right: 2vh;
@@ -92,11 +92,11 @@ span {
 }
 
 #footer {
-  width: 83.8vw;
+  width: 80vw;
   height: 10vh;
   position: absolute;
   top: 100%;
-  left: 16.8vw;
+  left: 20vw;
   -webkit-transform: translateY(-100%);
   transform: translateY(-100%);
   font-size: 0;
@@ -105,13 +105,13 @@ span {
 
 #main {
   display: inline-block;
-  width: 83vw;
+  width: 80vw;
   height: 90vh;
   font-size: 0;
   background-color: #f6f6f6;
   position: absolute;
   top: 0;
-  right: 0;
+  left: 20vw;
 }
 
 #wrapper {
@@ -182,7 +182,7 @@ span, p {
 }
 
 .divider {
-  width: 2vw;
+  width: 2vh;
   position: relative;
   left: 50%;
   -webkit-transform: translateX(-50%);
@@ -192,26 +192,33 @@ span, p {
 }
 
 span.name {
-  font-size: 3vw;
+  font-size: 4vh;
   margin-bottom: .5vw;
   font-weight: bold;
 }
 
 span.location {
-  font-size: 1.5vw;
+  font-size: 3vh;
   margin-bottom: .5vw;
   max-width: 20vw;
   word-wrap: normal;
   max-height: 10vh;
-  min-height: 7.5vh;
   overflow: hidden;
 }
 
-span.icons, span span.icons, .fa-stack-2x, .fa-stack-1x {
-  font-size: 2.25vw
+span.icons, span span.icons, span.icons i, .fa-stack-2x, .fa-stack-1x {
+  font-size: 4vh;
+  height: 4vh;
+  vertical-align: middle
 }
 
-.cell span {
+.fa-stack {
+  width: 5vh;
+  height: 4vh;
+  line-height: 4vh;
+}
+
+.cell span:not(.fa-stack) {
   display: block;
   text-align: center;
 }
@@ -226,7 +233,7 @@ img.icons {
   display: none;
 }
 
-.icons i {
+.icons i, .fa-stack {
   display: none;
 }
 

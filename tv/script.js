@@ -94,7 +94,11 @@ function ajax(theUrl, callback, nextFunc) {
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.onreadystatechange = function() {
     if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-      callback(xmlHttp.responseText, nextFunc);
+      if (nextFunc) {
+        callback(xmlHttp.responseText, nextFunc);
+      } else {
+        callback(xmlHttp.responseText);
+      }
   };
   xmlHttp.open("GET", theUrl, true); // true for asynchronous
   xmlHttp.send(null);
@@ -170,7 +174,7 @@ function get() {
   });
 }
 //
-function run(msg, next) {
+function run(msg, runNext) {
   var datadiv = document.getElementById("data");
   var data = JSON.parse(msg);
   var responseObj = {};
@@ -213,7 +217,7 @@ function run(msg, next) {
   if (true) {
     responseObj.rows = rows;
   }
-  next(responseObj);
+  runNext(responseObj);
 }
 
 var teacherArray = [];

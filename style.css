@@ -236,7 +236,7 @@ span.location {
   max-width: 100%;
   word-wrap: normal;
   max-height: 10vh;
-  min-height: 7.5vh;
+  min-height: 5vh;
   overflow: hidden;
 }
 
@@ -400,6 +400,7 @@ span.icons, span span.icons, .fa-stack-2x, .fa-stack-1x {
   .cell {
     margin-top: 3vh;
     width: 25%;
+    /*display: none;*/
   }
 
   body {
@@ -433,6 +434,7 @@ span.icons, span span.icons, .fa-stack-2x, .fa-stack-1x {
   #search {
     margin-top: 1vh;
   }
+
   span.icons, span span.icons, .fa-stack-2x, .fa-stack-1x {
     font-size: 25px;
   }
@@ -442,12 +444,28 @@ span.icons, span span.icons, .fa-stack-2x, .fa-stack-1x {
   font-family: 'Roboto', sans-serif;
 }
 
-span.icons, span span.icons, .fa-stack-2x, .fa-stack-1x {
+span.icons, span span.icons, span.icons i, .fa-stack-2x, .fa-stack-1x {
   font-size: 25px;
+  vertical-align: middle;
 }
 
 img.icons {
   width: auto;
   height: 25px;
   display: none;
+}
+
+.fa-stack {
+  font-size:25px;
+  height:25px;
+  line-height:25px;
+  width: 31.25px;
+}
+
+.noshirt2 {
+  font-size:25px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  vertical-align: middle
 }
