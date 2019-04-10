@@ -394,7 +394,6 @@ span.icons, span span.icons, .fa-stack-2x, .fa-stack-1x {
     top: 0;
     position: relative;
     margin-top: 0;
-    overflow: hidden;
   }
 
   .cell {
