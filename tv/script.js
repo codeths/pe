@@ -297,7 +297,7 @@ function putData(data) {
       } else {
         cellArray[j].querySelector('.location').innerHTML = periodArray[j].location;
       }
-      if (periodArray[j].uniform) {
+      if (!periodArray[j].uniform) {
         cellArray[j].querySelector('.icons .uniform').style.display = 'inline';
       } else {
         cellArray[j].querySelector('.icons .noshirt').style.display = 'inline-block';
