@@ -312,7 +312,7 @@ function putData(data) { //turns arrays into HTML
         cellArray[j].style.display = '';
         cellArray[j].querySelector('.location').innerHTML = periodArray[j].location;
       }
-      if (periodArray[j].uniform) {
+      if (!periodArray[j].uniform) {
         cellArray[j].querySelector('.icons .uniform').style.display = 'inline';
         cellArray[j].querySelector('.icons .noshirt').style.display = 'none';
       } else {
