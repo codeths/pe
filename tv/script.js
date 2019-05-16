@@ -137,7 +137,7 @@ function get() {
     if (currentPeriod == 'AM Support') {
       currentPeriod = '1st Period';
     }
-    if (timeLeft <= 5) {
+    if (timeLeft <= 5 && currentPeriod !== 'AM Support') {
       var next = data.theNextSlot;
       console.log(next);
       if (next !== "Early Bird") {
