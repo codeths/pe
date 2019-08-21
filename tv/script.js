@@ -8,7 +8,7 @@ var weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 var sheetStart = 1;
 var currentDay;
 var dayOfWeek;
-var periodNumber;
+var periodNumberDebug;
 
 // GLOBAL VARIABLES
 
@@ -274,6 +274,8 @@ function putData(data) {
     cellArray[k].querySelector('.location').innerHTML = '';
   }
   if (currentPeriod != null) {
+    
+    var periodNumber;
     periodArray = [];
     for (var i = 0; i < slotList.length; i++) {
       if (slotList[i].indexOf(currentPeriod === 0)) {
@@ -281,6 +283,7 @@ function putData(data) {
         break;
       }
     }
+    periodNumberDebug = periodNumber;
     //var periodNumber = slotList.indexOf(currentPeriod);
     for (var i = 0; i < teacherData[periodNumber].length; i++) {
       if (teacherData[periodNumber][i].location !== "FALSE" && teacherData[periodNumber][i].location !== false && teacherData[periodNumber][i].location !== "0" && teacherData[periodNumber][i].location !== 0) {
