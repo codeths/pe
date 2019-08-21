@@ -8,6 +8,7 @@ var weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 var sheetStart = 1;
 var currentDay;
 var dayOfWeek;
+var periodNumber;
 
 // GLOBAL VARIABLES
 
@@ -273,7 +274,6 @@ function putData(data) {
     cellArray[k].querySelector('.location').innerHTML = '';
   }
   if (currentPeriod != null) {
-    var periodNumber;
     periodArray = [];
     for (var i = 0; i < slotList.length; i++) {
       if (slotList[i].indexOf(currentPeriod === 0)) {
