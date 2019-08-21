@@ -273,6 +273,7 @@ function putData(data) {
     cellArray[k].querySelector('.location').innerHTML = '';
   }
   if (currentPeriod != null) {
+    var periodNumber;
     periodArray = [];
     for (var i = 0; i < slotList.length; i++) {
       if (slotList[i].indexOf(currentPeriod !== -1)) {
