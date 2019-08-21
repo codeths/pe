@@ -276,8 +276,9 @@ function putData(data) {
     var periodNumber;
     periodArray = [];
     for (var i = 0; i < slotList.length; i++) {
-      if (slotList[i].indexOf(currentPeriod !== -1)) {
+      if (slotList[i].indexOf(currentPeriod === 0)) {
         periodNumber = i;
+        break;
       }
     }
     //var periodNumber = slotList.indexOf(currentPeriod);
