@@ -150,7 +150,7 @@ function get() { //there actual function that runs an HTTP GET request
   }
 
 
-  var bellUrl = "https://api.ethsbell.xyz/data" + mocktime;
+  var bellUrl = "https://api.ethsbell.xyz/data/eths" + mocktime;
 
   ajax(bellUrl, function(data) {
     data = JSON.parse(data);
