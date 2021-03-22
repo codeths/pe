@@ -65,12 +65,22 @@ span {
   font-size: 0;
 }
 
+#fullschedule {
+  padding-bottom: 10px;
+}
+
 .cell {
-  padding-top: 1vh;
-  height: 22.5vh;
+  padding-top: 2vh;
+  height: 20vh;
   background-color: #f6f6f6;
   padding-left: 2vh;
   padding-right: 2vh;
+  width: 175px;
+  display: inline-block;
+  margin-left: 0;
+  margin-right: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 #left {
@@ -83,7 +93,6 @@ span {
   width: 80vw;
   display: block;
   font-size: 1.75vw;
-  line-height: 5vh;
 }
 
 #footer table tbody tr td {
@@ -233,10 +242,6 @@ img.icons {
   display: none;
 }
 
-.icons i, .fa-stack {
-  display: none;
-}
-
 .uniform {
   color: #1A2741;
 }
@@ -267,6 +272,8 @@ img.icons {
 
 #overRide {
   font-family: 'Roboto', sans-serif;
+  align-self: center;
+  display: none;
 }
 
 .noshirt2 {
