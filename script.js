@@ -127,11 +127,11 @@ const ICON_LAPTOP = '<i class="fas fa-laptop laptop"></i>'
 const ICON_ = ''
 
 // Generate cell HTML for each period
-function getCellHTML(data) {
+function getCellHTML(data, filter) {
   const htmlArray = data.data.map(x => {
 
     // Base
-    let html = `<div class="cell">
+    let html = `<div class="cell" {DISPLAY}>
       <span class="name">{NAME}</span>
       <span class="location">{LOCATION}</span>
       <span class="icons">
@@ -149,6 +149,8 @@ function getCellHTML(data) {
     html = html.replace('{HEART}', x.data.heart ? ICON_HEART : ''); // Add heartrate icon
     html = html.replace('{LAPTOP}', x.data.laptop ? ICON_LAPTOP : ''); // Add laptop icon
 
+    if (filter) filter = filter.toLowerCase().replace(/ /g, '');
+    html = html.replace('{DISPLAY}', filter && filter !== '' && ![x.name, x.data.location].map(x => x.toLowerCase().replace(/ /g, '').includes(filter)).includes(true) ? 'style="display: none;"' : '')
     return html;
   })
 
@@ -179,10 +181,12 @@ async function updateMonitorHTML() {
 async function updateWebsiteHTML() {
   const dropdown = document.querySelector('#selectperiod select');
 
+  const search = document.getElementById('search').value;
+
   selectedPeriod = dropdown && dropdown.value && dropdown.value !== '---' ? dropdown.value : null;
 
   const data = await fetchData(selectedPeriod); // Get data
-  const html = getCellHTML(data); // Get HTML from that data
+  const html = getCellHTML(data, search); // Get HTML from that data
   document.getElementById('main-body').innerHTML = html.join('\n'); // Add HTML to the body
 
   document.getElementById('date').innerHTML = leftText().date; // Set the date
@@ -218,7 +222,7 @@ function search() {
   const cellArray = document.querySelectorAll('.cell');
 
   for (let cell of cellArray) {
-    if (value == '' || ['.name', '.location'].map(x => cell.querySelector(x).innerHTML.toLowerCase().includes(value.toLowerCase())).includes(true)) {
+    if (value == '' || ['.name', '.location'].map(x => cell.querySelector(x).innerHTML.toLowerCase().replace(/ /g, '').includes(value.toLowerCase().replace(/ /g, ''))).includes(true)) {
       cell.style.display = "inline-block";
     } else {
       cell.style.display = "none";
