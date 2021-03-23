@@ -62,7 +62,7 @@ async function fetchData(period, day) {
   // Use current period if none specified
   if (!period) period = ethsbellJson.theSlot;
   if (period == 'monitor') {
-    if (ethsbellJson.timeLeftInPeriod <= 5 && ethsbellJson.theNextSlot) {
+    if (ethsbellJson.theNextSlot && !IGNORED_PERIODS.includes(ethsbellJson.theNextSlot) && (ethsbellJson.timeLeftInPeriod <= 5 || (ethsbellJson.timeLeftInPeriod <= 15 && IGNORED_PERIODS.includes(ethsbellJson.theSlot)))) {
       period = ethsbellJson.theNextSlot;
     } else {
       period = ethsbellJson.theSlot;
