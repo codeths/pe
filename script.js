@@ -193,7 +193,7 @@ async function updateWebsiteHTML() {
   document.getElementById('time').innerHTML = leftText().time; // Set the time
 
   // Set period end time text if there is a period
-  if (data.ethsbell.current && data.ethsbell.remaining) document.getElementById('timeleft').innerHTML = `${data.ethsbell.showing} ends in ${data.ethsbell.remaining} minute${data.ethsbell.remaining == 1 ? '' : 's'}.`;
+  if (data.ethsbell.current && data.ethsbell.remaining) document.getElementById('timeleft').innerHTML = `${data.ethsbell.current} ends in ${data.ethsbell.remaining} minute${data.ethsbell.remaining == 1 ? '' : 's'}.`;
 
   // Remove loading text and add in dropdown
   if (document.getElementById('showing').innerHTML == 'Loading data from ETHSBell...') {
