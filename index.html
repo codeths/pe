@@ -8,8 +8,10 @@
   <title>ETHS PE Board</title>
   <link rel="shortcut icon" type="image/png" href="wildkit.ico" />
   <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono|Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-  <link rel="stylesheet" href="style.css"></head>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+</head>
 
 <body>
   <div id="top">
@@ -23,10 +25,10 @@
                 <div class="divider"></div>
               </div>
               <span id="date"></span>
-              <br>
               <span id="time"></span>
               <div class="divider"></div>
-              <span id="showing">Loading data from ETHSBell...</span><span> </span>
+              <span id="showing">Loading data from ETHSBell...</span>
+              <span id="timeleft"></span>
               <input id="search" placeholder="Search" autocomplete="off" onkeyup="search();" onkeydown="search();">
             </td>
           </tr>
@@ -39,214 +41,6 @@
       <p id='overRideP' style='font-size: 5vw'></p>
     </div>
     <div id="main-body">
-      <div class="cell">
-        <span class="name"></span>
-        <span class="location"></span>
-        <span class="icons">
-          <span class="fa-stack noshirt">
-            <i class="fas fa-tshirt fa-stack-1x noshirt1"></i>
-            <i class="fas fa-times fa-stack-1x noshirt2" style="color:red"></i>
-          </span>
-          <i class="fas fa-tshirt uniform"></i>
-          <i class="fas fa-heartbeat heart"></i>
-          <i class="fas fa-laptop laptop"></i>
-        </span>
-      </div>
-      <div class="cell">
-        <span class="name"></span>
-        <span class="location"></span>
-        <span class="icons">
-          <span class="fa-stack noshirt">
-            <i class="fas fa-tshirt fa-stack-1x noshirt1"></i>
-            <i class="fas fa-times fa-stack-1x noshirt2" style="color:red"></i>
-          </span>
-          <i class="fas fa-tshirt uniform"></i>
-          <i class="fas fa-heartbeat heart"></i>
-          <i class="fas fa-laptop laptop"></i>
-        </span>
-      </div>
-      <div class="cell">
-        <span class="name"></span>
-        <span class="location"></span>
-        <span class="icons">
-          <span class="fa-stack noshirt">
-            <i class="fas fa-tshirt fa-stack-1x noshirt1"></i>
-            <i class="fas fa-times fa-stack-1x noshirt2" style="color:red"></i>
-          </span>
-          <i class="fas fa-tshirt uniform"></i>
-          <i class="fas fa-heartbeat heart"></i>
-          <i class="fas fa-laptop laptop"></i>
-        </span>
-      </div>
-      <div class="cell">
-        <span class="name"></span>
-        <span class="location"></span>
-        <span class="icons">
-          <span class="fa-stack noshirt">
-            <i class="fas fa-tshirt fa-stack-1x noshirt1"></i>
-            <i class="fas fa-times fa-stack-1x noshirt2" style="color:red"></i>
-          </span>
-          <i class="fas fa-tshirt uniform"></i>
-          <i class="fas fa-heartbeat heart"></i>
-          <i class="fas fa-laptop laptop"></i>
-        </span>
-      </div>
-      <div class="cell">
-        <span class="name"></span>
-        <span class="location"></span>
-        <span class="icons">
-          <span class="fa-stack noshirt">
-            <i class="fas fa-tshirt fa-stack-1x noshirt1"></i>
-            <i class="fas fa-times fa-stack-1x noshirt2" style="color:red"></i>
-          </span>
-          <i class="fas fa-tshirt uniform"></i>
-          <i class="fas fa-heartbeat heart"></i>
-          <i class="fas fa-laptop laptop"></i>
-        </span>
-      </div>
-      <div class="cell">
-        <span class="name"></span>
-        <span class="location"></span>
-        <span class="icons">
-          <span class="fa-stack noshirt">
-            <i class="fas fa-tshirt fa-stack-1x noshirt1"></i>
-            <i class="fas fa-times fa-stack-1x noshirt2" style="color:red"></i>
-          </span>
-          <i class="fas fa-tshirt uniform"></i>
-          <i class="fas fa-heartbeat heart"></i>
-          <i class="fas fa-laptop laptop"></i>
-        </span>
-      </div>
-      <div class="cell">
-        <span class="name"></span>
-        <span class="location"></span>
-        <span class="icons">
-          <span class="fa-stack noshirt">
-            <i class="fas fa-tshirt fa-stack-1x noshirt1"></i>
-            <i class="fas fa-times fa-stack-1x noshirt2" style="color:red"></i>
-          </span>
-          <i class="fas fa-tshirt uniform"></i>
-          <i class="fas fa-heartbeat heart"></i>
-          <i class="fas fa-laptop laptop"></i>
-        </span>
-      </div>
-      <div class="cell">
-        <span class="name"></span>
-        <span class="location"></span>
-        <span class="icons">
-          <span class="fa-stack noshirt">
-            <i class="fas fa-tshirt fa-stack-1x noshirt1"></i>
-            <i class="fas fa-times fa-stack-1x noshirt2" style="color:red"></i>
-          </span>
-          <i class="fas fa-tshirt uniform"></i>
-          <i class="fas fa-heartbeat heart"></i>
-          <i class="fas fa-laptop laptop"></i>
-        </span>
-      </div>
-      <div class="cell">
-        <span class="name"></span>
-        <span class="location"></span>
-        <span class="icons">
-          <span class="fa-stack noshirt">
-            <i class="fas fa-tshirt fa-stack-1x noshirt1"></i>
-            <i class="fas fa-times fa-stack-1x noshirt2" style="color:red"></i>
-          </span>
-          <i class="fas fa-tshirt uniform"></i>
-          <i class="fas fa-heartbeat heart"></i>
-          <i class="fas fa-laptop laptop"></i>
-        </span>
-      </div>
-      <div class="cell">
-        <span class="name"></span>
-        <span class="location"></span>
-        <span class="icons">
-          <span class="fa-stack noshirt">
-            <i class="fas fa-tshirt fa-stack-1x noshirt1"></i>
-            <i class="fas fa-times fa-stack-1x noshirt2" style="color:red"></i>
-          </span>
-          <i class="fas fa-tshirt uniform"></i>
-          <i class="fas fa-heartbeat heart"></i>
-          <i class="fas fa-laptop laptop"></i>
-        </span>
-      </div>
-      <div class="cell">
-        <span class="name"></span>
-        <span class="location"></span>
-        <span class="icons">
-          <span class="fa-stack noshirt">
-            <i class="fas fa-tshirt fa-stack-1x noshirt1"></i>
-            <i class="fas fa-times fa-stack-1x noshirt2" style="color:red"></i>
-          </span>
-          <i class="fas fa-tshirt uniform"></i>
-          <i class="fas fa-heartbeat heart"></i>
-          <i class="fas fa-laptop laptop"></i>
-        </span>
-      </div>
-      <div class="cell">
-        <span class="name"></span>
-        <span class="location"></span>
-        <span class="icons">
-          <span class="fa-stack noshirt">
-            <i class="fas fa-tshirt fa-stack-1x noshirt1"></i>
-            <i class="fas fa-times fa-stack-1x noshirt2" style="color:red"></i>
-          </span>
-          <i class="fas fa-tshirt uniform"></i>
-          <i class="fas fa-heartbeat heart"></i>
-          <i class="fas fa-laptop laptop"></i>
-        </span>
-      </div>
-      <div class="cell">
-        <span class="name"></span>
-        <span class="location"></span>
-        <span class="icons">
-          <span class="fa-stack noshirt">
-            <i class="fas fa-tshirt fa-stack-1x noshirt1"></i>
-            <i class="fas fa-times fa-stack-1x noshirt2" style="color:red"></i>
-          </span>
-          <i class="fas fa-tshirt uniform"></i>
-          <i class="fas fa-heartbeat heart"></i>
-          <i class="fas fa-laptop laptop"></i>
-        </span>
-      </div>
-      <div class="cell">
-        <span class="name"></span>
-        <span class="location"></span>
-        <span class="icons">
-          <span class="fa-stack noshirt">
-            <i class="fas fa-tshirt fa-stack-1x noshirt1"></i>
-            <i class="fas fa-times fa-stack-1x noshirt2" style="color:red"></i>
-          </span>
-          <i class="fas fa-tshirt uniform"></i>
-          <i class="fas fa-heartbeat heart"></i>
-          <i class="fas fa-laptop laptop"></i>
-        </span>
-      </div>
-      <div class="cell">
-        <span class="name"></span>
-        <span class="location"></span>
-        <span class="icons">
-          <span class="fa-stack noshirt">
-            <i class="fas fa-tshirt fa-stack-1x noshirt1"></i>
-            <i class="fas fa-times fa-stack-1x noshirt2" style="color:red"></i>
-          </span>
-          <i class="fas fa-tshirt uniform"></i>
-          <i class="fas fa-heartbeat heart"></i>
-          <i class="fas fa-laptop laptop"></i>
-        </span>
-      </div>
-      <div class="cell">
-        <span class="name"></span>
-        <span class="location"></span>
-        <span class="icons">
-          <span class="fa-stack noshirt">
-            <i class="fas fa-tshirt fa-stack-1x noshirt1"></i>
-            <i class="fas fa-times fa-stack-1x noshirt2" style="color:red"></i>
-          </span>
-          <i class="fas fa-tshirt uniform"></i>
-          <i class="fas fa-heartbeat heart"></i>
-          <i class="fas fa-laptop laptop"></i>
-        </span>
-      </div>
     </div>
   </div>
   <div id="footer">
@@ -255,7 +49,6 @@
         <tr>
           <td>
             <p>
-              <!--COMING SOON: See the full schedule at <u>https://ethsbell.xyz/pe</u><br>-->
               <i class="fas fa-tshirt uniform"></i> Uniform |
               <i class="fas fa-heartbeat heart"></i> HR monitor |
               <i class="fas fa-laptop laptop"></i> Chromebook</p>
@@ -265,7 +58,13 @@
     </table>
   </div>
   </div>
+
+  <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+  <script src="https://unpkg.com/dayjs@1.8.21/plugin/advancedFormat.js"></script>
   <script src="script.js"></script>
+  <script>
+    init('website');
+  </script>
 </body>
 
 </html>

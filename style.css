@@ -82,8 +82,7 @@ span {
 
 #top {
   width: 100vw;
-  height: 15vh;
-  min-height: 15vh;
+  height: 20vh;
   position: absolute;
   top: 0;
   left: 0;
@@ -99,8 +98,7 @@ span {
   text-align: center;
   width: 100vw;
   display: block;
-  font-size: 3vh;
-  line-height: 5vh;
+  font-size: 30px;
 }
 
 #footer table tbody tr td {
@@ -124,12 +122,11 @@ span {
   background-color: #f6f6f6;
   display: inline-block;
   width: 100vw;
-  height: 75vh;
-  min-height: 75vh;
+  height: 70vh;
   font-size: 0;
   background-color: #f6f6f6;
   position: static;
-  margin-top: 15vh;
+  margin-top: 20vh;
   overflow-y: scroll;
 }
 
@@ -140,20 +137,23 @@ span {
 }
 
 #date, #time {
-  font-size: 3vh;
+  font-size: 25px;
+}
+
+#date {
+  padding-top: 5px;
 }
 
 #datetime {
   background-color: #C34614;
   text-align: center;
   width: 100vw;
-  height: 15vh;
+  height: 20vh;
 }
 
 #datetime table tbody tr td {
   vertical-align: middle;
   width: 100vw;
-  height: 15vh;
 }
 
 #ethsbell {
@@ -171,6 +171,11 @@ span {
   width: 100vw;
 }
 
+#wildkitdiv, #date, #time, #showing, #timeleft, #search {
+  margin: 0 10px;
+  display: block;
+}
+
 span, p {
   font-family: 'Roboto', sans-serif;
 }
@@ -184,12 +189,12 @@ span, p {
 }
 
 #ethsbell span:not(.arrow) {
-  font-size: 2.25vh;
-  margin: .25vw;
+  font-size: 20px;
+  margin: 5px;
 }
 
 .spacer {
-  padding-bottom: 1vw;
+  padding-bottom: 10px;
   display: block;
 }
 
@@ -203,36 +208,36 @@ span, p {
 
 #wildkit {
   width: 15vw;
-  padding-bottom: 1vw;
+  padding-bottom: 10px;
   margin: 0 auto;
 }
 
 #showing {
-  line-height: 2.25vh;
   vertical-align: middle;
-  font-size: 2.25vh;
+  font-size: 20px;
+  line-height: 30px;
 }
 
 .divider {
-  width: 2vw;
+  width: 20px;
   position: relative;
   left: 50%;
   height: 0px;
   -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
   border-bottom: 2px solid #cdcdcd;
-  margin: 1vw 0;
+  margin: 5px 0;
 }
 
 span.name {
-  font-size: 30px;
-  margin-bottom: .5vw;
+  font-size: 25px;
+  margin-bottom: 5px;
   font-weight: bold;
 }
 
 span.location {
   font-size: 20px;
-  margin-bottom: .5vw;
+  margin-bottom: 5px;
   max-width: 100%;
   word-wrap: normal;
   max-height: 10vh;
@@ -244,17 +249,13 @@ span.icons, span span.icons, .fa-stack-2x, .fa-stack-1x {
   font-size: 25px;
 }
 
-.cell span {
+.name, .locations, .icons {
   display: block;
   text-align: center;
 }
 
 #footer .fas {
   display: inline;
-}
-
-.icons i {
-  display: none;
 }
 
 .uniform {
@@ -274,7 +275,7 @@ span.icons, span span.icons, .fa-stack-2x, .fa-stack-1x {
 }
 
 #message {
-  font-size: 7.5vh;
+  font-size: 50px;
   line-height: 90vh;
   vertical-align: middle;
   text-align: center;
@@ -282,45 +283,34 @@ span.icons, span span.icons, .fa-stack-2x, .fa-stack-1x {
 }
 
 #selectperiod {
-  display: inline;
+  display: inline-block;
   border: 1px solid white;
-  border-radius: .75vw;
+  border-radius: 5px;
   background-color: rgba(0, 0, 0, 0.25);
-  font-size: 1.75vh;
-  width: 15vw;
-  padding: .25vw;
+  font-size: 15px;
   vertical-align: middle;
 }
 
 .dropdown {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  padding: .125vw;
+  padding: 2.5px;
   background-color: transparent;
   cursor: pointer;
   border: 0;
-  font-size: 1.75vh;
+  font-size: 15px;
 }
 
 .dropdown:focus {
   outline: 0;
 }
 
-#selctperiod option {
-  font-size: 1.75vh;
-}
-
-#selectperiod::after {
-  content: "\25BE";
-  font-size: 1.75vh;
-  color: white;
+#selectperiod option {
+  font-size: 15px;
 }
 
 .down-arrow {
   border-color: white transparent;
   border-style: solid;
-  border-width: 1vw 1vw 0 1vw;
+  border-width: 5px 5px 0 5px;
   height: 0px;
   width: 0px;
   font-size: 0px;
@@ -330,7 +320,7 @@ span.icons, span span.icons, .fa-stack-2x, .fa-stack-1x {
 .up-arrow {
   border-color: white transparent;
   border-style: solid;
-  border-width: 0px 1vw 1vw 1vw;
+  border-width: 0px 5px 5px 5px;
   height: 0px;
   width: 0px;
   font-size: 0px;
@@ -338,6 +328,7 @@ span.icons, span span.icons, .fa-stack-2x, .fa-stack-1x {
 }
 
 #search {
+  display: inline-block;
   background-color: white;
   border: 0;
   outline: 0;
@@ -374,6 +365,10 @@ span.icons, span span.icons, .fa-stack-2x, .fa-stack-1x {
   #datetime {
     width: 20vw;
     height: 100vh;
+  }
+
+  #date {
+    padding-top: 0px;
   }
 
   #footer {
@@ -415,19 +410,27 @@ span.icons, span span.icons, .fa-stack-2x, .fa-stack-1x {
   }
 
   span.location {
-    font-size: 2vw;
+    font-size: 20px;
   }
 
   span.name {
-    font-size: 4vw;
+    font-size: 25px;
   }
 
   span.icons, span span.icons, .fa-stack-2x, .fa-stack-1x {
-    font-size: 3vw;
+    font-size: 30px;
   }
 
   #wildkitdiv {
     display: block;
+  }
+
+  #selectperiod {
+    width: 15vw;
+  }
+
+  #timeleft {
+    padding-top: 10px;
   }
 
   #search {

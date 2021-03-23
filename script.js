@@ -1,371 +1,238 @@
-/*jshint -W054 */
-/*
+const ETHSBELL_API_URL = "https://api.ethsbell.xyz/data/eths";
+const SPREADSHEET_URL = "https://script.google.com/macros/s/AKfycbyD4QWaKRFb88EY9ZENMZu7l1qnk9WImxVf1Bkj-bHidrXVOPwzKgFzY1rvKhGLEI9Q/exec?sheet={SHEET}";
 
-I'm working on decoding Albert's functions
+// Delay between each fetch (seconds)
+const DELAY = 15;
 
--Asher
-
-*/
-
-//CONSTANTS
-
-
-var PERIODS_PER_DAY = 10; //number of periods in a day, including early bird
-var slotList = [
-  "Early Bird",
-  "1st Period",
-  "2nd Period",
-  "3rd Period",
-  "4th Period",
-  "5th Period",
-  "6th Period",
-  "7th Period",
-  "8th Period",
-  "9th Period",
-  null //unsure, maybe bug protection?
-]; //exactly what it sounds like
-var weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-var sheetStart = 1;
-var currentDay;
-
-var DELAY = 15; //refresh delay in seconds
-
-var ddHTML = '<span id="selectperiod"><select class="dropdown" onchange="reload();"><option value="p0">Early Bird</option><option value="p1">1st Period</option><option value="p2">2nd Period</option><option value="p3">3rd Period</option><option value="p4">4th Period</option><option value="p5">5th Period</option><option value="p6">6th Period</option><option value="p7">7th Period</option><option value="p8">8th Period</option><option value="p9">9th Period</option><option value="select">Select Period</option></select></span>';
-
-// GLOBAL VARIABLES
-
-var currentlyShowing, currentPeriod, timeLeft; //VERY IMPORTANT VARS, DO NOT TOUCH! Names tell you what they mean.
-
-
-//QUICK SELECT
-
-function sel(query) {
-  return document.querySelector(query);
+// Which sheet is used for each day
+const SHEET_INDEXES = {
+  'Sunday': -1,
+  'Monday': -1,
+  'Tuesday': 1,
+  'Wednesday': 2,
+  'Thursday': 3,
+  'Friday': 4,
+  'Saturday': -1
 }
 
-//DATE AND TIME
-//functions
-function numSuffix(i) { //finds the suffix for a given number, i.e. 1 -> 1st, 2 -> 2nd, 3 -> 3rd, 4 -> 4th, etc
-  var j = i % 10,
-    k = i % 100;
-  if (j == 1 && k != 11) {
-    return i + "st";
-  }
-  if (j == 2 && k != 12) {
-    return i + "nd";
-  }
-  if (j == 3 && k != 13) {
-    return i + "rd";
-  }
-  return i + "th";
-}
+// Dropdown selected
+let selectedPeriod = null;
 
-function toBool(str) { //I feel like this can be removed with some spaghetti code later, but I'm not going to do it now.
-  if (str == "TRUE") {
-    return true;
-  } else if (str == "FALSE") {
-    return false;
-  } else {
-    return "Error";
-  }
-}
+// Periods to be ignored in the dropdown
+const IGNORED_PERIODS = ['AM Support', 'Office Hours / Teacher Collaboration'];
 
-function twoDigit(i) { //returns numbers as double digits, used mostly to fix date text
-  if (i.toString().length === 1) {
-    return ('0' + i);
-  } else {
-    return i;
-  }
-}
+// Dropdown HTML
+const dropdownWrapper = '<span id="selectperiod"><select class="dropdown" onchange="dropdownChanged();">{OPTIONS}</select></span>';
+const dropdownOptions = '<option value="{VALUE}" {DISABLED}>{NAME}</option>';
+// Add advancedFormat plugin to day.js
+dayjs.extend(window.dayjs_plugin_advancedFormat)
 
+// Generate text for date and time
+function leftText() {
+  const date = dayjs().format('dddd, MMMM Do');
+  const time = dayjs().format('h:mm A');
 
-//BEGIN BIG OLE' FUNCTION
-//THAT'S NOT DISCRIPTIVE **AT ALL**
-function reload() {
-
-  var mocktime = getParameterByName("mock_time");
-  var date;
-  if (mocktime) {
-    date = new Date(mocktime * 1000);
-  } else {
-    date = new Date();
-  }
-  //Fill left column
-  var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  var dayOfWeek = days[date.getDay()];
-  currentDay = weekdays.indexOf(dayOfWeek) + 1; //For sheet selection
-  var month = months[date.getMonth()];
-  var day = date.getDate();
-  var year = date.getFullYear();
-  var hour = (date.getHours() > 12) ? date.getHours() - 12 : date.getHours();
-  if (hour == 0) { //fixes java time beig weird
-    hour = 12;
-  }
-  var period = (date.getHours() < 12) ? "AM" : "PM"; //finds out if it's the morning or the afternoon
-  var minute = date.getMinutes();
-  var fullDate = dayOfWeek + ', ' + month + ' ' + numSuffix(day);
-  var fullTime = hour + ':' + twoDigit(minute) + " " + period;
-  // \/  Return the dates \/
-  sel('#date').innerHTML = fullDate;
-  sel('#time').innerHTML = fullTime;
-  get();
-}
-reload();
-//ETHSBELL
-
-function ajax(theUrl, callback, nextFunc) {
-  var xmlHttp = new XMLHttpRequest();
-  xmlHttp.onreadystatechange = function() {
-    if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-      if (nextFunc) {
-        callback(xmlHttp.responseText, nextFunc);
-      } else {
-        callback(xmlHttp.responseText);
-      }
+  return {
+    date,
+    time
   };
-  xmlHttp.open("GET", theUrl, true); // true for asynchronous
-  xmlHttp.send(null);
 }
 
-function getParameterByName(name, url) { //parses URL for mock time query streams
-  if (!url) url = window.location.href;
-  name = name.replace(/[\[\]]/g, "\\$&");
-  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-    results = regex.exec(url);
-  if (!results) return null;
-  if (!results[2]) return "";
-  return decodeURIComponent(results[2].replace(/\+/g, " "));
+// Get data from ETHSBell and the spreadsheet and parse them
+async function fetchData(period, day) {
+  // Fetch from ETHSBell
+  const ethsbellRes = await fetch(ETHSBELL_API_URL);
+  let ethsbellJson;
+
+  try {
+    ethsbellJson = await ethsbellRes.json();
+  } catch (e) {}
+
+  if (!ethsbellRes.ok || !ethsbellJson) return {
+    ethsbell: {
+      periods: [],
+      current: null,
+      remaining: null
+    },
+    data: []
+  }
+  // Get array of period names and remove ignored periods
+  const periods = ethsbellJson.schedule ? ethsbellJson.schedule.period_array.map(x => x.period_name).filter(x => !IGNORED_PERIODS.includes(x)) : [];
+
+  // Use current period if none specified
+  if (!period) period = ethsbellJson.theSlot;
+  if (period == 'monitor') {
+    if (ethsbellJson.timeLeftInPeriod <= 5 && ethsbellJson.theNextSlot) {
+      period = ethsbellJson.theNextSlot;
+    } else {
+      period = ethsbellJson.theSlot;
+    }
+  }
+
+  // ETHSBell data to return
+  const ethsbell = {
+    periods,
+    current: ethsbellJson.theSlot,
+    showing: period,
+    remaining: ethsbellJson.timeLeftInPeriod
+  };
+
+  // No period specified and no current period
+  if (!period) return {
+    ethsbell,
+    data: []
+  };
+
+  // Get sheet index for that day
+  const dayOfWeek = day || dayjs().format('dddd');
+  if (!SHEET_INDEXES[dayOfWeek] || SHEET_INDEXES[dayOfWeek] == -1) return { // No sheet for that day
+    ethsbell,
+    data: []
+  };
+
+  // Get URL to fetch for spreadsheet
+  const spreadsheetURL = SPREADSHEET_URL.replace('{SHEET}', SHEET_INDEXES[dayOfWeek]);
+
+  // Fetch the data
+  const spreadsheetRes = await fetch(spreadsheetURL);
+
+  let spreadsheetJson;
+  try {
+    spreadsheetJson = await spreadsheetRes.json();
+  } catch (e) {}
+
+  // Error
+  if (!spreadsheetRes.ok || !spreadsheetJson || spreadsheetJson.error) return {
+    ethsbell,
+    data: []
+  };
+
+  // Get this period only from the data and remove teachers without a period
+  const thisPeriod = spreadsheetJson.map(x => ({
+    name: x.name,
+    data: x[period]
+  })).filter(x => x.data && x.data.location.toString().replace(/ /g, '') !== '');
+
+  return {
+    ethsbell,
+    data: thisPeriod
+  };
 }
 
-function get() { //there actual function that runs an HTTP GET request
+// HTML for each icon
+const ICON_NOUNIFORM = '<span class="fa-stack noshirt"><i class="fas fa-tshirt fa-stack-1x noshirt1"></i><i class="fas fa-times fa-stack-1x noshirt2" style="color:red"></i></span>';
+const ICON_UNIFORM = '<i class="fas fa-tshirt uniform"></i>'
+const ICON_HEART = '<i class="fas fa-heartbeat heart"></i>'
+const ICON_LAPTOP = '<i class="fas fa-laptop laptop"></i>'
+const ICON_ = ''
 
+// Generate cell HTML for each period
+function getCellHTML(data) {
+  const htmlArray = data.data.map(x => {
 
-  var mocktime = getParameterByName("mock_time");
+    // Base
+    let html = `<div class="cell">
+      <span class="name">{NAME}</span>
+      <span class="location">{LOCATION}</span>
+      <span class="icons">
+        {NOUNIFORM}
+        {UNIFORM}
+        {HEART}
+        {LAPTOP}
+      </span>
+      </div>`;
 
-  if (mocktime == null) {
-    mocktime = "";
+    html = html.replace('{NAME}', x.name); // Add name
+    html = html.replace('{LOCATION}', x.data.location.toString()); // Add location
+    html = html.replace('{NOUNIFORM}', x.data.nodress ? ICON_NOUNIFORM : ''); // Add no uniform icon
+    html = html.replace('{UNIFORM}', !x.data.nodress ? ICON_UNIFORM : ''); // Add uniform icon
+    html = html.replace('{HEART}', x.data.heart ? ICON_HEART : ''); // Add heartrate icon
+    html = html.replace('{LAPTOP}', x.data.laptop ? ICON_LAPTOP : ''); // Add laptop icon
+
+    return html;
+  })
+
+  return htmlArray;
+}
+
+// Update HTML for monitor
+
+async function updateMonitorHTML() {
+  const data = await fetchData('monitor'); // Get data
+  const html = getCellHTML(data); // Get HTML from that data
+  document.getElementById('main-body').innerHTML = html.join('\n'); // Add HTML to the body
+
+  document.getElementById('date').innerHTML = leftText().date; // Set the date
+  document.getElementById('time').innerHTML = leftText().time; // Set the time
+
+  console.log(data.ethsbell);
+  if (data.ethsbell.current && data.ethsbell.remaining) {
+    document.getElementById('showing').innerHTML = 'Showing locations for ' + data.ethsbell.showing;
+    document.getElementById('timeleft').innerHTML = `${data.ethsbell.current} ends in ${data.ethsbell.remaining} minute${data.ethsbell.remaining == 1 ? '' : 's'}.`;
   } else {
-    mocktime = "?mock_time=" + mocktime;
+    document.getElementById('showing').innerHTML = '';
+    document.getElementById('timeleft').innerHTML = '';
   }
-
-
-  var bellUrl = "https://api.ethsbell.xyz/data/eths" + mocktime;
-
-  ajax(bellUrl, function(data) {
-    data = JSON.parse(data);
-
-    currentPeriod = data.theSlot;
-    timeLeft = data.timeLeftInPeriod;
-
-    if (sel('#showing').innerHTML == 'Loading data from ETHSBell...') { //displays loading text
-      sel('#showing').innerHTML = 'Showing locations for ' + ddHTML + '';
-      sel('#selectperiod select').selectedIndex = slotList.indexOf(currentPeriod);
-      if (currentPeriod == null || slotList.indexOf(currentPeriod) == -1) {
-        sel('#selectperiod select').selectedIndex = 10;
-      }
-    }
-    currentPeriod = slotList[sel('#selectperiod select').selectedIndex];
-    //sel('#timeleft').innerHTML = currentPeriod + ' ends in ' + timeLeft + ' minutes.';
-
-    ajax(sheetURL + (currentDay + sheetStart) + sheetUrlEnd, run, table);
-    ajax(sheetURL + 8 + sheetUrlEnd, run, overrideCheck);
-
-  });
 }
 
-function run(msg, runNext) {
-  var datadiv = document.getElementById("data");
-  var data = JSON.parse(msg);
-  var responseObj = {};
-  var rows = [];
-  var columns = {};
-  for (var i = 0; i < data.feed.entry.length; i++) {
-    var entry = data.feed.entry[i];
-    var keys = Object.keys(entry);
-    var newRow = {};
-    var queried = false;
-    for (var j = 0; j < keys.length; j++) {
-      var gsxCheck = keys[j].indexOf("gsx$");
-      if (gsxCheck > -1) {
-        var key = keys[j];
-        var name = key.substring(4);
-        var content = entry[key];
-        var value = content.$t;
-        queried = true;
-        if (true && !isNaN(value)) {
-          value = Number(value);
-        }
-        newRow[name] = value;
-        if (queried === true) {
-          if (!columns.hasOwnProperty(name)) {
-            columns[name] = [];
-            columns[name].push(value);
-          } else {
-            columns[name].push(value);
-          }
-        }
-      }
-    }
-    if (queried === true) {
-      rows.push(newRow);
-    }
+// Update HTML for website
+async function updateWebsiteHTML() {
+  const dropdown = document.querySelector('#selectperiod select');
+
+  selectedPeriod = dropdown && dropdown.value && dropdown.value !== '---' ? dropdown.value : null;
+
+  const data = await fetchData(selectedPeriod); // Get data
+  const html = getCellHTML(data); // Get HTML from that data
+  document.getElementById('main-body').innerHTML = html.join('\n'); // Add HTML to the body
+
+  document.getElementById('date').innerHTML = leftText().date; // Set the date
+  document.getElementById('time').innerHTML = leftText().time; // Set the time
+
+  // Set period end time text if there is a period
+  if (data.ethsbell.current && data.ethsbell.remaining) document.getElementById('timeleft').innerHTML = `${data.ethsbell.showing} ends in ${data.ethsbell.remaining} minute${data.ethsbell.remaining == 1 ? '' : 's'}.`;
+
+  // Remove loading text and add in dropdown
+  if (document.getElementById('showing').innerHTML == 'Loading data from ETHSBell...') {
+    // Generate dropdown HTML
+    const dropdown = dropdownWrapper.replace('{OPTIONS}', ['---'].concat(data.ethsbell.periods).map(x => dropdownOptions
+      .replace('{NAME}', x)
+      .replace('{VALUE}', x)
+      .replace('{DISABLED}', x == '---' ? 'disabled' : '')
+    ));
+
+    // Remove text and add dropdown 
+    document.getElementById('showing').innerHTML = 'Showing locations for ' + dropdown;
+
+    // Select current period
+    document.querySelector('#selectperiod select').selectedIndex = data.ethsbell.periods.indexOf(data.ethsbell.showing) + 1;
   }
-  if (true) {
-    responseObj.columns = columns;
-  }
-  if (true) {
-    responseObj.rows = rows;
-  }
-  console.log(responseObj);
-  runNext(responseObj);
 }
 
-var teacherArray = [];
-var teacherData = {};
-
-function table(data) { //converts raw data to arrays
-  /*ajax(settingsUrl, function(json) {
-    var override = JSON.parse(json).feed.entry[3].content.$t;
-    if (override !== "") {
-      var cellArray = document.querySelectorAll('.cell');
-      for (var l = 0; l < cellArray.length; l++) {
-        cellArray[l].querySelector('.icons .uniform').style.display = '';
-        cellArray[l].querySelector('.icons .heart').style.display = '';
-        cellArray[l].querySelector('.icons .laptop').style.display = '';
-        cellArray[l].querySelector('.name').innerHTML = '';
-        cellArray[l].querySelector('.location').innerHTML = '';
-      }
-      var overrideEl = document.getElementById('override');
-      overrideEl.style.display = '';
-      overrideEl.innerHTML = override;
-
-    } else {*/
-  //document.getElementById('override').style.display = 'none';
-  var currentJson = [];
-  var currentName;
-  var currentArray = [];
-  var current;
-  data = data.rows;
-  var teacherLength = data.length - 1;
-  for (var k = 0; k < PERIODS_PER_DAY; k++) {
-    teacherData[k] = [];
-  }
-  for (var i = 0; i <= teacherLength; i++) {
-    current = {};
-    currentArray = [];
-    currentArray = Object.values(data[i]);
-    teacherArray.push(currentArray);
-    currentName = currentArray[0];
-    currentJson = [];
-    currentJson.push(currentName);
-    for (var j = 0; j < PERIODS_PER_DAY; j++) {
-      current = {};
-      current.name = currentName;
-      current.location = currentArray[4 * j + 1 + 0];
-      current.uniform = toBool(currentArray[4 * j + 1 + 1]);
-      current.heart = toBool(currentArray[4 * j + 1 + 2]);
-      current.chromebook = toBool(currentArray[4 * j + 1 + 3]);
-      teacherData[j].push(current);
-    }
-  }
-  putData(teacherData);
-  /*}
-  });*/
-}
-
-function putData(data) { //turns arrays into HTML
-  var periodArray = [];
-  var periodNumber = slotList.indexOf(currentPeriod);
-
-
-  var cellArray = document.querySelectorAll('.cell');
-  for (var k = 0; k < cellArray.length; k++) {
-    cellArray[k].querySelector('.icons .uniform').style.display = '';
-    cellArray[k].querySelector('.icons .heart').style.display = '';
-    cellArray[k].querySelector('.icons .laptop').style.display = '';
-    cellArray[k].querySelector('.icons .noshirt').style.display = '';
-    cellArray[k].querySelector('.icons .noshirt1').style.display = '';
-    cellArray[k].querySelector('.icons .noshirt2').style.display = '';
-    cellArray[k].querySelector('.name').innerHTML = '';
-    cellArray[k].querySelector('.location').innerHTML = '';
-  }
-  if (periodNumber !== 10) {
-    for (var i = 0; i < teacherData[periodNumber].length; i++) {
-      if (teacherData[periodNumber][i].location !== "FALSE" && teacherData[periodNumber][i].location !== false && teacherData[periodNumber][i].location !== "0" && teacherData[periodNumber][i].location !== 0) {
-        periodArray.push(teacherData[periodNumber][i]);
-      }
-    }
-    for (var j = 0; j < periodArray.length; j++) {
-      cellArray[j].querySelector('.icons .uniform').style.display = '';
-      cellArray[j].querySelector('.icons .heart').style.display = '';
-      cellArray[j].querySelector('.icons .laptop').style.display = '';
-      cellArray[j].querySelector('.icons .noshirt').style.display = '';
-      cellArray[j].querySelector('.icons .noshirt1').style.display = '';
-      cellArray[j].querySelector('.icons .noshirt2').style.display = '';
-      cellArray[j].querySelector('.name').innerHTML = periodArray[j].name;
-      if (periodArray[j].location == 0) {
-        cellArray[j].querySelector('.location').innerHTML = 'No location specified';
-        cellArray[j].style.display = 'none';
-
-      } else {
-        cellArray[j].style.display = '';
-        cellArray[j].querySelector('.location').innerHTML = periodArray[j].location;
-      }
-      if (!periodArray[j].uniform) {
-        cellArray[j].querySelector('.icons .uniform').style.display = 'inline';
-        cellArray[j].querySelector('.icons .noshirt').style.display = 'none';
-      } else {
-        cellArray[j].querySelector('.icons .noshirt').style.display = 'inline-block';
-        cellArray[j].querySelector('.icons .noshirt1').style.display = 'inline';
-        cellArray[j].querySelector('.icons .noshirt2').style.display = 'inline';
-      }
-      if (periodArray[j].heart) {
-        cellArray[j].querySelector('.icons .heart').style.display = 'inline';
-      }
-      if (periodArray[j].chromebook) {
-        cellArray[j].querySelector('.icons .laptop').style.display = 'inline';
-      }
-    }
-  }
+function dropdownChanged() {
+  document.getElementById('main-body').innerHTML = '<div class="cell"><span class="name">Loading...</span></div>';
+  updateWebsiteHTML();
 }
 
 function search() {
-  var cellArray = document.querySelectorAll('.cell');
-  for (var k = 0; k < cellArray.length; k++) {
-    if (sel('#search').value == '' || cellArray[k].querySelector('.name').innerHTML.toLowerCase().search(sel('#search').value.toLowerCase()) !== -1 || cellArray[k].querySelector('.location').innerHTML.toLowerCase().search(sel('#search').value.toLowerCase()) !== -1) {
-      cellArray[k].style.display = "inline-block";
+  const value = document.getElementById('search').value;
+  const cellArray = document.querySelectorAll('.cell');
+
+  for (let cell of cellArray) {
+    if (value == '' || ['.name', '.location'].map(x => cell.querySelector(x).innerHTML.toLowerCase().includes(value.toLowerCase())).includes(true)) {
+      cell.style.display = "inline-block";
     } else {
-      cellArray[k].style.display = "none";
+      cell.style.display = "none";
     }
   }
 }
 
-function overrideCheck(data) {
-
-  if (data.columns._cpzh4[1] == null || data.columns._cpzh4[1] == "-") {
-    console.log("no override");
-    sel("#main-body").style.display = "block";
-    sel("#overRide").style.display = "none";
-  } else {
-    console.log('there is an override');
-    var currentOverride = data.columns._cpzh4[1];
-    console.log(currentOverride);
-    sel("#main-body").style.display = "none";
-    sel("#overRideP").innerHTML = data.columns._cpzh4[1];
-    sel("#overRide").style.display = "block";
+function init(location) {
+  if (location == 'website') {
+    setInterval(updateWebsiteHTML, DELAY * 1000);
+    updateWebsiteHTML();
+  }
+  if (location == 'tv') {
+    setInterval(updateMonitorHTML, DELAY * 1000);
+    updateMonitorHTML();
   }
 }
-
-
-var sheetURL =
-  "https://spreadsheets.google.com/feeds/list/1T-HUAINDX69-UYUHhOO1jVjZ_Aq0Zqi1z08my0KHzqU/";
-var sheetUrlEnd = "/public/values?alt=json";
-
-var settingsUrl = "https://spreadsheets.google.com/feeds/cells/1T-HUAINDX69-UYUHhOO1jVjZ_Aq0Zqi1z08my0KHzqU/3/public/values?alt=json";
-var settingsQueries = { //NOT USED
-  override: "data.feed.entry[3].content.$t"
-};
-//Reload interval
-
-var interval = setInterval(reload, DELAY * 1000); //reloads the page after a delay
