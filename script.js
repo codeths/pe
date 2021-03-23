@@ -19,7 +19,7 @@ const SHEET_INDEXES = {
 let selectedPeriod = null;
 
 // Periods to be ignored in the dropdown
-const IGNORED_PERIODS = ['AM Support', 'Office Hours / Teacher Collaboration'];
+const IGNORED_PERIODS = ['AM Support', 'Office Hours / Teacher Collaboration', 'Break'];
 
 // Dropdown HTML
 const dropdownWrapper = '<span id="selectperiod"><select class="dropdown" onchange="dropdownChanged();">{OPTIONS}</select></span>';
