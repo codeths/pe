@@ -19,7 +19,7 @@ const SHEET_INDEXES = {
 let selectedPeriod = null;
 
 // Periods to be ignored in the dropdown
-const IGNORED_PERIODS = ['AM Support', 'Office Hours / Teacher Collaboration'];
+const IGNORED_PERIODS = ['AM Support', 'Office Hours / Teacher Collaboration', 'Break'];
 
 // Dropdown HTML
 const dropdownWrapper = '<span id="selectperiod"><select class="dropdown" onchange="dropdownChanged();">{OPTIONS}</select></span>';
@@ -62,7 +62,7 @@ async function fetchData(period, day) {
   // Use current period if none specified
   if (!period) period = ethsbellJson.theSlot;
   if (period == 'monitor') {
-    if (ethsbellJson.timeLeftInPeriod <= 5 && ethsbellJson.theNextSlot) {
+    if (ethsbellJson.theNextSlot && !IGNORED_PERIODS.includes(ethsbellJson.theNextSlot) && ethsbellJson.timeLeftInPeriod > 0 && (ethsbellJson.timeLeftInPeriod <= 5 || (ethsbellJson.timeLeftInPeriod <= 15 && IGNORED_PERIODS.includes(ethsbellJson.theSlot)))) {
       period = ethsbellJson.theNextSlot;
     } else {
       period = ethsbellJson.theSlot;
@@ -127,11 +127,11 @@ const ICON_LAPTOP = '<i class="fas fa-laptop laptop"></i>'
 const ICON_ = ''
 
 // Generate cell HTML for each period
-function getCellHTML(data) {
+function getCellHTML(data, filter) {
   const htmlArray = data.data.map(x => {
 
     // Base
-    let html = `<div class="cell">
+    let html = `<div class="cell" {DISPLAY}>
       <span class="name">{NAME}</span>
       <span class="location">{LOCATION}</span>
       <span class="icons">
@@ -149,6 +149,8 @@ function getCellHTML(data) {
     html = html.replace('{HEART}', x.data.heart ? ICON_HEART : ''); // Add heartrate icon
     html = html.replace('{LAPTOP}', x.data.laptop ? ICON_LAPTOP : ''); // Add laptop icon
 
+    if (filter) filter = filter.toLowerCase().replace(/ /g, '');
+    html = html.replace('{DISPLAY}', filter && filter !== '' && ![x.name, x.data.location].map(x => x.toLowerCase().replace(/ /g, '').includes(filter)).includes(true) ? 'style="display: none;"' : '')
     return html;
   })
 
@@ -179,17 +181,19 @@ async function updateMonitorHTML() {
 async function updateWebsiteHTML() {
   const dropdown = document.querySelector('#selectperiod select');
 
+  const search = document.getElementById('search').value;
+
   selectedPeriod = dropdown && dropdown.value && dropdown.value !== '---' ? dropdown.value : null;
 
   const data = await fetchData(selectedPeriod); // Get data
-  const html = getCellHTML(data); // Get HTML from that data
+  const html = getCellHTML(data, search); // Get HTML from that data
   document.getElementById('main-body').innerHTML = html.join('\n'); // Add HTML to the body
 
   document.getElementById('date').innerHTML = leftText().date; // Set the date
   document.getElementById('time').innerHTML = leftText().time; // Set the time
 
   // Set period end time text if there is a period
-  if (data.ethsbell.current && data.ethsbell.remaining) document.getElementById('timeleft').innerHTML = `${data.ethsbell.showing} ends in ${data.ethsbell.remaining} minute${data.ethsbell.remaining == 1 ? '' : 's'}.`;
+  if (data.ethsbell.current && data.ethsbell.remaining) document.getElementById('timeleft').innerHTML = `${data.ethsbell.current} ends in ${data.ethsbell.remaining} minute${data.ethsbell.remaining == 1 ? '' : 's'}.`;
 
   // Remove loading text and add in dropdown
   if (document.getElementById('showing').innerHTML == 'Loading data from ETHSBell...') {
@@ -218,7 +222,7 @@ function search() {
   const cellArray = document.querySelectorAll('.cell');
 
   for (let cell of cellArray) {
-    if (value == '' || ['.name', '.location'].map(x => cell.querySelector(x).innerHTML.toLowerCase().includes(value.toLowerCase())).includes(true)) {
+    if (value == '' || ['.name', '.location'].map(x => cell.querySelector(x).innerHTML.toLowerCase().replace(/ /g, '').includes(value.toLowerCase().replace(/ /g, ''))).includes(true)) {
       cell.style.display = "inline-block";
     } else {
       cell.style.display = "none";
