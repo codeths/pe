@@ -19,20 +19,11 @@ p {
     height: 100vh;
 }
 
-#left {
-    width: 20vw;
-}
-
-#main {
-    width: 80vw;
-    position: relative;
-}
-
 #datetime {
     background-color: #C34614;
     text-align: center;
     color: white;
-    font-size: 2.5vw;
+    font-size: max(20px, 2.5vw);
     line-height: 1;
 }
 
@@ -40,7 +31,27 @@ p {
     background-color: #1A2741;
     text-align: center;
     color: white;
-    font-size: 1.5vw;
+    font-size: max(20px, 1.25vw);
+}
+
+#left {
+    height: fit-content;
+}
+
+#main {
+    position: static;
+}
+
+@media (min-width: 768px) {
+    #left, #main {
+        height: 100%;
+    }
+    #datetime {
+        height: 25vh;
+    }
+    #ethsbell {
+        height: 75vh;
+    }
 }
 
 #main-body {
@@ -53,7 +64,11 @@ p {
     height: 10vh;
     position: absolute;
     bottom: 0;
-    font-size: 1.5vw;
+    font-size: max(20px, 1.5vw);
+}
+
+.filtered {
+    display: none !important;
 }
 
 .class {
@@ -61,12 +76,12 @@ p {
 }
 
 .class .name {
-    font-size: 2.5vw;
+    font-size: max(30px, 2.5vw);
     font-weight: bold;
 }
 
 .class .location {
-    font-size: 1.5vw;
+    font-size: max(20px, 1.5vw);
 }
 
 .uniform {
