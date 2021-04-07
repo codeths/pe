@@ -22,7 +22,7 @@ let selectedPeriod = null;
 const IGNORED_PERIODS = ['AM Support', 'Office Hours / Teacher Collaboration', 'Break'];
 
 // Dropdown HTML
-const dropdownWrapper = '<span id="selectperiod"><select class="dropdown" onchange="dropdownChanged();">{OPTIONS}</select></span>';
+const dropdownWrapper = '<select class="dropdown" onchange="dropdownChanged(event)">{OPTIONS}</select>';
 const dropdownOptions = '<option value="{VALUE}" {DISABLED}>{NAME}</option>';
 // Add advancedFormat plugin to day.js
 dayjs.extend(window.dayjs_plugin_advancedFormat)
@@ -130,21 +130,10 @@ const ICON_HEART = '<i class="fas fa-heartbeat heart fa-2x"></i>'
 const ICON_LAPTOP = '<i class="fas fa-laptop laptop fa-2x"></i>'
 const ICON_ = ''
 
-const HTML_MONITOR = `<div class="class col-3 py-2 d-flex flex-column justify-content-center" {DISPLAY}>
+const CLASS_HTML = `<div class="class col-6 col-md-6 col-lg-4 col-xl-3 p-2 d-flex flex-column justify-content-center" {DISPLAY}>
 <span class="name d-block">{NAME}</span>
 <span class="location d-block">{LOCATION}</span>
 <span class="icons d-block">
-  {NOUNIFORM}
-  {UNIFORM}
-  {HEART}
-  {LAPTOP}
-</span>
-</div>`
-
-const HTML_WEBSITE = `<div class="cell" {DISPLAY}>
-<span class="name">{NAME}</span>
-<span class="location">{LOCATION}</span>
-<span class="icons">
   {NOUNIFORM}
   {UNIFORM}
   {HEART}
@@ -176,7 +165,7 @@ function getCellHTML(template, data, filter) {
 
 async function updateMonitorHTML() {
   const data = await fetchData('monitor'); // Get data
-  const html = getCellHTML(HTML_MONITOR, data); // Get HTML from that data
+  const html = getCellHTML(CLASS_HTML, data); // Get HTML from that data
   document.getElementById('main-body').innerHTML = html.join('\n'); // Add HTML to the body
 
   document.getElementById('date').innerHTML = leftText().date; // Set the date
@@ -203,7 +192,7 @@ async function updateWebsiteHTML() {
   selectedPeriod = dropdown && dropdown.value && dropdown.value !== '---' ? dropdown.value : null;
 
   const data = await fetchData(selectedPeriod); // Get data
-  const html = getCellHTML(HTML_WEBSITE, data, search); // Get HTML from that data
+  const html = getCellHTML(CLASS_HTML, data, search); // Get HTML from that data
   document.getElementById('main-body').innerHTML = html.join('\n'); // Add HTML to the body
 
   document.getElementById('date').innerHTML = leftText().date; // Set the date
@@ -222,27 +211,29 @@ async function updateWebsiteHTML() {
     ));
 
     // Remove text and add dropdown 
-    document.getElementById('showing').innerHTML = 'Showing locations for ' + dropdown;
+    document.getElementById('selectperiod').innerHTML = dropdown;
 
     // Select current period
     document.querySelector('#selectperiod select').selectedIndex = data.ethsbell.periods.indexOf(data.ethsbell.showing) + 1;
   }
+  document.getElementById('showing').innerHTML = 'Showing locations for ';
 }
 
 function dropdownChanged() {
-  document.getElementById('main-body').innerHTML = '<div class="cell"><span class="name">Loading...</span></div>';
+  document.getElementById('showing').innerHTML = 'Loading locations for ';
   updateWebsiteHTML();
 }
 
 function search() {
   const value = document.getElementById('search').value;
-  const cellArray = document.querySelectorAll('.cell');
+  const cellArray = document.querySelectorAll('.class');
 
   for (let cell of cellArray) {
+    console.log(cell);
     if (value == '' || ['.name', '.location'].map(x => cell.querySelector(x).innerHTML.toLowerCase().replace(/ /g, '').includes(value.toLowerCase().replace(/ /g, ''))).includes(true)) {
-      cell.style.display = "inline-block";
+      cell.classList.remove('filtered');
     } else {
-      cell.style.display = "none";
+      cell.classList.add('filtered');
     }
   }
 }
