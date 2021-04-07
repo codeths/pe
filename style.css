@@ -1,473 +1,86 @@
-/* http://meyerweb.com/eric/tools/css/reset/
-   v2.0 | 20110126
-   License: none (public domain)
-*/
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: top;
-}
-
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-  display: block;
-}
-
-body {
-  line-height: 1;
-  overflow: hidden;
-  background-color: #f6f6f6;
-}
-
-ol, ul {
-  list-style: none;
-}
-
-blockquote, q {
-  quotes: none;
-}
-
-blockquote:before, blockquote:after,
-q:before, q:after {
-  content: '';
-  content: none;
-}
-
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-/**/
-span {
-  font-size: 16px;
-}
-
-.col {
-  width: 25vw;
-  height: 90vh;
-  display: inline-block;
-  font-size: 0;
-}
-
-.cell {
-  padding-top: 2vh;
-  height: 25vh;
-  background-color: #f6f6f6;
-  padding-left: 2vh;
-  padding-right: 2vh;
-  width: 175px;
-  display: inline-block;
-  margin-left: 0;
-  margin-right: 0;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-#top {
-  width: 100vw;
-  height: 20vh;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-#left {
-  height: 100vh;
-  max-height: 100vh;
-  display: none;
-}
-
-#footer p {
-  text-align: center;
-  width: 100vw;
-  display: block;
-  font-size: 30px;
-}
-
-#footer table tbody tr td {
-  vertical-align: middle;
-  height: 10vh;
-}
-
-#footer {
-  width: 100vw;
-  height: 10vh;
-  position: absolute;
-  top: 100%;
-  left: 0vw;
-  -webkit-transform: translateY(-100%);
-  transform: translateY(-100%);
-  font-size: 0;
-  background-color: #D8D8D8
-}
-
-#main {
-  background-color: #f6f6f6;
-  display: inline-block;
-  width: 100vw;
-  height: 70vh;
-  font-size: 0;
-  background-color: #f6f6f6;
-  position: static;
-  margin-top: 20vh;
-  overflow-y: scroll;
-}
-
-#wrapper {
-  width: 100vw;
-  height: 100vh;
-  font-size: 0;
-}
-
-#date, #time {
-  font-size: 25px;
-}
-
-#date {
-  padding-top: 5px;
-}
-
-#datetime {
-  background-color: #C34614;
-  text-align: center;
-  width: 100vw;
-  height: 20vh;
-}
-
-#datetime table tbody tr td {
-  vertical-align: middle;
-  width: 100vw;
-}
-
-#ethsbell {
-  height: 15vh;
-  background-color: #1A2741;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  display: none;
-}
-
-#ethsbell table tbody tr td {
-  vertical-align: middle;
-  height: 75vh;
-  width: 100vw;
-}
-
-#wildkitdiv, #date, #time, #showing, #timeleft, #search {
-  margin: 0 10px;
-  display: block;
-}
-
-span, p {
-  font-family: 'Roboto', sans-serif;
-}
-
-#left span {
-  color: white;
-}
-
-#time {
-  font-weight: bold;
-}
-
-#ethsbell span:not(.arrow) {
-  font-size: 20px;
-  margin: 5px;
-}
-
-.spacer {
-  padding-bottom: 10px;
-  display: block;
-}
-
-#ethsbell {
-  text-align: center;
-}
-
-#wildkitdiv {
-  display: none;
-}
-
-#wildkit {
-  width: 15vw;
-  padding-bottom: 10px;
-  margin: 0 auto;
-}
-
-#showing {
-  vertical-align: middle;
-  font-size: 20px;
-  line-height: 30px;
-}
-
-.divider {
-  width: 20px;
-  position: relative;
-  left: 50%;
-  height: 0px;
-  -webkit-transform: translateX(-50%);
-  transform: translateX(-50%);
-  border-bottom: 2px solid #cdcdcd;
-  margin: 5px 0;
-}
-
-span.name {
-  font-size: 25px;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-span.location {
-  font-size: 20px;
-  margin-bottom: 5px;
-  max-width: 100%;
-  word-wrap: normal;
-  max-height: 10vh;
-  min-height: 5vh;
-  overflow: hidden;
-}
-
-span.icons, span span.icons, .fa-stack-2x, .fa-stack-1x {
-  font-size: 25px;
-}
-
-.name, .locations, .icons {
-  display: block;
-  text-align: center;
-}
-
-#footer .fas {
-  display: inline;
-}
-
-.uniform {
-  color: #1A2741;
-}
-
-.heart {
-  color: #C34614;
-}
-
-.laptop {
-  color: #30B2C9;
-}
-
-#main {
-  text-align: center;
-}
-
-#message {
-  font-size: 50px;
-  line-height: 90vh;
-  vertical-align: middle;
-  text-align: center;
-  font-family: 'Roboto', sans-serif;
-}
-
-#selectperiod {
-  display: inline-block;
-  border: 1px solid white;
-  border-radius: 5px;
-  background-color: rgba(0, 0, 0, 0.25);
-  font-size: 15px;
-  vertical-align: middle;
-}
-
-.dropdown {
-  padding: 2.5px;
-  background-color: transparent;
-  cursor: pointer;
-  border: 0;
-  font-size: 15px;
-}
-
-.dropdown:focus {
-  outline: 0;
-}
-
-#selectperiod option {
-  font-size: 15px;
-}
-
-.down-arrow {
-  border-color: white transparent;
-  border-style: solid;
-  border-width: 5px 5px 0 5px;
-  height: 0px;
-  width: 0px;
-  font-size: 0px;
-  vertical-align: middle;
-}
-
-.up-arrow {
-  border-color: white transparent;
-  border-style: solid;
-  border-width: 0px 5px 5px 5px;
-  height: 0px;
-  width: 0px;
-  font-size: 0px;
-  vertical-align: middle;
-}
-
-#search {
-  display: inline-block;
-  background-color: white;
-  border: 0;
-  outline: 0;
-  color: black;
-  font-family: 'Roboto', sans-serif;
-  font-size: 12px;
-  width: 15vw;
-  height: 1.25vh;
-  padding: 10px;
-  border-radius: 10px;
-}
-
-#search::-webkit-input-placeholder {
-  color: black;
-  font-family: 'Roboto', sans-serif;
-}
-
-#search::-ms-input-placeholder {
-  color: black;
-  font-family: 'Roboto', sans-serif;
-}
-
-#search::placeholder {
-  color: black;
-  font-family: 'Roboto', sans-serif;
-}
-
-@media only screen and (min-width : 768px) {
-  #datetime table tbody tr td {
-    width: 20vw;
-    height: 100vh;
-  }
-
-  #datetime {
-    width: 20vw;
-    height: 100vh;
-  }
-
-  #date {
-    padding-top: 0px;
-  }
-
-  #footer {
-    width: 80vw;
-    left: 20vw;
-    right: 0;
-  }
-
-  #footer table tbody tr td p {
-    width: 80vw;
-  }
-
-  #main {
-    width: 80vw;
-    height: 90vh;
-    left: 20vw;
-    right: 0;
-    top: 0;
-    position: relative;
-    margin-top: 0;
-  }
-
-  .cell {
-    margin-top: 3vh;
-    width: 25%;
-    /*display: none;*/
-  }
-
-  body {
-    overflow: hidden;
-    width: 100vw;
-    height: 100vh;
-  }
-
-  img.icons {
-    width: auto;
-    height: 25px;
-    display: none;
-  }
-
-  span.location {
-    font-size: 20px;
-  }
-
-  span.name {
-    font-size: 25px;
-  }
-
-  span.icons, span span.icons, .fa-stack-2x, .fa-stack-1x {
-    font-size: 30px;
-  }
-
-  #wildkitdiv {
-    display: block;
-  }
-
-  #selectperiod {
-    width: 15vw;
-  }
-
-  #timeleft {
-    padding-top: 10px;
-  }
-
-  #search {
-    margin-top: 1vh;
-  }
-
-  span.icons, span span.icons, .fa-stack-2x, .fa-stack-1x {
-    font-size: 25px;
-  }
-}
-
-#overRide {
-  font-family: 'Roboto', sans-serif;
-}
-
-span.icons, span span.icons, span.icons i, .fa-stack-2x, .fa-stack-1x {
-  font-size: 25px;
-  vertical-align: middle;
-}
-
-img.icons {
-  width: auto;
-  height: 25px;
-  display: none;
+span,
+p {
+    font-family: 'Roboto', sans-serif;
 }
 
 .fa-stack {
-  font-size:25px;
-  height:25px;
-  line-height:25px;
-  width: 31.25px;
+    vertical-align: top;
 }
 
-.noshirt2 {
-  font-size:25px;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  transform: translateY(-50%);
-  vertical-align: middle
+.divider {
+    background-color: #ffffff;
+    width: 50px;
+    height: 2px;
+    display: block;
+    margin: 5px auto;
+}
+
+.full-height {
+    height: 100vh;
+}
+
+#left {
+    width: 20vw;
+}
+
+#main {
+    width: 80vw;
+    position: relative;
+}
+
+#datetime {
+    background-color: #C34614;
+    text-align: center;
+    color: white;
+    font-size: 2.5vw;
+    line-height: 1;
+}
+
+#ethsbell {
+    background-color: #1A2741;
+    text-align: center;
+    color: white;
+    font-size: 1.5vw;
+}
+
+#main-body {
+    max-height: 80vh;
+    overflow: hidden;
+}
+
+#footer {
+    background-color: #D8D8D8;
+    height: 10vh;
+    position: absolute;
+    bottom: 0;
+    font-size: 1.5vw;
+}
+
+.class {
+    height: 20vh;
+}
+
+.class .name {
+    font-size: 2.5vw;
+    font-weight: bold;
+}
+
+.class .location {
+    font-size: 1.5vw;
+}
+
+.uniform {
+    color: #1A2741;
+}
+
+.noshirt {
+    color: #ff0000;
+}
+
+.heart {
+    color: #C34614;
+}
+
+.laptop {
+    color: #30B2C9;
 }
