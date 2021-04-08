@@ -22,7 +22,7 @@ let selectedPeriod = null;
 const IGNORED_PERIODS = ['AM Support', 'Office Hours / Teacher Collaboration', 'Break'];
 
 // Dropdown HTML
-const dropdownWrapper = '<span id="selectperiod"><select class="dropdown" onchange="dropdownChanged();">{OPTIONS}</select></span>';
+const dropdownWrapper = '<select class="dropdown" onchange="dropdownChanged(event)">{OPTIONS}</select>';
 const dropdownOptions = '<option value="{VALUE}" {DISABLED}>{NAME}</option>';
 // Add advancedFormat plugin to day.js
 dayjs.extend(window.dayjs_plugin_advancedFormat)
@@ -61,18 +61,23 @@ async function fetchData(period, day) {
 
   // Use current period if none specified
   if (!period) period = ethsbellJson.theSlot;
+
   if (period == 'monitor') {
-    if (ethsbellJson.theNextSlot && !IGNORED_PERIODS.includes(ethsbellJson.theNextSlot) && ethsbellJson.timeLeftInPeriod > 0 && (ethsbellJson.timeLeftInPeriod <= 5 || (ethsbellJson.timeLeftInPeriod <= 15 && IGNORED_PERIODS.includes(ethsbellJson.theSlot)))) {
+    if (ethsbellJson.theNextSlot && !IGNORED_PERIODS.includes(ethsbellJson.theNextSlot) && ethsbellJson.timeLeftInPeriod >= 0 && (ethsbellJson.timeLeftInPeriod <= 5 || (ethsbellJson.timeLeftInPeriod <= 15 && IGNORED_PERIODS.includes(ethsbellJson.theSlot)))) {
       period = ethsbellJson.theNextSlot;
     } else {
       period = ethsbellJson.theSlot;
     }
   }
 
+  // No period should be shown
+  if (!period || IGNORED_PERIODS.includes(period) || (period == ethsbellJson.theSlot && ethsbellJson.timeLeftInPeriod < 0)) period = null;
+
   // ETHSBell data to return
+
   const ethsbell = {
     periods,
-    current: ethsbellJson.theSlot,
+    current: ethsbellJson.theSlot && ethsbellJson.timeLeftInPeriod >= 0 ? ethsbellJson.theSlot : null,
     showing: period,
     remaining: ethsbellJson.timeLeftInPeriod
   };
@@ -120,34 +125,34 @@ async function fetchData(period, day) {
 }
 
 // HTML for each icon
-const ICON_NOUNIFORM = '<span class="fa-stack noshirt"><i class="fas fa-tshirt fa-stack-1x noshirt1"></i><i class="fas fa-times fa-stack-1x noshirt2" style="color:red"></i></span>';
+const ICON_NOUNIFORM = '<i class="fas position-relative fa-tshirt nouniform"><i class="fas position-absolute fa-times nouniform-x"></i></i>';
 const ICON_UNIFORM = '<i class="fas fa-tshirt uniform"></i>'
 const ICON_HEART = '<i class="fas fa-heartbeat heart"></i>'
 const ICON_LAPTOP = '<i class="fas fa-laptop laptop"></i>'
 const ICON_ = ''
 
-// Generate cell HTML for each period
-function getCellHTML(data, filter) {
-  const htmlArray = data.data.map(x => {
+const CLASS_HTML = `<div class="class col-6 col-md-6 col-lg-4 col-xl-3 p-2 d-flex flex-column justify-content-center" {DISPLAY}>
+<span class="name d-block">{NAME}</span>
+<span class="location d-block">{LOCATION}</span>
+<span class="icons d-block">
+  {NOUNIFORM}
+  {UNIFORM}
+  {HEART}
+  {LAPTOP}
+</span>
+</div>`;
 
-    // Base
-    let html = `<div class="cell" {DISPLAY}>
-      <span class="name">{NAME}</span>
-      <span class="location">{LOCATION}</span>
-      <span class="icons">
-        {NOUNIFORM}
-        {UNIFORM}
-        {HEART}
-        {LAPTOP}
-      </span>
-      </div>`;
+// Generate cell HTML for each period
+function getCellHTML(template, data, filter) {
+  const htmlArray = data.data.map(x => {
+    let html = template;
 
     html = html.replace('{NAME}', x.name); // Add name
     html = html.replace('{LOCATION}', x.data.location.toString()); // Add location
     html = html.replace('{NOUNIFORM}', x.data.nodress ? ICON_NOUNIFORM : ''); // Add no uniform icon
     html = html.replace('{UNIFORM}', !x.data.nodress ? ICON_UNIFORM : ''); // Add uniform icon
     html = html.replace('{HEART}', x.data.heart ? ICON_HEART : ''); // Add heartrate icon
-    html = html.replace('{LAPTOP}', x.data.laptop ? ICON_LAPTOP : ''); // Add laptop icon
+    html = html.replace('{LAPTOP}', x.data.chromebook ? ICON_LAPTOP : ''); // Add laptop icon
 
     if (filter) filter = filter.toLowerCase().replace(/ /g, '');
     html = html.replace('{DISPLAY}', filter && filter !== '' && ![x.name, x.data.location].map(x => x.toLowerCase().replace(/ /g, '').includes(filter)).includes(true) ? 'style="display: none;"' : '')
@@ -161,16 +166,18 @@ function getCellHTML(data, filter) {
 
 async function updateMonitorHTML() {
   const data = await fetchData('monitor'); // Get data
-  const html = getCellHTML(data); // Get HTML from that data
-  document.getElementById('main-body').innerHTML = html.join('\n'); // Add HTML to the body
+  const html = getCellHTML(CLASS_HTML, data); // Get HTML from that data
+  document.getElementById('main-body-monitor').innerHTML = html.join('\n'); // Add HTML to the body
 
   document.getElementById('date').innerHTML = leftText().date; // Set the date
   document.getElementById('time').innerHTML = leftText().time; // Set the time
 
-  console.log(data.ethsbell);
-  if (data.ethsbell.current && data.ethsbell.remaining) {
-    document.getElementById('showing').innerHTML = 'Showing locations for ' + data.ethsbell.showing;
-    document.getElementById('timeleft').innerHTML = `${data.ethsbell.current} ends in ${data.ethsbell.remaining} minute${data.ethsbell.remaining == 1 ? '' : 's'}.`;
+  if (data.ethsbell.current && data.ethsbell.showing && data.ethsbell.remaining !== null) {
+    document.getElementById('showing').innerHTML = 'Showing locations for<br>' + data.ethsbell.showing;
+    document.getElementById('timeleft').innerHTML = `${data.ethsbell.current} ends in<br>${data.ethsbell.remaining} minute${data.ethsbell.remaining == 1 ? '' : 's'}.`;
+  } else if (data.ethsbell.current && data.ethsbell.remaining !== null) {
+    document.getElementById('showing').innerHTML = '';
+    document.getElementById('timeleft').innerHTML = `${data.ethsbell.current} ends in<br>${data.ethsbell.remaining} minute${data.ethsbell.remaining == 1 ? '' : 's'}.`;
   } else {
     document.getElementById('showing').innerHTML = '';
     document.getElementById('timeleft').innerHTML = '';
@@ -186,7 +193,7 @@ async function updateWebsiteHTML() {
   selectedPeriod = dropdown && dropdown.value && dropdown.value !== '---' ? dropdown.value : null;
 
   const data = await fetchData(selectedPeriod); // Get data
-  const html = getCellHTML(data, search); // Get HTML from that data
+  const html = getCellHTML(CLASS_HTML, data, search); // Get HTML from that data
   document.getElementById('main-body').innerHTML = html.join('\n'); // Add HTML to the body
 
   document.getElementById('date').innerHTML = leftText().date; // Set the date
@@ -205,27 +212,28 @@ async function updateWebsiteHTML() {
     ));
 
     // Remove text and add dropdown 
-    document.getElementById('showing').innerHTML = 'Showing locations for ' + dropdown;
+    document.getElementById('selectperiod').innerHTML = dropdown;
 
     // Select current period
     document.querySelector('#selectperiod select').selectedIndex = data.ethsbell.periods.indexOf(data.ethsbell.showing) + 1;
   }
+  document.getElementById('showing').innerHTML = 'Showing locations for ';
 }
 
 function dropdownChanged() {
-  document.getElementById('main-body').innerHTML = '<div class="cell"><span class="name">Loading...</span></div>';
+  document.getElementById('showing').innerHTML = 'Loading locations for ';
   updateWebsiteHTML();
 }
 
 function search() {
   const value = document.getElementById('search').value;
-  const cellArray = document.querySelectorAll('.cell');
+  const cellArray = document.querySelectorAll('.class');
 
   for (let cell of cellArray) {
     if (value == '' || ['.name', '.location'].map(x => cell.querySelector(x).innerHTML.toLowerCase().replace(/ /g, '').includes(value.toLowerCase().replace(/ /g, ''))).includes(true)) {
-      cell.style.display = "inline-block";
+      cell.classList.remove('filtered');
     } else {
-      cell.style.display = "none";
+      cell.classList.add('filtered');
     }
   }
 }
