@@ -40,11 +40,13 @@ p {
 
 #main {
     position: static;
+    padding-bottom: 10vh;
 }
 
 @media (min-width: 768px) {
     #left, #main {
         height: 100%;
+        padding-bottom: 0px;
     }
     #datetime {
         height: 25vh;
@@ -62,7 +64,7 @@ p {
 #footer {
     background-color: #D8D8D8;
     height: 10vh;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     font-size: max(20px, 1.5vw);
 }
