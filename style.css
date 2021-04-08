@@ -9,7 +9,7 @@ p {
 
 .divider {
     background-color: #ffffff;
-    width: 50px;
+    width: 3vw;
     height: 2px;
     display: block;
     margin: 5px auto;
@@ -23,7 +23,7 @@ p {
     background-color: #C34614;
     text-align: center;
     color: white;
-    font-size: max(20px, 2.5vw);
+    font-size: max(25px, 2.5vw);
     line-height: 1;
 }
 
@@ -44,36 +44,41 @@ p {
 }
 
 @media (min-width: 768px) {
-    #left, #main {
+    #left,
+    #main {
         height: 100%;
         padding-bottom: 0px;
     }
+
     #datetime {
         height: 25vh;
     }
+
     #ethsbell {
         height: 75vh;
     }
 }
 
-#main-body {
+#main-body, #main-body-monitor {
     max-height: 80vh;
     overflow: hidden;
 }
 
-#footer, #footer-monitor {
+#footer,
+#footer-monitor {
     background-color: #D8D8D8;
     position: fixed;
     bottom: 0;
-    font-size: max(20px, 2vw);
 }
 
 #footer {
     height: 10vh;
+    font-size: min(25px, max(15px, 2vw));
 }
 
 #footer-monitor {
     height: 15vh;
+    font-size: 1.75vw;
 }
 
 .filtered {
@@ -84,21 +89,37 @@ p {
     height: 20vh;
 }
 
-.class .name {
-    font-size: max(30px, 2.5vw);
+#main-body .class .name {
+    font-size: 25px;
     font-weight: bold;
 }
 
-.class .location {
-    font-size: max(20px, 1.5vw);
+#main-body .class .location {
+    font-size: 20px;
 }
 
-.icons {
-    font-size: max(20px, 2.75vw);
+#main-body .icons {
+    font-size: 35px;
 }
 
-.footer-icons .icon {
-    font-size: max(20px, 2vw);
+#main-body-monitor .class .name {
+    font-size: 2.5vw;
+    font-weight: bold;
+}
+
+#main-body-monitor .class .location {
+    font-size: 1.5vw;
+}
+
+#main-body-monitor .icons {
+    font-size: 2.5vw;
+}
+#footer .footer-icons .icon {
+    font-size: min(25px, max(15px, 2vw));
+}
+
+#footer-monitor .footer-icons .icon {
+    font-size: 1.75vw;
 }
 
 .nouniform {
@@ -123,4 +144,10 @@ p {
 
 .laptop {
     color: #30B2C9;
+}
+
+.legend {
+    display: inline-block;
+    break-after: column;
+    padding: 0 5px;
 }
