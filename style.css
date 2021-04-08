@@ -61,12 +61,19 @@ p {
     overflow: hidden;
 }
 
-#footer {
+#footer, #footer-monitor {
     background-color: #D8D8D8;
-    height: 10vh;
     position: fixed;
     bottom: 0;
-    font-size: max(20px, 1.5vw);
+    font-size: max(20px, 2vw);
+}
+
+#footer {
+    height: 10vh;
+}
+
+#footer-monitor {
+    height: 15vh;
 }
 
 .filtered {
@@ -86,12 +93,28 @@ p {
     font-size: max(20px, 1.5vw);
 }
 
-.uniform {
-    color: #1A2741;
+.icons {
+    font-size: max(20px, 2.75vw);
 }
 
-.noshirt {
+.footer-icons .icon {
+    font-size: max(20px, 2vw);
+}
+
+.nouniform {
+    color: #25385e;
+}
+
+.nouniform-x {
     color: #ff0000;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.uniform {
+    color: #1A2741;
 }
 
 .heart {

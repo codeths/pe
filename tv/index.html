@@ -12,8 +12,8 @@
     <!-- Other CSS n' stuff -->
     <link rel="shortcut icon" type="image/png" href="../wildkit.ico" />
     <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono|Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        crossorigin="anonymous" />
     <link rel="stylesheet" href="../style.css">
     <title>ETHS PE Board</title>
 </head>
@@ -33,15 +33,20 @@
                     <span class="d-block py-1" id="timeleft"></span>
                 </div>
             </div>
-            <div class="col-10 p-0 h-100" id="main">
+            <div class="col-10 p-0 h-100" id="main-monitor">
                 <div class="row text-center m-0" id="main-body"></div>
-                <div id="footer" class="text-center col-10 d-flex flex-column justify-content-center">
+                <div id="footer-monitor" class="text-center col-10 d-flex flex-column justify-content-center">
                     <p class="m-0">
                         See the full schedule at <u>https://pe.ethsbell.xyz</u>
                         <br>
-                        <i class="fas fa-tshirt uniform"></i> Uniform |
-                        <i class="fas fa-heartbeat heart"></i> HR monitor |
-                        <i class="fas fa-laptop laptop"></i> Chromebook
+                        <span class="footer-icons d-block">
+                            <i class="icon fas fa-tshirt uniform"></i> Uniform |
+                            <i class="icon fas position-relative fa-tshirt nouniform">
+                                <i class="fas position-absolute fa-times nouniform-x"></i>
+                            </i> No Uniform |
+                            <i class="icon fas fa-heartbeat heart"></i> HR monitor |
+                            <i class="icon fas fa-laptop laptop"></i> Chromebook
+                        </span>
                     </p>
                 </div>
             </div>

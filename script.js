@@ -124,10 +124,10 @@ async function fetchData(period, day) {
 }
 
 // HTML for each icon
-const ICON_NOUNIFORM = '<span class="fa-stack"><i class="fas fa-tshirt fa-stack-2x uniform"></i><i class="fas fa-times fa-stack-2x noshirt"></i></span>';
-const ICON_UNIFORM = '<i class="fas fa-tshirt uniform fa-2x"></i>'
-const ICON_HEART = '<i class="fas fa-heartbeat heart fa-2x"></i>'
-const ICON_LAPTOP = '<i class="fas fa-laptop laptop fa-2x"></i>'
+const ICON_NOUNIFORM = '<i class="fas position-relative fa-tshirt nouniform"><i class="fas position-absolute fa-times nouniform-x"></i></i>';
+const ICON_UNIFORM = '<i class="fas fa-tshirt uniform"></i>'
+const ICON_HEART = '<i class="fas fa-heartbeat heart"></i>'
+const ICON_LAPTOP = '<i class="fas fa-laptop laptop"></i>'
 const ICON_ = ''
 
 const CLASS_HTML = `<div class="class col-6 col-md-6 col-lg-4 col-xl-3 p-2 d-flex flex-column justify-content-center" {DISPLAY}>
