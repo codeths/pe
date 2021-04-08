@@ -61,6 +61,7 @@ async function fetchData(period, day) {
 
   // Use current period if none specified
   if (!period) period = ethsbellJson.theSlot;
+
   if (period == 'monitor') {
     if (ethsbellJson.theNextSlot && !IGNORED_PERIODS.includes(ethsbellJson.theNextSlot) && ethsbellJson.timeLeftInPeriod >= 0 && (ethsbellJson.timeLeftInPeriod <= 5 || (ethsbellJson.timeLeftInPeriod <= 15 && IGNORED_PERIODS.includes(ethsbellJson.theSlot)))) {
       period = ethsbellJson.theNextSlot;
@@ -70,7 +71,7 @@ async function fetchData(period, day) {
   }
 
   // No period should be shown
-  if (!period || IGNORED_PERIODS.includes(period) || ethsbellJson.timeLeftInPeriod < 0) period = null;
+  if (!period || IGNORED_PERIODS.includes(period) || (period == ethsbellJson.theSlot && ethsbellJson.timeLeftInPeriod < 0)) period = null;
 
   // ETHSBell data to return
 
@@ -166,7 +167,7 @@ function getCellHTML(template, data, filter) {
 async function updateMonitorHTML() {
   const data = await fetchData('monitor'); // Get data
   const html = getCellHTML(CLASS_HTML, data); // Get HTML from that data
-  document.getElementById('main-body').innerHTML = html.join('\n'); // Add HTML to the body
+  document.getElementById('main-body-monitor').innerHTML = html.join('\n'); // Add HTML to the body
 
   document.getElementById('date').innerHTML = leftText().date; // Set the date
   document.getElementById('time').innerHTML = leftText().time; // Set the time
@@ -229,7 +230,6 @@ function search() {
   const cellArray = document.querySelectorAll('.class');
 
   for (let cell of cellArray) {
-    console.log(cell);
     if (value == '' || ['.name', '.location'].map(x => cell.querySelector(x).innerHTML.toLowerCase().replace(/ /g, '').includes(value.toLowerCase().replace(/ /g, ''))).includes(true)) {
       cell.classList.remove('filtered');
     } else {
