@@ -10,7 +10,7 @@ let selectedPeriod = null;
 
 // Dropdown HTML
 const dropdownWrapper = '<select class="dropdown" onchange="dropdownChanged(event)">{OPTIONS}</select>';
-const dropdownOptions = '<option value="{VALUE}" {DISABLED}>{NAME}</option>';
+const dropdownOptions = '<option value="{VALUE}">{NAME}</option>';
 // Add advancedFormat plugin to day.js
 dayjs.extend(window.dayjs_plugin_advancedFormat)
 
@@ -277,7 +277,6 @@ async function updateWebsiteHTML() {
 		const dropdown = dropdownWrapper.replace('{OPTIONS}', ['Current Period'].concat(filterPeriodNames(data.ethsbell.periods.map(x => x.friendly_name))).map(x => dropdownOptions
 			.replace('{NAME}', x)
 			.replace('{VALUE}', x)
-			.replace('{DISABLED}', x == 'Current Period' ? 'disabled' : '')
 		));
 
 		// Remove text and add dropdown 
