@@ -311,6 +311,9 @@ function init(location) {
 	if (location == 'website') {
 		setInterval(updateWebsiteHTML, DELAY * 1000);
 		updateWebsiteHTML();
+
+		document.getElementById('date').innerHTML = leftText().date; // Set the date
+		document.getElementById('time').innerHTML = leftText().time; // Set the time
 	}
 	if (location == 'tv') {
 		setInterval(updateMonitorHTML, DELAY * 1000);
