@@ -1,5 +1,5 @@
-const ETHSBELL_API_URL_TODAY = "https://codeths.eths.k12.il.us/api/v1/today";
-const ETHSBELL_API_URL_NOW = "https://codeths.eths.k12.il.us/api/v1/today/now";
+const ETHSBELL_API_URL_TODAY = "https://ethsbell.app/api/v1/today";
+const ETHSBELL_API_URL_NOW = "https://ethsbell.app/api/v1/today/now";
 const SPREADSHEET_URL = "https://script.google.com/macros/s/AKfycbyDKSHNBGObWtoxLr9kb9xlbXdnjZAB1K7mYPAEtR095d16Uhzt4QUTiHjQY7JWlqwG/exec";
 
 // Delay between each fetch (seconds)
