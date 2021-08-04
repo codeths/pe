@@ -1,82 +1,105 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, shrink-to-fit=no"
+		/>
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<!-- Bootstrap CSS -->
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+			integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+			crossorigin="anonymous"
+		/>
+		<!-- Other CSS n' stuff -->
+		<link rel="shortcut icon" type="image/png" href="../wildkit.ico" />
+		<link
+			href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono|Material+Icons"
+			rel="stylesheet"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+			crossorigin="anonymous"
+		/>
+		<link rel="stylesheet" href="../style.css" />
+		<title>ETHS PE Board</title>
+	</head>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    <!-- Other CSS n' stuff -->
-    <link rel="shortcut icon" type="image/png" href="../wildkit.ico" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono|Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-        crossorigin="anonymous" />
-    <link rel="stylesheet" href="../style.css">
-    <title>ETHS PE Board</title>
-</head>
+	<body class="full-height">
+		<div class="container-fluid h-100 p-0">
+			<div class="row w-100 h-100 m-0">
+				<div class="col-2 h-100 p-0" id="left">
+					<div
+						class="h-25 p-4 d-flex flex-column justify-content-center"
+						id="datetime"
+					>
+						<span id="date" class="py-1">Wednesday, April 7th</span>
+						<span id="time" class="py-1">3:33 PM</span>
+					</div>
+					<div class="h-75 p-2" id="ethsbell">
+						<img id="wildkit" src="../wildkit.png" class="w-75 pt-4" />
+						<div class="divider"></div>
+						<span class="d-block py-1" id="showing"
+							>Loading data from ETHSBell...</span
+						>
+						<span class="d-block py-1" id="timeleft"></span>
+					</div>
+				</div>
+				<div class="col-10 p-0 h-100" id="main-monitor">
+					<div class="row text-center m-0" id="main-body-monitor"></div>
+					<div
+						id="footer-monitor"
+						class="text-center col-10 d-flex flex-column justify-content-center"
+					>
+						<p class="m-0">
+							See the full schedule at <u>https://pe.ethsbell.app</u>
+							<br />
+							<span class="footer-icons d-block">
+								<span class="legend">
+									<i class="icon fas fa-tshirt uniform"></i> Uniform
+								</span>
+								<span class="legend">
+									<i class="icon fas position-relative fa-tshirt nouniform">
+										<i class="fas position-absolute fa-times nouniform-x"></i>
+									</i>
+									No Uniform
+								</span>
+								<span class="legend">
+									<i class="icon fas fa-heartbeat heart"></i> HR monitor
+								</span>
+								<span class="legend">
+									<i class="icon fas fa-laptop laptop"></i> Chromebook
+								</span>
+							</span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
 
-<body class="full-height">
-    <div class="container-fluid h-100 p-0">
-        <div class="row w-100 h-100 m-0">
-            <div class="col-2 h-100 p-0" id="left">
-                <div class="h-25 p-4 d-flex flex-column justify-content-center" id="datetime">
-                    <span id="date" class="py-1">Wednesday, April 7th</span>
-                    <span id="time" class="py-1">3:33 PM</span>
-                </div>
-                <div class="h-75 p-2" id="ethsbell">
-                    <img id="wildkit" src="../wildkit.png" class="w-75 pt-4">
-                    <div class="divider"></div>
-                    <span class="d-block py-1" id="showing">Loading data from ETHSBell...</span>
-                    <span class="d-block py-1" id="timeleft"></span>
-                </div>
-            </div>
-            <div class="col-10 p-0 h-100" id="main-monitor">
-                <div class="row text-center m-0" id="main-body-monitor"></div>
-                <div id="footer-monitor" class="text-center col-10 d-flex flex-column justify-content-center">
-                    <p class="m-0">
-                        See the full schedule at <u>https://pe.ethsbell.xyz</u>
-                        <br>
-                        <span class="footer-icons d-block">
-                            <span class="legend">
-                                <i class="icon fas fa-tshirt uniform"></i> Uniform
-                            </span>
-                            <span class="legend">
-                                <i class="icon fas position-relative fa-tshirt nouniform">
-                                    <i class="fas position-absolute fa-times nouniform-x"></i>
-                                </i> No Uniform
-                            </span>
-                            <span class="legend">
-                                <i class="icon fas fa-heartbeat heart"></i> HR monitor
-                            </span>
-                            <span class="legend">
-                                <i class="icon fas fa-laptop laptop"></i> Chromebook
-                            </span>
-                        </span>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+		<!-- Bootstrap JS -->
+		<script
+			src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+			integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+			crossorigin="anonymous"
+		></script>
 
-
-    <!-- Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
-    </script>
-
-    <!-- Other JS -->
-    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
-    <script src="https://unpkg.com/dayjs@1.8.21/plugin/advancedFormat.js"></script>
-    <script src="../script.js"></script>
-    <script>
-        init('tv');
-    </script>
-</body>
-
+		<!-- Other JS -->
+		<script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+		<script src="https://unpkg.com/dayjs@1.8.21/plugin/advancedFormat.js"></script>
+		<script src="../script.js"></script>
+		<script>
+			init("tv");
+		</script>
+	</body>
 </html>
