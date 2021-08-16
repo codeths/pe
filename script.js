@@ -256,18 +256,17 @@ async function updateMonitorHTML() {
 async function updateWebsiteHTML() {
 	const dropdown = document.querySelector('#selectperiod select');
 
-	const search = document.getElementById('search').value;
 
 	selectedPeriod = dropdown && dropdown.value && dropdown.value !== 'Current Period' ? dropdown.value : 'now';
 
 	const data = await fetchData(selectedPeriod); // Get data
-	const html = getCellHTML(CLASS_HTML, data, search); // Get HTML from that data
+	const html = getCellHTML(CLASS_HTML, data); // Get HTML from that data
 	document.getElementById('main-body').innerHTML = html.join('\n'); // Add HTML to the body
+	search();
 
 	document.getElementById('date').innerHTML = leftText().date; // Set the date
 	document.getElementById('time').innerHTML = leftText().time; // Set the time
 
-	console.log(data);
 	// Set period end time text if there is a period
 	if (data.ethsbell.current) document.getElementById('timeleft').innerHTML = data.ethsbell.current.map(x => `${x.friendly_name} ends in ${human_time_left(x.end, null, true)}`).join('<br>');
 
