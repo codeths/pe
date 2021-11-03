@@ -1,153 +1,161 @@
 span,
 p {
-    font-family: 'Roboto', sans-serif;
+	font-family: 'Roboto', sans-serif;
 }
 
 .fa-stack {
-    vertical-align: top;
+	vertical-align: top;
 }
 
 .divider {
-    background-color: #ffffff;
-    width: 3vw;
-    height: 2px;
-    display: block;
-    margin: 5px auto;
+	background-color: #ffffff;
+	width: 3vw;
+	height: 2px;
+	display: block;
+	margin: 5px auto;
 }
 
 .full-height {
-    height: 100vh;
+	height: 100vh;
 }
 
 #datetime {
-    background-color: #C34614;
-    text-align: center;
-    color: white;
-    font-size: max(25px, 2.5vw);
-    line-height: 1;
+	background-color: #c34614;
+	text-align: center;
+	color: white;
+	font-size: max(25px, 2.5vw);
+	line-height: 1;
 }
 
 #ethsbell {
-    background-color: #1A2741;
-    text-align: center;
-    color: white;
-    font-size: max(20px, 1.25vw);
+	background-color: #1a2741;
+	text-align: center;
+	color: white;
+	font-size: max(20px, 1.25vw);
 }
 
 #left {
-    height: fit-content;
+	height: -webkit-fit-content;
+	height: -moz-fit-content;
+	height: fit-content;
 }
 
 #main {
-    position: static;
-    padding-bottom: 10vh;
+	position: static;
+	padding-bottom: 10vh;
+}
+
+#main-body-monitor {
+	max-height: 80vh;
+	overflow: hidden;
 }
 
 @media (min-width: 768px) {
-    #left,
-    #main {
-        height: 100%;
-        padding-bottom: 0px;
-    }
+	#left,
+	#main {
+		height: 100%;
+		padding-bottom: 0px;
+	}
 
-    #datetime {
-        height: 25vh;
-    }
+	#datetime {
+		height: 25vh;
+	}
 
-    #ethsbell {
-        height: 75vh;
-    }
-}
+	#ethsbell {
+		height: 75vh;
+	}
 
-#main-body, #main-body-monitor {
-    max-height: 80vh;
-    overflow: hidden;
+	#main-body {
+		max-height: 90vh;
+		overflow: scroll;
+	}
 }
 
 #footer,
 #footer-monitor {
-    background-color: #D8D8D8;
-    position: fixed;
-    bottom: 0;
+	background-color: #d8d8d8;
+	position: fixed;
+	bottom: 0;
 }
 
 #footer {
-    height: 10vh;
-    font-size: min(25px, max(15px, 2vw));
+	height: 10vh;
+	font-size: min(25px, max(15px, 2vw));
 }
 
 #footer-monitor {
-    height: 15vh;
-    font-size: 1.75vw;
+	height: 15vh;
+	font-size: 1.75vw;
 }
 
 .filtered {
-    display: none !important;
+	display: none !important;
 }
 
 .class {
-    height: 20vh;
+	height: 20vh;
 }
 
 #main-body .class .name {
-    font-size: 25px;
-    font-weight: bold;
+	font-size: 25px;
+	font-weight: bold;
 }
 
 #main-body .class .location {
-    font-size: 20px;
+	font-size: 20px;
 }
 
 #main-body .icons {
-    font-size: 35px;
+	font-size: 35px;
 }
 
 #main-body-monitor .class .name {
-    font-size: 2.5vw;
-    font-weight: bold;
+	font-size: 2.5vw;
+	font-weight: bold;
 }
 
 #main-body-monitor .class .location {
-    font-size: 1.5vw;
+	font-size: 1.5vw;
 }
 
 #main-body-monitor .icons {
-    font-size: 2.5vw;
+	font-size: 2.5vw;
 }
 #footer .footer-icons .icon {
-    font-size: min(25px, max(15px, 2vw));
+	font-size: min(25px, max(15px, 2vw));
 }
 
 #footer-monitor .footer-icons .icon {
-    font-size: 1.75vw;
+	font-size: 1.75vw;
 }
 
 .nouniform {
-    color: #25385e;
+	color: #25385e;
 }
 
 .nouniform-x {
-    color: #ff0000;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+	color: #ff0000;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
 }
 
 .uniform {
-    color: #1A2741;
+	color: #1a2741;
 }
 
 .heart {
-    color: #C34614;
+	color: #c34614;
 }
 
 .laptop {
-    color: #30B2C9;
+	color: #30b2c9;
 }
 
 .legend {
-    display: inline-block;
-    break-after: column;
-    padding: 0 5px;
+	display: inline-block;
+	-moz-column-break-after: column;
+	break-after: column;
+	padding: 0 5px;
 }
