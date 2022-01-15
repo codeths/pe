@@ -56,9 +56,9 @@ function human_time(time) {
 function date_from_api(time, now = current_date()) {
 	const [h, m, s] = time.split(':');
 	const date = new Date(
-		now.getUTCFullYear(),
-		now.getUTCMonth(),
-		now.getUTCDate(),
+		now.getFullYear(),
+		now.getMonth(),
+		now.getDate(),
 		h,
 		m,
 		s,
