@@ -336,26 +336,12 @@ async function updateMonitorHTML() {
 				),
 			);
 		document.getElementById('timeleft').innerHTML = data.ethsbell.current
-			.map(
-				x =>
-					`${x.friendly_name} ends in ${human_time_left(
-						x.end,
-						null,
-						true,
-					)}`,
-			)
+			.map(periodText)
 			.join('<br>');
 	} else if (data.ethsbell.current) {
 		document.getElementById('showing').innerHTML = '';
 		document.getElementById('timeleft').innerHTML = data.ethsbell.current
-			.map(
-				x =>
-					`${x.friendly_name} ends in ${human_time_left(
-						x.end,
-						null,
-						true,
-					)}`,
-			)
+			.map(periodText)
 			.join('<br>');
 	} else {
 		document.getElementById('showing').innerHTML = '';
@@ -383,14 +369,7 @@ async function updateWebsiteHTML() {
 	// Set period end time text if there is a period
 	if (data.ethsbell.current)
 		document.getElementById('timeleft').innerHTML = data.ethsbell.current
-			.map(
-				x =>
-					`${x.friendly_name} ends in ${human_time_left(
-						x.end,
-						null,
-						true,
-					)}`,
-			)
+			.map(periodText)
 			.join('<br>');
 
 	// Remove loading text and add in dropdown
@@ -463,4 +442,15 @@ function init(location) {
 		setInterval(updateMonitorHTML, DELAY * 1000);
 		updateMonitorHTML();
 	}
+}
+
+function periodText(period) {
+	if (period.kind == 'BeforeSchool')
+		return `School starts in ${human_time_left(period.end, null, true)}`;
+	if (period.kind == 'AfterSchool') return `School's out!`;
+	return `${period.friendly_name} ends in ${human_time_left(
+		period.end,
+		null,
+		true,
+	)}`;
 }
