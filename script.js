@@ -29,8 +29,9 @@ function leftText() {
 
 function classFilter(period) {
 	return (
-		typeof period.kind == 'object' &&
-		(period.kind.Class || period.kind.ClassOrLunch)
+		(typeof period.kind == 'object' &&
+			(period.kind.Class || period.kind.ClassOrLunch)) ||
+		period.kind == 'AMSupport'
 	);
 }
 
@@ -272,7 +273,7 @@ const ICON_HEART = '<i class="fas fa-heartbeat heart"></i>';
 const ICON_LAPTOP = '<i class="fas fa-laptop laptop"></i>';
 const ICON_ = '';
 
-const CLASS_HTML = `<div class="class col-6 col-md-6 col-lg-4 col-xl-3 p-2 d-flex flex-column justify-content-center" {DISPLAY}>
+const CLASS_HTML = `<div class="class p-2 d-flex flex-column justify-content-center {CLASSES}" {DISPLAY}>
 <span class="name d-block">{NAME}</span>
 <span class="location d-block">{LOCATION}</span>
 <span class="icons d-block">
@@ -282,9 +283,11 @@ const CLASS_HTML = `<div class="class col-6 col-md-6 col-lg-4 col-xl-3 p-2 d-fle
   {LAPTOP}
 </span>
 </div>`;
+const WEB_CLASSES = 'col-6 col-md-6 col-lg-4 col-xl-3';
+const MONITOR_CLASSES = '';
 
 // Generate cell HTML for each period
-function getCellHTML(template, data, filter) {
+function getCellHTML(template, data, filter, isMonitor) {
 	const htmlArray = data.data.map(x => {
 		let html = template;
 
@@ -297,6 +300,10 @@ function getCellHTML(template, data, filter) {
 		html = html.replace('{UNIFORM}', !x.data.nodress ? ICON_UNIFORM : ''); // Add uniform icon
 		html = html.replace('{HEART}', x.data.heart ? ICON_HEART : ''); // Add heartrate icon
 		html = html.replace('{LAPTOP}', x.data.chromebook ? ICON_LAPTOP : ''); // Add laptop icon
+		html = html.replace(
+			'{CLASSES}',
+			isMonitor ? MONITOR_CLASSES : WEB_CLASSES,
+		); // Add classes
 
 		if (filter) filter = filter.toLowerCase().replace(/ /g, '');
 		html = html.replace(
@@ -319,10 +326,23 @@ function getCellHTML(template, data, filter) {
 
 // Update HTML for monitor
 
+const MONITOR_BODY = document.getElementById('main-body-monitor');
+
 async function updateMonitorHTML() {
 	const data = await fetchData('monitor'); // Get data
-	const html = getCellHTML(CLASS_HTML, data); // Get HTML from that data
-	document.getElementById('main-body-monitor').innerHTML = html.join('\n'); // Add HTML to the body
+	const html = getCellHTML(CLASS_HTML, data, null, true); // Get HTML from that data
+	MONITOR_BODY.innerHTML = html.join('\n'); // Add HTML to the body
+
+	let cells = data.data.length;
+	MONITOR_BODY.classList.remove('five-rows', 'five-cols', 'six-rows');
+	if (cells > 20) {
+		MONITOR_BODY.classList.add('five-cols');
+	}
+	if (cells > 25) {
+		MONITOR_BODY.classList.add('six-rows');
+	} else if (cells > 16) {
+		MONITOR_BODY.classList.add('five-rows');
+	}
 
 	document.getElementById('date').innerHTML = leftText().date; // Set the date
 	document.getElementById('time').innerHTML = leftText().time; // Set the time
@@ -359,7 +379,7 @@ async function updateWebsiteHTML() {
 			: 'now';
 
 	const data = await fetchData(selectedPeriod); // Get data
-	const html = getCellHTML(CLASS_HTML, data); // Get HTML from that data
+	const html = getCellHTML(CLASS_HTML, data, null, false); // Get HTML from that data
 	document.getElementById('main-body').innerHTML = html.join('\n'); // Add HTML to the body
 	search();
 

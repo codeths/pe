@@ -46,7 +46,7 @@ p {
 }
 
 #main-body-monitor {
-	max-height: 80vh;
+	max-height: 85vh;
 	overflow: hidden;
 }
 
@@ -92,7 +92,7 @@ p {
 	display: none !important;
 }
 
-.class {
+#main-body .class {
 	height: 20vh;
 }
 
@@ -109,18 +109,6 @@ p {
 	font-size: 35px;
 }
 
-#main-body-monitor .class .name {
-	font-size: 2.5vw;
-	font-weight: bold;
-}
-
-#main-body-monitor .class .location {
-	font-size: 1.5vw;
-}
-
-#main-body-monitor .icons {
-	font-size: 2.5vw;
-}
 #footer .footer-icons .icon {
 	font-size: min(25px, max(15px, 2vw));
 }
@@ -158,4 +146,58 @@ p {
 	-moz-column-break-after: column;
 	break-after: column;
 	padding: 0 5px;
+}
+
+#main-body-monitor .class .name {
+	font-size: 2.5vw;
+	font-weight: bold;
+}
+
+#main-body-monitor .class .location {
+	font-size: 1.5vw;
+}
+
+#main-body-monitor .icons {
+	font-size: 2.5vw;
+}
+
+#main-body-monitor .class {
+	width: calc(100% / 4);
+	height: calc(85vh / 4);
+}
+
+#main-body-monitor.five-cols .class {
+	width: calc(100% / 5);
+}
+
+#main-body-monitor.six-rows .class {
+	height: calc(85vh / 6);
+}
+
+#main-body-monitor.six-rows .class .name {
+	font-size: 1.75vw;
+}
+
+#main-body-monitor.six-rows .class .location {
+	font-size: 1.25vw;
+}
+
+#main-body-monitor.six-rows .class .icons {
+	font-size: 1.5vw;
+}
+
+#main-body-monitor.five-rows .class {
+	height: calc(85vh / 5);
+}
+
+#main-body-monitor.five-rows .class .name {
+	font-size: 2.25vw;
+}
+
+#main-body-monitor.five-rows .class .location {
+	font-size: 1.25vw;
+}
+
+#main-body-monitor.five-rows .class .icons {
+	font-size: 2vw;
 }
