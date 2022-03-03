@@ -29,8 +29,9 @@ function leftText() {
 
 function classFilter(period) {
 	return (
-		typeof period.kind == 'object' &&
-		(period.kind.Class || period.kind.ClassOrLunch)
+		(typeof period.kind == 'object' &&
+			(period.kind.Class || period.kind.ClassOrLunch)) ||
+		period.kind == 'AMSupport'
 	);
 }
 
