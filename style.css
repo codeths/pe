@@ -98,7 +98,7 @@ p {
 
 #main-body .class .name {
 	font-size: 25px;
-	font-weight: bold;
+	font-weight: 700;
 }
 
 #main-body .class .location {
@@ -150,7 +150,7 @@ p {
 
 #main-body-monitor .class .name {
 	font-size: 2.5vw;
-	font-weight: bold;
+	font-weight: 700;
 }
 
 #main-body-monitor .class .location {
