@@ -67,7 +67,7 @@ p {
 
 	#main-body {
 		max-height: 90vh;
-		overflow: scroll;
+		overflow: auto;
 	}
 }
 
