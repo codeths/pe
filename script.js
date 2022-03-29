@@ -329,6 +329,9 @@ function getCellHTML(template, data, filter, isMonitor) {
 const MONITOR_BODY = document.getElementById('main-body-monitor');
 
 async function updateMonitorHTML() {
+	document.getElementById('date').innerHTML = leftText().date; // Set the date
+	document.getElementById('time').innerHTML = leftText().time; // Set the time
+
 	const data = await fetchData('monitor'); // Get data
 	const html = getCellHTML(CLASS_HTML, data, null, true); // Get HTML from that data
 	MONITOR_BODY.innerHTML = html.join('\n'); // Add HTML to the body
@@ -343,9 +346,6 @@ async function updateMonitorHTML() {
 	} else if (cells > 16) {
 		MONITOR_BODY.classList.add('five-rows');
 	}
-
-	document.getElementById('date').innerHTML = leftText().date; // Set the date
-	document.getElementById('time').innerHTML = leftText().time; // Set the time
 
 	if (data.ethsbell.current && data.ethsbell.showing) {
 		document.getElementById('showing').innerHTML =
