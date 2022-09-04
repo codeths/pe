@@ -163,7 +163,7 @@ p {
 
 #main-body-monitor .class {
 	width: calc(100% / 4);
-	height: calc(85vh / 4);
+	height: calc(75vh / 4);
 }
 
 #main-body-monitor.five-cols .class {
@@ -171,11 +171,11 @@ p {
 }
 
 #main-body-monitor.six-rows .class {
-	height: calc(85vh / 6);
+	height: calc(75vh / 6);
 }
 
 #main-body-monitor.six-rows .class .name {
-	font-size: 1.75vw;
+	font-size: 1.60vw;
 }
 
 #main-body-monitor.six-rows .class .location {
@@ -183,15 +183,15 @@ p {
 }
 
 #main-body-monitor.six-rows .class .icons {
-	font-size: 1.5vw;
+	font-size: 1.4vw;
 }
 
 #main-body-monitor.five-rows .class {
-	height: calc(85vh / 5);
+	height: calc(75vh / 5);
 }
 
 #main-body-monitor.five-rows .class .name {
-	font-size: 2.25vw;
+	font-size: 2.05vw;
 }
 
 #main-body-monitor.five-rows .class .location {
@@ -199,5 +199,9 @@ p {
 }
 
 #main-body-monitor.five-rows .class .icons {
-	font-size: 2vw;
+	font-size: 1.90vw;
+}
+
+.title-div {
+	height: 8vh;
 }
