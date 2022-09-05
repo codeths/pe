@@ -227,7 +227,11 @@ async function fetchData(period = 'now') {
 		};
 
 	// Get URL to fetch for spreadsheet
-	const spreadsheetURL = `${SPREADSHEET_URL}${window.location.search}`;
+	let spreadsheetURL = `${SPREADSHEET_URL}${window.location.search}`;
+	const params = new URLSearchParams(window.location.search);
+	if (params.get('timestamp') && !params.get('day')) {
+		spreadsheetURL += `&day=${current_date().getDay()}`
+	}
 
 	// Fetch the data
 	const spreadsheetRes = await fetch(spreadsheetURL).catch(e => null);
