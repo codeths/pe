@@ -346,18 +346,25 @@ async function updateMonitorHTML() {
 	} else if (cells > 16) {
 		MONITOR_BODY.classList.add('five-rows');
 	}
-
+	if(data.ethsbell.current[0].kind == "AfterSchool"){
+		document.getElementById('titleBIG').innerHTML = '';
+	}
 	if (data.ethsbell.current && data.ethsbell.showing) {
 		document.getElementById('showing').innerHTML =
-			'Showing locations for<br>' +
+			'Showing locations for<p class="fs-2"><b>' +
 			human_list(
 				filterPeriodNames(
 					data.ethsbell.showing.map(x => x.friendly_name),
 				),
-			);
+			) + '</b></p>';
 		document.getElementById('timeleft').innerHTML = data.ethsbell.current
 			.map(periodText)
 			.join('<br>');
+		document.getElementById('titleBIG').innerHTML = "<b>" + human_list(
+			filterPeriodNames(
+				data.ethsbell.showing.map(x => x.friendly_name),
+			),
+		) + "</b> Class Locations";
 	} else if (data.ethsbell.current) {
 		document.getElementById('showing').innerHTML = '';
 		document.getElementById('timeleft').innerHTML = data.ethsbell.current
