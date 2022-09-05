@@ -350,7 +350,7 @@ async function updateMonitorHTML() {
 	} else if (cells > 16) {
 		MONITOR_BODY.classList.add('five-rows');
 	}
-	if(data.ethsbell.current[0].kind == "AfterSchool"){
+	if (data.ethsbell.current[0] && data.ethsbell.current[0].kind == "AfterSchool") {
 		document.getElementById('titleBIG').innerHTML = '';
 	}
 	if (data.ethsbell.current && data.ethsbell.showing) {
