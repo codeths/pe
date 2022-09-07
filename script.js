@@ -355,7 +355,7 @@ async function updateMonitorHTML() {
 	}
 	if (data.ethsbell.current && data.ethsbell.showing) {
 		document.getElementById('showing').innerHTML =
-			'Showing locations for<p class="fs-2"><b>' +
+			'Showing locations for<p class="block"><b>' +
 			human_list(
 				filterPeriodNames(
 					data.ethsbell.showing.map(x => x.friendly_name),
