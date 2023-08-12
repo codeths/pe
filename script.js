@@ -1,7 +1,7 @@
 const ETHSBELL_API_URL_TODAY = 'https://ethsbell.app/api/v1/today';
 const ETHSBELL_API_URL_NOW = 'https://ethsbell.app/api/v1/today/now/near';
 const SPREADSHEET_URL =
-	'https://script.google.com/macros/s/AKfycbyDKSHNBGObWtoxLr9kb9xlbXdnjZAB1K7mYPAEtR095d16Uhzt4QUTiHjQY7JWlqwG/exec';
+	'https://script.google.com/macros/s/AKfycbw6uJhClafaSIspS7HmsFYWMJ5ZRCbzoQxkQtwUMyjiFo12QdQNYStVq2r11NoL5roC/exec';
 
 // Delay between each fetch (seconds)
 const DELAY = 15;
