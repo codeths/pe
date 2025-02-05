@@ -50,7 +50,7 @@ p {
 	overflow: hidden;
 }
 
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
 	#left,
 	#main {
 		height: 100%;
@@ -70,6 +70,7 @@ p {
 		overflow: auto;
 	}
 }
+*/
 
 #footer,
 #footer-monitor {

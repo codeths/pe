@@ -19,22 +19,18 @@
 <body class="full-height">
 	<div class="container-fluid h-100 p-0">
 		<div class="row w-100 h-100 m-0">
-			<div class="col-2 h-100 p-0" id="left">
-				<div class="h-25 p-4 d-flex flex-column justify-content-center" id="datetime">
+			<div id="header" class="row">
+				<div class="col-4 text-start">	
 					<span id="date" class="py-1"></span>
+				</div>
+				<div class="col-4 text-center">
 					<span id="time" class="py-1"></span>
 				</div>
-				<div class="h-75 p-2" id="ethsbell">
-					<img id="wildkit" src="../wildkit.png" class="w-75 pt-4" />
-					<div class="divider"></div>
-					<span class="d-block py-1" id="showing">Loading data from ETHSBell...</span>
-					<span class="d-block py-1" id="timeleft"></span>
+				<div class="col-4 text-end">
+
 				</div>
 			</div>
-			<div class="col-10 p-0 h-100" id="main-monitor">
-				<div class="title-div">
-					<h1 class="text-center title mt-2 mb-2" id="titleBIG"></h1>
-				</div>
+			<div class="p-0 h-75" id="main-monitor">
 				<div class="row text-center m-0" id="main-body-monitor"></div>
 				<div id="footer-monitor" class="text-center col-10 d-flex flex-column justify-content-center">
 					<p class="m-0">
