@@ -18,43 +18,22 @@
 
 <body class="full-height">
 	<div class="container-fluid h-100 p-0">
-		<div class="row w-100 h-100 m-0">
-			<div id="header" class="row">
+		<div class="w-100 h-100">
+			<div id="header" class="row ps-2 pe-2 pt-2 mb-2">
 				<div class="col-4 text-start">	
-					<span id="date" class="py-1"></span>
+					<span id="date" class="py-1 fs-3"></span>
+					<br>See the full schedule at <u>https://pe.ethsbell.app</u>
 				</div>
 				<div class="col-4 text-center">
-					<span id="time" class="py-1"></span>
+					<span id="time" class="py-1 fs-3"></span>
+					<span class="d-block py-1" id="showing">Loading data from ETHSBell...</span>
 				</div>
 				<div class="col-4 text-end">
-
+					<span class="py-1 fs-3" id="timeleft"></span>
 				</div>
 			</div>
-			<div class="p-0 h-75" id="main-monitor">
+			<div class="p-0" id="main-monitor">
 				<div class="row text-center m-0" id="main-body-monitor"></div>
-				<div id="footer-monitor" class="text-center col-10 d-flex flex-column justify-content-center">
-					<p class="m-0">
-						See the full schedule at <u>https://pe.ethsbell.app</u>
-						<br />
-						<span class="footer-icons d-block">
-							<span class="legend">
-								<i class="icon fas fa-tshirt uniform"></i> Uniform
-							</span>
-							<span class="legend">
-								<i class="icon fas position-relative fa-tshirt nouniform">
-									<i class="fas position-absolute fa-times nouniform-x"></i>
-								</i>
-								No Uniform
-							</span>
-							<!-- <span class="legend">
-								<i class="icon fas fa-heartbeat heart"></i> HR monitor
-							</span> -->
-							<span class="legend">
-								<i class="icon fas fa-laptop laptop"></i> Chromebook
-							</span>
-						</span>
-					</p>
-				</div>
 			</div>
 		</div>
 	</div>

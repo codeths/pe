@@ -78,7 +78,12 @@ p {
 	position: fixed;
 	bottom: 0;
 }
-
+#header {
+	background-color: #c34614;
+	color: white;
+	height: 12.5vh;
+	width: 100%;
+}
 #footer {
 	height: 10vh;
 	font-size: min(25px, max(15px, 2vw));
@@ -119,7 +124,7 @@ p {
 }
 
 .nouniform {
-	color: #25385e;
+	color: #1a2741;
 }
 
 .nouniform-x {
@@ -164,7 +169,7 @@ p {
 
 #main-body-monitor .class {
 	width: calc(100% / 4);
-	height: calc(75vh / 4);
+	height: calc(85vh / 4);
 }
 
 #main-body-monitor.five-cols .class {
@@ -172,7 +177,7 @@ p {
 }
 
 #main-body-monitor.six-rows .class {
-	height: calc(75vh / 6);
+	height: calc(85vh / 6);
 }
 
 #main-body-monitor.six-rows .class .name {
@@ -188,7 +193,7 @@ p {
 }
 
 #main-body-monitor.five-rows .class {
-	height: calc(75vh / 5);
+	height: calc(85vh / 5);
 }
 
 #main-body-monitor.five-rows .class .name {
@@ -213,4 +218,8 @@ p {
 
 .block{
 	font-size: 4.5vh;
+}
+
+#main-monitor{
+	height: 85vh;
 }

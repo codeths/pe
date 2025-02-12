@@ -277,7 +277,7 @@ const ICON_HEART = '<i class="fas fa-heartbeat heart"></i>';
 const ICON_LAPTOP = '<i class="fas fa-laptop laptop"></i>';
 const ICON_ = '';
 
-const CLASS_HTML = `<div class="class p-2 d-flex flex-column justify-content-center {CLASSES}" {DISPLAY}>
+const CLASS_HTML = `<div class="class border-top ps-2 pe-2 pt-4 pb-4 d-flex flex-column justify-content-center {CLASSES}" {DISPLAY}>
 <span class="name d-block">{NAME}</span>
 <span class="location d-block">{LOCATION}</span>
 <span class="icons d-block">
@@ -355,7 +355,7 @@ async function updateMonitorHTML() {
 	}
 	if (data.ethsbell.current && data.ethsbell.showing) {
 		document.getElementById('showing').innerHTML =
-			'Showing locations for<p class="block"><b>' +
+			'<p class="fs-1 block"><b>' +
 			human_list(
 				filterPeriodNames(
 					data.ethsbell.showing.map(x => x.friendly_name),
@@ -470,7 +470,7 @@ function init(location) {
 		document.getElementById('time').innerHTML = leftText().time; // Set the time
 	}
 	if (location == 'tv') {
-		setInterval(updateMonitorHTML, DELAY * 1000);
+		// setInterval(updateMonitorHTML, DELAY * 1000);
 		updateMonitorHTML();
 	}
 }
