@@ -107,8 +107,8 @@ p {
 	font-weight: 700;
 }
 
-#main-body .class .location {
-	font-size: 20px;
+.class .location {
+	white-space: nowrap;
 }
 
 #main-body .icons {
@@ -223,7 +223,6 @@ p {
 #main-monitor{
 	height: 85vh;
 }
-
 
 .gray {
 	background-color: rgb(221, 221, 221);

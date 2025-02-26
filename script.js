@@ -338,20 +338,23 @@ async function updateMonitorHTML() {
 
 	const data = await fetchData('monitor'); // Get data
 	const html = getCellHTML(CLASS_HTML, data, null, true); // Get HTML from that data
+	let cells = data.data.length;
 
 	let j = 1;
 	for(let i=1; i<=html.length; i++) {
 		if(j % 2 == 0){
 			html[i-1] = html[i-1].replace('{BACKGROUND}', 'gray');
 		}
-		if(i % 5 == 0){
+		if(i % (cells > 20 ? 5 : 4) == 0){
 			j++;
 		}
 	}
 
+	
+
 	MONITOR_BODY.innerHTML = html.join('\n'); // Add HTML to the body
 
-	let cells = data.data.length;
+	  
 	MONITOR_BODY.classList.remove('five-rows', 'five-cols', 'six-rows');
 	if (cells > 20) {
 		MONITOR_BODY.classList.add('five-cols');
@@ -361,9 +364,12 @@ async function updateMonitorHTML() {
 	} else if (cells > 16) {
 		MONITOR_BODY.classList.add('five-rows');
 	}
-	if (data.ethsbell.current[0] && data.ethsbell.current[0].kind == "AfterSchool") {
-		document.getElementById('titleBIG').innerHTML = '';
-	}
+
+	resizeText({
+		elements: document.querySelectorAll('.location'),
+		maxSize: (cells > 20 ? 1.5 : 1.25)
+	})
+
 	if (data.ethsbell.current && data.ethsbell.showing) {
 		document.getElementById('showing').innerHTML =
 			'<p class="fs-1 block"><b>' +
@@ -375,11 +381,6 @@ async function updateMonitorHTML() {
 		document.getElementById('timeleft').innerHTML = data.ethsbell.current
 			.map(periodText)
 			.join('<br>');
-		document.getElementById('titleBIG').innerHTML = "<b>" + human_list(
-			filterPeriodNames(
-				data.ethsbell.showing.map(x => x.friendly_name),
-			),
-		) + "</b> Class Locations";
 	} else if (data.ethsbell.current) {
 		document.getElementById('showing').innerHTML = '';
 		document.getElementById('timeleft').innerHTML = data.ethsbell.current
@@ -497,3 +498,19 @@ function periodText(period) {
 	)}`;
 }
 
+function isOverflown(el){
+	return (el.parentElement.clientWidth-10) <= el.scrollWidth
+}
+
+// https://dev.to/jankapunkt/make-text-fit-it-s-parent-size-using-javascript-m40
+const resizeText = ({ element, elements, minSize = .5, maxSize = 1.5, step = .05, unit = 'vw' }) => {
+  (elements || [element]).forEach(el => {
+    let i = maxSize
+	overflow = isOverflown(el)
+    while (overflow && i >= minSize) {
+        el.style.fontSize = `${i}${unit}`
+    	overflow = isOverflown(el)
+      	if (overflow) i -= step
+    }
+  })
+}
