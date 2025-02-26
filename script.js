@@ -277,7 +277,7 @@ const ICON_HEART = '<i class="fas fa-heartbeat heart"></i>';
 const ICON_LAPTOP = '<i class="fas fa-laptop laptop"></i>';
 const ICON_ = '';
 
-const CLASS_HTML = `<div class="class border-top ps-2 pe-2 pt-4 pb-4 d-flex flex-column justify-content-center {CLASSES}" {DISPLAY}>
+const CLASS_HTML = `<div class="class ps-2 pe-2 pt-4 pb-4 d-flex flex-column justify-content-center {BACKGROUND} {CLASSES}" {DISPLAY}>
 <span class="name d-block">{NAME}</span>
 <span class="location d-block">{LOCATION}</span>
 <span class="icons d-block">
@@ -338,6 +338,17 @@ async function updateMonitorHTML() {
 
 	const data = await fetchData('monitor'); // Get data
 	const html = getCellHTML(CLASS_HTML, data, null, true); // Get HTML from that data
+
+	let j = 1;
+	for(let i=1; i<=html.length; i++) {
+		if(j % 2 == 0){
+			html[i-1] = html[i-1].replace('{BACKGROUND}', 'gray');
+		}
+		if(i % 5 == 0){
+			j++;
+		}
+	}
+
 	MONITOR_BODY.innerHTML = html.join('\n'); // Add HTML to the body
 
 	let cells = data.data.length;
@@ -485,3 +496,4 @@ function periodText(period) {
 		true,
 	)}`;
 }
+

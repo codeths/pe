@@ -223,3 +223,8 @@ p {
 #main-monitor{
 	height: 85vh;
 }
+
+
+.gray {
+	background-color: rgb(221, 221, 221);
+}
