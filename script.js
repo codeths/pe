@@ -128,6 +128,11 @@ function human_list(items) {
 	return output;
 }
 
+// Convert array of RGB to hex; taken from ethsbell (frontend/global/helpers.js)
+function bytes_to_color(bytes) {
+	return '#' + bytes.map(b => ('0' + b.toString(16)).slice(-2)).join('');
+}
+
 // Get data from ETHSBell and the spreadsheet and parse them
 async function fetchData(period = 'now') {
 	// Fetch from ETHSBell
@@ -151,6 +156,9 @@ async function fetchData(period = 'now') {
 			nowData = await now.json();
 		} catch (e) {}
 	}
+
+	// Get today's color; set to eths orange by default (this is redundent)
+	const todayColor = todayData ? todayData.color : [195, 70, 20];
 
 	// Get array of period names and remove ignored periods
 	const periods = todayData ? todayData.periods.filter(classFilter) : [];
@@ -217,6 +225,7 @@ async function fetchData(period = 'now') {
 		periods,
 		current: nowData && nowData[1],
 		showing: period,
+		color: todayColor,
 	};
 
 	// No period specified and no current period
@@ -339,6 +348,8 @@ async function updateMonitorHTML() {
 	const data = await fetchData('monitor'); // Get data
 	const html = getCellHTML(CLASS_HTML, data, null, true); // Get HTML from that data
 	let cells = data.data.length;
+
+	document.getElementById('header').style["background-color"] = bytes_to_color(data.ethsbell.color); // Set the color
 
 	let j = 1;
 	for(let i=1; i<=html.length; i++) {
