@@ -50,7 +50,7 @@ p {
 	overflow: hidden;
 }
 
-/* @media (min-width: 768px) {
+@media (min-width: 768px) {
 	#left,
 	#main {
 		height: 100%;
@@ -70,7 +70,6 @@ p {
 		overflow: auto;
 	}
 }
-*/
 
 #footer,
 #footer-monitor {
@@ -91,9 +90,14 @@ p {
 }
 
 #footer-monitor {
-	height: 15vh;
+	height: 10vh;
 	width: 100vw;
-	font-size: 1.75vw;
+	font-size: 1.25vw;
+}
+
+.qr {
+	height: 9vh;
+	width: 9vh;
 }
 
 .filtered {
@@ -171,7 +175,7 @@ p {
 
 #main-body-monitor .class {
 	width: calc(100% / 4);
-	height: calc(85vh / 4);
+	height: calc(75vh / 4);
 }
 
 #main-body-monitor.five-cols .class {
@@ -179,7 +183,7 @@ p {
 }
 
 #main-body-monitor.six-rows .class {
-	height: calc(85vh / 6);
+	height: calc(75vh / 6);
 }
 
 #main-body-monitor.six-rows .class .name {
@@ -195,7 +199,7 @@ p {
 }
 
 #main-body-monitor.five-rows .class {
-	height: calc(85vh / 5);
+	height: calc(75vh / 5);
 }
 
 #main-body-monitor.five-rows .class .name {
@@ -223,7 +227,7 @@ p {
 }
 
 #main-monitor{
-	height: 85vh;
+	height: 75vh;
 }
 
 .gray {

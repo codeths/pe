@@ -1,7 +1,7 @@
 const ETHSBELL_API_URL_TODAY = 'https://ethsbell.app/api/v1/today';
 const ETHSBELL_API_URL_NOW = 'https://ethsbell.app/api/v1/today/now/near';
 const SPREADSHEET_URL =
-	'https://script.google.com/macros/s/AKfycbyD4QWaKRFb88EY9ZENMZu7l1qnk9WImxVf1Bkj-bHidrXVOPwzKgFzY1rvKhGLEI9Q/exec';
+	'https://s3.codeths.dev/pe-board/data';
 
 // Delay between each fetch (seconds)
 const DELAY = 15;
@@ -237,6 +237,7 @@ async function fetchData(period = 'now') {
 
 	// Get URL to fetch for spreadsheet
 	let spreadsheetURL = `${SPREADSHEET_URL}${window.location.search}`;
+	spreadsheetURL += `?v=${Date.now()}`
 	const params = new URLSearchParams(window.location.search);
 	if (params.get('timestamp') && !params.get('day')) {
 		spreadsheetURL += `&day=${current_date().getDay()}`
@@ -493,7 +494,7 @@ function init(location) {
 		document.getElementById('time').innerHTML = leftText().time; // Set the time
 	}
 	if (location == 'tv') {
-		// setInterval(updateMonitorHTML, DELAY * 1000);
+		setInterval(updateMonitorHTML, DELAY * 1000);
 		updateMonitorHTML();
 	}
 }
