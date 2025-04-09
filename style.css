@@ -76,16 +76,28 @@ p {
 	background-color: #d8d8d8;
 	position: fixed;
 	bottom: 0;
+	width: 100%;
 }
-
+#header {
+	background-color: #c34614;
+	color: white;
+	height: 12.5vh;
+	width: 100%;
+}
 #footer {
 	height: 10vh;
 	font-size: min(25px, max(15px, 2vw));
 }
 
 #footer-monitor {
-	height: 15vh;
-	font-size: 1.75vw;
+	height: 10vh;
+	width: 100vw;
+	font-size: 1.25vw;
+}
+
+.qr {
+	height: 9vh;
+	width: 9vh;
 }
 
 .filtered {
@@ -101,8 +113,8 @@ p {
 	font-weight: 700;
 }
 
-#main-body .class .location {
-	font-size: 20px;
+.class .location {
+	white-space: nowrap;
 }
 
 #main-body .icons {
@@ -118,7 +130,7 @@ p {
 }
 
 .nouniform {
-	color: #25385e;
+	color: #1a2741;
 }
 
 .nouniform-x {
@@ -212,4 +224,12 @@ p {
 
 .block{
 	font-size: 4.5vh;
+}
+
+#main-monitor{
+	height: 75vh;
+}
+
+.gray {
+	background-color: rgb(221, 221, 221);
 }

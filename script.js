@@ -1,7 +1,7 @@
 const ETHSBELL_API_URL_TODAY = 'https://ethsbell.app/api/v1/today';
 const ETHSBELL_API_URL_NOW = 'https://ethsbell.app/api/v1/today/now/near';
 const SPREADSHEET_URL =
-	'https://script.google.com/macros/s/AKfycbyD4QWaKRFb88EY9ZENMZu7l1qnk9WImxVf1Bkj-bHidrXVOPwzKgFzY1rvKhGLEI9Q/exec';
+	'https://s3.codeths.dev/pe-board/data';
 
 // Delay between each fetch (seconds)
 const DELAY = 15;
@@ -128,6 +128,11 @@ function human_list(items) {
 	return output;
 }
 
+// Convert array of RGB to hex; taken from ethsbell (frontend/global/helpers.js)
+function bytes_to_color(bytes) {
+	return '#' + bytes.map(b => ('0' + b.toString(16)).slice(-2)).join('');
+}
+
 // Get data from ETHSBell and the spreadsheet and parse them
 async function fetchData(period = 'now') {
 	// Fetch from ETHSBell
@@ -151,6 +156,9 @@ async function fetchData(period = 'now') {
 			nowData = await now.json();
 		} catch (e) {}
 	}
+
+	// Get today's color; set to eths orange by default (this is redundent)
+	const todayColor = todayData ? todayData.color : [195, 70, 20];
 
 	// Get array of period names and remove ignored periods
 	const periods = todayData ? todayData.periods.filter(classFilter) : [];
@@ -217,6 +225,7 @@ async function fetchData(period = 'now') {
 		periods,
 		current: nowData && nowData[1],
 		showing: period,
+		color: todayColor,
 	};
 
 	// No period specified and no current period
@@ -228,6 +237,7 @@ async function fetchData(period = 'now') {
 
 	// Get URL to fetch for spreadsheet
 	let spreadsheetURL = `${SPREADSHEET_URL}${window.location.search}`;
+	spreadsheetURL += `?v=${Date.now()}`
 	const params = new URLSearchParams(window.location.search);
 	if (params.get('timestamp') && !params.get('day')) {
 		spreadsheetURL += `&day=${current_date().getDay()}`
@@ -277,7 +287,7 @@ const ICON_HEART = '<i class="fas fa-heartbeat heart"></i>';
 const ICON_LAPTOP = '<i class="fas fa-laptop laptop"></i>';
 const ICON_ = '';
 
-const CLASS_HTML = `<div class="class p-2 d-flex flex-column justify-content-center {CLASSES}" {DISPLAY}>
+const CLASS_HTML = `<div class="class ps-2 pe-2 pt-4 pb-4 d-flex flex-column justify-content-center {BACKGROUND} {CLASSES}" {DISPLAY}>
 <span class="name d-block">{NAME}</span>
 <span class="location d-block">{LOCATION}</span>
 <span class="icons d-block">
@@ -338,9 +348,25 @@ async function updateMonitorHTML() {
 
 	const data = await fetchData('monitor'); // Get data
 	const html = getCellHTML(CLASS_HTML, data, null, true); // Get HTML from that data
+	let cells = data.data.length;
+
+	document.getElementById('header').style["background-color"] = bytes_to_color(data.ethsbell.color); // Set the color
+
+	let j = 1;
+	for(let i=1; i<=html.length; i++) {
+		if(j % 2 == 0){
+			html[i-1] = html[i-1].replace('{BACKGROUND}', 'gray');
+		}
+		if(i % (cells > 20 ? 5 : 4) == 0){
+			j++;
+		}
+	}
+
+	
+
 	MONITOR_BODY.innerHTML = html.join('\n'); // Add HTML to the body
 
-	let cells = data.data.length;
+	  
 	MONITOR_BODY.classList.remove('five-rows', 'five-cols', 'six-rows');
 	if (cells > 20) {
 		MONITOR_BODY.classList.add('five-cols');
@@ -350,12 +376,15 @@ async function updateMonitorHTML() {
 	} else if (cells > 16) {
 		MONITOR_BODY.classList.add('five-rows');
 	}
-	if (data.ethsbell.current[0] && data.ethsbell.current[0].kind == "AfterSchool") {
-		document.getElementById('titleBIG').innerHTML = '';
-	}
+
+	resizeText({
+		elements: document.querySelectorAll('.location'),
+		maxSize: (cells > 20 ? 1.5 : 1.25)
+	})
+
 	if (data.ethsbell.current && data.ethsbell.showing) {
 		document.getElementById('showing').innerHTML =
-			'Showing locations for<p class="block"><b>' +
+			'<p class="fs-1 block"><b>' +
 			human_list(
 				filterPeriodNames(
 					data.ethsbell.showing.map(x => x.friendly_name),
@@ -364,11 +393,6 @@ async function updateMonitorHTML() {
 		document.getElementById('timeleft').innerHTML = data.ethsbell.current
 			.map(periodText)
 			.join('<br>');
-		document.getElementById('titleBIG').innerHTML = "<b>" + human_list(
-			filterPeriodNames(
-				data.ethsbell.showing.map(x => x.friendly_name),
-			),
-		) + "</b> Class Locations";
 	} else if (data.ethsbell.current) {
 		document.getElementById('showing').innerHTML = '';
 		document.getElementById('timeleft').innerHTML = data.ethsbell.current
@@ -484,4 +508,21 @@ function periodText(period) {
 		null,
 		true,
 	)}`;
+}
+
+function isOverflown(el){
+	return (el.parentElement.clientWidth-10) <= el.scrollWidth
+}
+
+// https://dev.to/jankapunkt/make-text-fit-it-s-parent-size-using-javascript-m40
+const resizeText = ({ element, elements, minSize = .5, maxSize = 1.5, step = .05, unit = 'vw' }) => {
+  (elements || [element]).forEach(el => {
+    let i = maxSize
+	overflow = isOverflown(el)
+    while (overflow && i >= minSize) {
+        el.style.fontSize = `${i}${unit}`
+    	overflow = isOverflown(el)
+      	if (overflow) i -= step
+    }
+  })
 }
