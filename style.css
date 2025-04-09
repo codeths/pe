@@ -219,7 +219,11 @@ p {
 }
 
 .title{
-	font-size: 6.5vh;
+	font-size: 7vh;
+}
+
+.subtitle{
+	font-size: 3vh;
 }
 
 .block{

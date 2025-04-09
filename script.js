@@ -384,7 +384,7 @@ async function updateMonitorHTML() {
 
 	if (data.ethsbell.current && data.ethsbell.showing) {
 		document.getElementById('showing').innerHTML =
-			'<p class="fs-1 block"><b>' +
+			'<p class="title block"><b>' +
 			human_list(
 				filterPeriodNames(
 					data.ethsbell.showing.map(x => x.friendly_name),
