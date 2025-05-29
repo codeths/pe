@@ -267,7 +267,7 @@ async function fetchData(period = 'now') {
 	const thisPeriod = spreadsheetJson
 		.map(x => ({
 			name: x.name,
-			data: periodNames.map(p => x[p]).find(x => x),
+			data: periodNames.map(p => x[p]).find(x => x.location != ''),
 		}))
 		.filter(
 			x => x.data && x.data.location.toString().replace(/ /g, '') !== '',
