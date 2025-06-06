@@ -27,8 +27,9 @@
 	"prettier": {
 		"useTabs": true,
 		"singleQuote": true,
-		"trailingComma": "none",
+		"trailingComma": "es5",
 		"printWidth": 100,
+		"quoteProps": "consistent",
 		"plugins": [
 			"prettier-plugin-svelte"
 		],
