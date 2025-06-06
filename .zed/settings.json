@@ -1,3 +1,4 @@
 {
-	"format_on_save": "prettier"
+	"format_on_save": "prettier",
+	"hard_tabs": true
 }
