@@ -1,5 +1,8 @@
-<script>
+<script lang="ts">
+	import { time } from '$lib/sharedTime.svelte';
 	import Legend from '$lib/components/Legend.svelte';
+
+	const pad = (n: number) => (n < 10 ? '0' + n : n);
 </script>
 
 <svelte:head>
@@ -7,7 +10,9 @@
 </svelte:head>
 
 <div class="flex h-screen">
-	<div class="h-full w-1/4 bg-orange-400">time info</div>
+	<div class="h-full w-1/4 bg-orange-400">
+		The time is {time.getHours()}:{pad(time.getMinutes())}:{pad(time.getSeconds())}
+	</div>
 	<div class="flex h-full w-3/4 flex-col">
 		<main class="grow"></main>
 		<footer class="flex h-1/10 items-center justify-center bg-gray-300">
