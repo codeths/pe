@@ -1,22 +1,22 @@
 <script lang="ts">
-	import { time } from '$lib/sharedTime.svelte';
 	import Legend from '$lib/components/Legend.svelte';
-
-	const pad = (n: number) => (n < 10 ? '0' + n : n);
+	import DataLoader from '$lib/components/DataLoader.svelte';
+	import TimeInfo from './TimeInfo.svelte';
+	import LocationsAdapter from './LocationsAdapter.svelte';
 </script>
 
 <svelte:head>
 	<title>ETHS PE Board</title>
 </svelte:head>
 
-<div class="flex h-screen">
-	<div class="h-full w-1/4 bg-orange-400">
-		The time is {time.getHours()}:{pad(time.getMinutes())}:{pad(time.getSeconds())}
-	</div>
-	<div class="flex h-full w-3/4 flex-col">
-		<main class="grow"></main>
-		<footer class="flex h-1/10 items-center justify-center bg-gray-300">
-			<Legend />
-		</footer>
-	</div>
+<div class="flex h-screen flex-col sm:flex-row">
+	<DataLoader>
+		<TimeInfo />
+		<div class="flex h-full flex-col sm:w-3/4">
+			<main class="grow"><LocationsAdapter /></main>
+			<footer class="flex items-center justify-center bg-gray-300 py-4">
+				<Legend />
+			</footer>
+		</div>
+	</DataLoader>
 </div>

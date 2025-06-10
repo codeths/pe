@@ -10,7 +10,7 @@
 	</div>
 {/snippet}
 
-<div class="flex gap-6">
+<div class="flex flex-wrap justify-center gap-x-6 gap-y-2">
 	{@render item('shirt', 'Uniform')}
 	{@render item('no-shirt', 'No Uniform')}
 	{@render item('laptop', 'Chromebook')}
