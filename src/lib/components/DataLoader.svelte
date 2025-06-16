@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { TodayNowNear, NullablePeriods, PEData } from '$lib/api';
 	import type { Snippet } from 'svelte';
 	import { untrack, setContext } from 'svelte';
 	import { time } from '$lib/sharedTime.svelte';
@@ -7,15 +8,18 @@
 		children: Snippet;
 	}
 
-	type PeriodList = any[] | null;
 	export interface CurrentPeriods {
-		previous: PeriodList;
-		current: PeriodList;
-		future: PeriodList;
+		previous: NullablePeriods;
+		current: NullablePeriods;
+		future: NullablePeriods;
 		random?: number;
 	}
 	export interface CurrentPeriodsState {
 		state: CurrentPeriods;
+	}
+
+	export interface PEDataState {
+		state: PEData;
 	}
 
 	let { children }: Props = $props();
@@ -32,10 +36,15 @@
 	});
 	setContext('current-periods', currentPeriods);
 
+	const boardData = $state<PEDataState>({
+		state: [],
+	});
+	setContext('board-data', boardData);
+
 	const updateCurrentPeriods = async () => {
 		try {
 			const req = await fetch(`${API_BASE}/today/now/near?timestamp=${untrack(() => currentTime)}`);
-			const [previous, current, future] = await req.json();
+			const [previous, current, future] = (await req.json()) as TodayNowNear;
 			const data: CurrentPeriods = { previous, current, future, random: Math.random() };
 			console.log('current classes:', data);
 			currentPeriods.state = data;
@@ -44,12 +53,26 @@
 		}
 	};
 
+	const updateBoardData = async () => {
+		try {
+			const req = await fetch('https://s3.codeths.dev/pe-board/data');
+			const data = (await req.json()) as PEData;
+			boardData.state = data;
+		} catch (e) {
+			console.error('Failed to fetch spreadsheet data:', e);
+		}
+	};
+
 	$effect(() => {
 		const currentPeriodInterval = setInterval(updateCurrentPeriods, 30_000);
 		updateCurrentPeriods();
 
+		const boardDataInterval = setInterval(updateBoardData, 15_000);
+		updateBoardData();
+
 		return () => {
 			clearInterval(currentPeriodInterval);
+			clearInterval(boardDataInterval);
 		};
 	});
 </script>
