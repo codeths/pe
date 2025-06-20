@@ -12,9 +12,9 @@
 <div class="flex h-screen flex-col sm:flex-row">
 	<DataLoader>
 		<TimeInfo />
-		<div class="flex h-full flex-col sm:w-3/4">
+		<div class="flex h-full flex-col overflow-y-auto sm:w-3/4">
 			<main class="grow"><LocationsAdapter /></main>
-			<footer class="flex items-center justify-center bg-gray-300 py-4">
+			<footer class="sticky bottom-0 flex items-center justify-center bg-gray-300 py-4">
 				<Legend />
 			</footer>
 		</div>
