@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { TodayNowNear, NullablePeriods, PEData } from '$lib/api';
+	import type { TodayNowNear, NullablePeriods, PEData, ScheduleData } from '$lib/api';
 	import type { Snippet } from 'svelte';
 	import { untrack, setContext } from 'svelte';
 	import { time } from '$lib/sharedTime.svelte';
@@ -16,6 +16,10 @@
 	}
 	export interface CurrentPeriodsState {
 		state: CurrentPeriods;
+	}
+
+	export interface ScheduleDataState {
+		state: ScheduleData | null;
 	}
 
 	export interface PEDataState {
@@ -36,6 +40,11 @@
 	});
 	setContext('current-periods', currentPeriods);
 
+	const currentSchedule = $state<ScheduleDataState>({
+		state: null,
+	});
+	setContext('current-schedule', currentSchedule);
+
 	const boardData = $state<PEDataState>({
 		state: [],
 	});
@@ -53,6 +62,16 @@
 		}
 	};
 
+	const updateScheduleData = async () => {
+		try {
+			const req = await fetch(`${API_BASE}/today?timestamp=${untrack(() => currentTime)}`);
+			const data = (await req.json()) as ScheduleData;
+			currentSchedule.state = data;
+		} catch (e) {
+			console.error('Failed to fetch schedule data:', e);
+		}
+	};
+
 	const updateBoardData = async () => {
 		try {
 			const req = await fetch('https://s3.codeths.dev/pe-board/data');
@@ -67,11 +86,15 @@
 		const currentPeriodInterval = setInterval(updateCurrentPeriods, 30_000);
 		updateCurrentPeriods();
 
+		const scheduleDataInterval = setInterval(updateScheduleData, 30 * 60_000);
+		updateScheduleData();
+
 		const boardDataInterval = setInterval(updateBoardData, 15_000);
 		updateBoardData();
 
 		return () => {
 			clearInterval(currentPeriodInterval);
+			clearInterval(scheduleDataInterval);
 			clearInterval(boardDataInterval);
 		};
 	});

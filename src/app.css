@@ -1,2 +1,15 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
+
+/* Used to hide the wildkit image when the screen is too small */
+@custom-variant tiny {
+	@media (width >= 40rem) and (height >= 40rem) {
+		@slot;
+	}
+}
+
+@custom-variant h-small {
+	@media (height >= 30rem) {
+		@slot;
+	}
+}

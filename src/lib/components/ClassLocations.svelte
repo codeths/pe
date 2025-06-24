@@ -1,34 +1,19 @@
 <script lang="ts">
-	import type { Period, PEData } from '$lib/api';
 	import Icon from './Icon.svelte';
-	const { periods, peData }: { periods: Period[]; peData: PEData } = $props();
-	$inspect(periods);
-	$inspect(peData);
-	const periodNames = $derived(periods.map((period) => period.friendly_name));
 
-	const displayedLocations = $derived.by(() => {
-		let allLocations = [];
-		for (const teacher of peData) {
-			// 1. Get current classes for each teacher
-			// 2. Exclude periods not listed in the spreadsheet data
-			// 3. Also exclude classes where the location is blank or empty
-			const currentClasses = periodNames
-				.map((period) => ({
-					teacher: teacher.name,
-					period,
-					status: teacher[period],
-				}))
-				.filter((classStatus) => !!classStatus.status)
-				.filter(
-					({ status }) => typeof status.location === 'string' && status.location.trim() !== ''
-				);
+	interface DisplayedLocation {
+		teacher: string;
+		period: string;
+		status: {
+			location: string | boolean;
+			nodress: string | boolean;
+			heart: string | boolean;
+			chromebook: string | boolean;
+		};
+	}
+	type DisplayedLocations = DisplayedLocation[];
 
-			allLocations.push(...currentClasses);
-		}
-
-		return allLocations;
-	});
-	$inspect(displayedLocations);
+	const { displayedLocations }: { displayedLocations: DisplayedLocations } = $props();
 </script>
 
 <div
