@@ -17,7 +17,7 @@
 		<div class="flex h-full flex-col overflow-y-auto sm:w-3/4">
 			<main class="grow"><LocationsAdapter /></main>
 			<footer
-				class="h-small:visible invisible sticky bottom-0 flex items-center justify-center bg-gray-300 py-4"
+				class="h-small:visible 2k:py-8 invisible sticky bottom-0 flex items-center justify-center bg-gray-300 py-4"
 			>
 				<Legend />
 			</footer>

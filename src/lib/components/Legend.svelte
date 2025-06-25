@@ -4,13 +4,13 @@
 </script>
 
 {#snippet item(type: IconType, text: string)}
-	<div class="flex items-center">
+	<div class="2k:[--icon-size:3] flex items-center">
 		<Icon {type} />
-		<p class="ml-2 font-medium">{text}</p>
+		<p class="2k:text-6xl 2k:ml-6 max-2k:font-medium ml-2">{text}</p>
 	</div>
 {/snippet}
 
-<div class="flex flex-wrap justify-center gap-x-6 gap-y-2">
+<div class="2k:gap-x-16 flex flex-wrap justify-center gap-x-6 gap-y-2">
 	<!-- {@render item('heart', 'HR Monitor')} -->
 	{@render item('shirt', 'Uniform')}
 	{@render item('no-shirt', 'No Uniform')}

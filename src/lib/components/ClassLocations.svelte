@@ -17,24 +17,24 @@
 </script>
 
 <div
-	class="m-8 grid gap-x-2 gap-y-4"
-	style="grid-template-columns: repeat( auto-fit, minmax( 200px, auto ) )"
+	class="2k:[--grid-w-multiplier:2] m-8 grid gap-x-2 gap-y-4"
+	style="grid-template-columns: repeat( auto-fit, minmax( calc( 200px * var( --grid-w-multiplier, 1) ), auto ) )"
 >
 	{#each displayedLocations as classInfo}
-		<div class="flex flex-col items-center text-center">
-			<h1 class="text-4xl font-semibold">{classInfo.teacher}</h1>
-			<p class="mb-2 text-2xl">{classInfo.status.location}</p>
-			<div class="flex">
+		<div class="2k:gap-y-4 flex flex-col items-center text-center">
+			<h1 class="2k:text-8xl text-4xl font-semibold">{classInfo.teacher}</h1>
+			<p class="2k:text-6xl mb-2 text-2xl">{classInfo.status.location}</p>
+			<div class="2k:[--icon-size:4] flex [--icon-size:1.5]">
 				{#if classInfo.status.nodress}
-					<Icon type="no-shirt" --icon-size="1.5" />
+					<Icon type="no-shirt" />
 				{:else}
-					<Icon type="shirt" --icon-size="1.5" />
+					<Icon type="shirt" />
 				{/if}
 				<!-- {#if classInfo.status.heart}
-					<Icon type="heart" --icon-size="1.5" />
+					<Icon type="heart" />
 				{/if} -->
 				{#if classInfo.status.chromebook}
-					<Icon type="laptop" --icon-size="1.5" />
+					<Icon type="laptop" />
 				{/if}
 			</div>
 		</div>
