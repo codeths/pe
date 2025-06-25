@@ -22,7 +22,7 @@
 >
 	{#each displayedLocations as classInfo}
 		<div class="2k:gap-y-4 flex flex-col items-center text-center">
-			<h1 class="2k:text-8xl text-4xl font-semibold">{classInfo.teacher}</h1>
+			<h1 class="2k:text-8xl text-4xl font-semibold font-stretch-condensed">{classInfo.teacher}</h1>
 			<p class="2k:text-6xl mb-2 text-2xl">{classInfo.status.location}</p>
 			<div class="2k:[--icon-size:4] flex [--icon-size:1.5]">
 				{#if classInfo.status.nodress}
