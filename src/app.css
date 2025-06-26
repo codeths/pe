@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap');
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 
@@ -9,6 +10,7 @@
 	--color-gray-500: rgb(106 114 130);
 
 	--breakpoint-2k: 128rem;
+	--font-sans: 'Archivo', ui-sans-serif, system-ui, sans-serif;
 }
 
 /* Used to hide the wildkit image when the screen is too small */

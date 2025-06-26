@@ -35,4 +35,4 @@
 	});
 </script>
 
-<ClassLocations {displayedLocations} />
+<ClassLocations {displayedLocations} fullHeight />

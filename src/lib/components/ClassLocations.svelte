@@ -13,11 +13,15 @@
 	}
 	type DisplayedLocations = DisplayedLocation[];
 
-	const { displayedLocations }: { displayedLocations: DisplayedLocations } = $props();
+	const {
+		displayedLocations,
+		fullHeight = false,
+	}: { displayedLocations: DisplayedLocations; fullHeight?: boolean } = $props();
 </script>
 
 <div
-	class="2k:[--grid-w-multiplier:2] m-8 grid gap-x-2 gap-y-4"
+	class:h-full={fullHeight}
+	class="2k:[--grid-w-multiplier:2] grid gap-x-2 gap-y-4 p-8"
 	style="grid-template-columns: repeat( auto-fit, minmax( calc( 200px * var( --grid-w-multiplier, 1) ), auto ) )"
 >
 	{#each displayedLocations as classInfo}
@@ -30,9 +34,9 @@
 				{:else}
 					<Icon type="shirt" />
 				{/if}
-				<!-- {#if classInfo.status.heart}
+				{#if classInfo.status.heart}
 					<Icon type="heart" />
-				{/if} -->
+				{/if}
 				{#if classInfo.status.chromebook}
 					<Icon type="laptop" />
 				{/if}

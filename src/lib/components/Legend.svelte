@@ -6,7 +6,7 @@
 {#snippet item(type: IconType, text: string)}
 	<div class="2k:[--icon-size:3] flex items-center">
 		<Icon {type} />
-		<p class="2k:text-6xl 2k:ml-6 max-2k:font-medium ml-2">{text}</p>
+		<p class="2k:text-6xl 2k:ml-6 max-2k:font-medium ml-2 2xl:text-3xl">{text}</p>
 	</div>
 {/snippet}
 

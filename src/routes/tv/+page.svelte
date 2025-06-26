@@ -14,6 +14,7 @@
 		<TimeInfo />
 		<main class="grow"><LocationsAdapter /></main>
 		<footer class="2k:py-8 flex items-center bg-gray-300 py-4">
+			<img src="/athletics.svg" alt="" class="2k:size-40 2k:ml-8 ml-4 size-20" />
 			<div class="not-2k:text-2xl grow">
 				<Legend />
 			</div>
