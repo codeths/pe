@@ -74,7 +74,7 @@
 
 	const updateBoardData = async () => {
 		try {
-			const req = await fetch('https://s3.codeths.dev/pe-board/data');
+			const req = await fetch('https://s3.codeths.dev/pe-board/data', { cache: 'no-cache' });
 			const data = (await req.json()) as PEData;
 			boardData.state = data;
 		} catch (e) {
