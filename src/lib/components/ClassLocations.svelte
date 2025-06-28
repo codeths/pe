@@ -21,7 +21,10 @@
 
 <div
 	class:h-full={fullHeight}
-	class="2k:[--grid-w-multiplier:2] grid gap-x-2 gap-y-4 p-8"
+	class={[
+		'2k:[--grid-w-multiplier:2] grid place-items-center gap-y-4 p-8',
+		fullHeight ? (displayedLocations.length > 24 ? 'gap-x-2' : 'gap-x-20') : 'gap-x-2',
+	]}
 	style="grid-template-columns: repeat( auto-fit, minmax( calc( 200px * var( --grid-w-multiplier, 1) ), auto ) )"
 >
 	{#each displayedLocations as classInfo}
