@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap');
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+
+@theme {
+	/*	Force sRGB color space for resolution of gray-500 value to fix <select> arrow on old chrome
+	 	We do this because chrome 90 doesn't support oklab() colors, which Tailwind defaults to
+		Our postcss compatibility config can't help here since the color is embedded in an svg:
+		https://github.com/tailwindlabs/tailwindcss-forms/blob/fc3f7e6bce06a1985d445c53e90c3c7fac0e1d18/src/index.js#L166	*/
+	--color-gray-500: rgb(106 114 130);
+
+	--breakpoint-2k: 128rem;
+	--font-sans: 'Archivo', ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Used to hide the wildkit image when the screen is too small */
+@custom-variant tiny {
+	@media (width >= 40rem) and (height >= 40rem) {
+		@slot;
+	}
+}
+
+@custom-variant h-small {
+	@media (height >= 30rem) {
+		@slot;
+	}
+}
