@@ -1,0 +1,34 @@
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+      - 'b*.*.*'
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build Site
+        run: |
+          npm ci
+          env
+          npm run build
+          cp LICENSE build
+
+      - name: Pack build output
+        run: |
+          cd build
+          zip -r ../build.zip *
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v0.1.15
+        with:
+          files: |
+            build.zip
+            LICENSE
+          generate_release_notes: true
+          prerelease: ${{ startsWith( github.ref_name, 'b' ) }}
