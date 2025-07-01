@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Build Site
         run: |
@@ -22,13 +22,13 @@ jobs:
       - name: Pack build output
         run: |
           cd build
-          zip -r ../build.zip *
+          tar -czvf ../build.tar.gz * --owner=0 --group=0 --mode=777
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v0.1.15
+        uses: softprops/action-gh-release@v2.3.2
         with:
           files: |
-            build.zip
+            build.tar.gz
             LICENSE
           generate_release_notes: true
           prerelease: ${{ startsWith( github.ref_name, 'b' ) }}
