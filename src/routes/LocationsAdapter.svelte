@@ -8,7 +8,7 @@
 	const periods = $derived(currentPeriods?.state.current || []);
 
 	const peDataContext = getContext('board-data') as PEDataState | undefined;
-	const peData = $derived(peDataContext?.state || []);
+	const peData = $derived(peDataContext?.state.data || []);
 
 	const periodNames = $derived.by(() => {
 		if (selected.state === 'current') {
@@ -28,7 +28,7 @@
 				.map((period) => ({
 					teacher: teacher.name,
 					period,
-					status: teacher[period],
+					status: teacher.classes[period],
 				}))
 				.filter((classStatus) => !!classStatus.status)
 				.filter(

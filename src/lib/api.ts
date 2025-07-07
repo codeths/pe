@@ -49,22 +49,33 @@ export interface Period {
 	kind: PeriodKind;
 }
 
-export type TeacherInfo = Record<
-	PeriodName,
-	{
-		location: string | boolean;
-		nodress: string | boolean;
-		heart: string | boolean;
-		chromebook: string | boolean;
-	}
-> & {
+export interface TeacherInfo {
 	/**
 	 * The teacher's name
 	 */
 	name: string;
-};
 
-export type PEData = TeacherInfo[];
+	/**
+	 * Information on
+	 */
+	classes: Record<
+		PeriodName,
+		{
+			location: string;
+			nodress: boolean;
+			heart: boolean;
+			chromebook: boolean;
+		}
+	>;
+}
+
+export interface PEData {
+	data: TeacherInfo[];
+	message?: {
+		text: string;
+		fullscreen: boolean;
+	};
+}
 
 export type NullablePeriods = Period[] | null;
 

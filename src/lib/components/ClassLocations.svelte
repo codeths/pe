@@ -5,10 +5,10 @@
 		teacher: string;
 		period: string;
 		status: {
-			location: string | boolean;
-			nodress: string | boolean;
-			heart: string | boolean;
-			chromebook: string | boolean;
+			location: string;
+			nodress: boolean;
+			heart: boolean;
+			chromebook: boolean;
 		};
 	}
 	type DisplayedLocations = DisplayedLocation[];

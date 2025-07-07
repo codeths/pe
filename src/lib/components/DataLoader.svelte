@@ -46,7 +46,9 @@
 	setContext('current-schedule', currentSchedule);
 
 	const boardData = $state<PEDataState>({
-		state: [],
+		state: {
+			data: [],
+		},
 	});
 	setContext('board-data', boardData);
 
