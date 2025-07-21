@@ -18,7 +18,9 @@
 	<TimeInfo />
 	{#if message?.fullscreen}
 		<div class="flex grow flex-wrap place-content-center bg-red-400">
-			<h1 class="2k:text-[9rem] w-[85%] text-center text-7xl leading-[1.2] font-bold">
+			<h1
+				class="2k:text-[9rem] w-[85%] text-center text-7xl leading-[1.2] font-bold whitespace-pre-wrap"
+			>
 				{message.text}
 			</h1>
 		</div>

@@ -11,7 +11,7 @@
 
 {#if message}
 	<div class="2k:p-5 flex items-center bg-red-400 p-2">
-		<p class="2k:text-5xl grow text-center text-xl font-semibold 2xl:text-2xl">
+		<p class="2k:text-5xl grow text-center text-xl font-semibold whitespace-pre-wrap 2xl:text-2xl">
 			{message.text}
 		</p>
 		{#if canDismiss}
