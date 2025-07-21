@@ -74,6 +74,8 @@ export interface PEData {
 	message?: {
 		text: string;
 		fullscreen: boolean;
+		/** Time in ms when message was created, as a string */
+		id: string | null;
 	};
 }
 
