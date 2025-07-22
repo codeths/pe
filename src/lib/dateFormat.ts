@@ -1,5 +1,6 @@
 import type { Period } from '$lib/api';
 import { time } from '$lib/sharedTime.svelte';
+import { dev } from '$app/environment';
 
 const getOrdinalSuffix = (n: number): string => {
 	const enOrdinalRules = new Intl.PluralRules('en-US', { type: 'ordinal' });
@@ -37,8 +38,9 @@ const getDuration = (future: number) => {
 	const hours = Math.floor(timeLeft / 60 / 60);
 	const minutes = Math.ceil((timeLeft / 60) % 60);
 	const seconds = timeLeft % 60;
+	const suffix = dev ? ` ${seconds}s` : ''; // only show seconds in dev mode
 
-	return hours > 0 ? `${hours}h ${minutes}m ${seconds}s` : `${minutes}m ${seconds}s`;
+	return hours > 0 ? `${hours}h ${minutes}m${suffix}` : `${minutes}m${suffix}`;
 };
 
 export const getPeriodText = (period: Period) => {

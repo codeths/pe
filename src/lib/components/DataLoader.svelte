@@ -12,7 +12,6 @@
 		previous: NullablePeriods;
 		current: NullablePeriods;
 		future: NullablePeriods;
-		random?: number;
 	}
 	export interface CurrentPeriodsState {
 		state: CurrentPeriods;
@@ -56,8 +55,7 @@
 		try {
 			const req = await fetch(`${API_BASE}/today/now/near?timestamp=${untrack(() => currentTime)}`);
 			const [previous, current, future] = (await req.json()) as TodayNowNear;
-			const data: CurrentPeriods = { previous, current, future, random: Math.random() };
-			console.log('current classes:', data);
+			const data: CurrentPeriods = { previous, current, future };
 			currentPeriods.state = data;
 		} catch (e) {
 			console.error('Failed to fetch current periods:', e);
