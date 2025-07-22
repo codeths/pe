@@ -16,7 +16,7 @@ jobs:
         run: |
           npm ci
           env
-          npm run build
+          npm run ${{ (startsWith( github.ref_name, 'b' ) && 'build-dev') || 'build' }}
           cp LICENSE build
 
       - name: Pack build output
@@ -27,8 +27,6 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2.3.2
         with:
-          files: |
-            build.tar.gz
-            LICENSE
+          files: build.tar.gz
           generate_release_notes: true
           prerelease: ${{ startsWith( github.ref_name, 'b' ) }}
