@@ -264,10 +264,10 @@ async function fetchData(period = 'now') {
 	const periodNames = period.map(x => formatPeriodName(x.friendly_name));
 
 	// Get this period only from the data and remove teachers without a period
-	const thisPeriod = spreadsheetJson
+	const thisPeriod = spreadsheetJson.data
 		.map(x => ({
 			name: x.name,
-			data: periodNames.map(p => x[p]).find(x => x),
+			data: periodNames.map(p => x.classes[p]).find(x => x),
 		}))
 		.filter(
 			x => x.data && x.data.location.toString().replace(/ /g, '') !== '',
