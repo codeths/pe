@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { TodayNowNear, NullablePeriods, PEData, ScheduleData } from '$lib/api';
+	import type { TodayNowNear, PEData, ScheduleData } from '$lib/api';
 	import type { Snippet } from 'svelte';
 	import { untrack, setContext } from 'svelte';
 	import { time } from '$lib/sharedTime.svelte';
@@ -8,13 +8,8 @@
 		children: Snippet;
 	}
 
-	export interface CurrentPeriods {
-		previous: NullablePeriods;
-		current: NullablePeriods;
-		future: NullablePeriods;
-	}
 	export interface CurrentPeriodsState {
-		state: CurrentPeriods;
+		state: TodayNowNear;
 	}
 
 	export interface ScheduleDataState {
@@ -27,14 +22,14 @@
 
 	let { children }: Props = $props();
 
-	const API_BASE = 'https://ethsbell.app/api/v1';
+	const API_BASE = 'https://ethsbell.app/api';
 
 	const currentTime = $derived(Math.floor(time.getTime() / 1000));
 	const currentPeriods = $state<CurrentPeriodsState>({
 		state: {
-			previous: null,
-			current: null,
-			future: null,
+			previous: [],
+			current: [],
+			future: [],
 		},
 	});
 	setContext('current-periods', currentPeriods);
@@ -53,9 +48,10 @@
 
 	const updateCurrentPeriods = async () => {
 		try {
-			const req = await fetch(`${API_BASE}/today/now/near?timestamp=${untrack(() => currentTime)}`);
-			const [previous, current, future] = (await req.json()) as TodayNowNear;
-			const data: CurrentPeriods = { previous, current, future };
+			const req = await fetch(
+				`${API_BASE}/v2/today/now/near?timestamp=${untrack(() => currentTime)}`
+			);
+			const data = (await req.json()) as TodayNowNear;
 			currentPeriods.state = data;
 		} catch (e) {
 			console.error('Failed to fetch current periods:', e);
@@ -64,7 +60,7 @@
 
 	const updateScheduleData = async () => {
 		try {
-			const req = await fetch(`${API_BASE}/today?timestamp=${untrack(() => currentTime)}`);
+			const req = await fetch(`${API_BASE}/v1/today?timestamp=${untrack(() => currentTime)}`);
 			const data = (await req.json()) as ScheduleData;
 			currentSchedule.state = data;
 		} catch (e) {

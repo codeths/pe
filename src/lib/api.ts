@@ -79,12 +79,14 @@ export interface PEData {
 	};
 }
 
-export type NullablePeriods = Period[] | null;
-
 /**
- * [previous, current, future]
+ * Response type for `/api/v2/today/now/near`
  */
-export type TodayNowNear = [NullablePeriods, NullablePeriods, NullablePeriods];
+export interface TodayNowNear {
+	previous: Period[];
+	current: Period[];
+	future: Period[];
+}
 
 export interface ScheduleData {
 	friendly_name: string;
