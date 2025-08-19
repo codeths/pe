@@ -1,32 +1,17 @@
 <script lang="ts">
-	import type { CurrentPeriodsState, PEDataState } from '$lib/components/DataLoader.svelte';
+	import type { PEDataState } from '$lib/components/DataLoader.svelte';
+	import type { Period } from '$lib/api';
 	import { getContext } from 'svelte';
-	import { selected } from './TimeInfo.svelte';
 	import { stripPeriodSuffix } from '$lib/utils';
 	import ClassLocations from '$lib/components/ClassLocations.svelte';
 
-	const currentPeriods = getContext('current-periods') as CurrentPeriodsState | undefined;
-	const periods = $derived({
-		current: currentPeriods?.state.current || [],
-		future: currentPeriods?.state.future || [],
-	});
+	interface Props {
+		activePeriods: Period[];
+	}
+	const { activePeriods }: Props = $props();
 
 	const peDataContext = getContext('board-data') as PEDataState | undefined;
 	const peData = $derived(peDataContext?.state.data || []);
-
-	const activePeriods = $derived.by(() => {
-		if (selected.state === 'current') {
-			let periodsShown = [...periods.current];
-			if (periods.current.some((p) => p.kind === 'Passing' || p.kind === 'BeforeSchool')) {
-				periodsShown.push(...periods.future);
-			}
-
-			return periodsShown;
-		} else {
-			return [selected.state];
-		}
-	});
-	$inspect(activePeriods);
 
 	const displayedLocations = $derived.by(() => {
 		let allLocations = [];
