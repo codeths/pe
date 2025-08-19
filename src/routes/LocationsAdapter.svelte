@@ -14,23 +14,23 @@
 	const peDataContext = getContext('board-data') as PEDataState | undefined;
 	const peData = $derived(peDataContext?.state.data || []);
 
-	const periodNames = $derived.by(() => {
+	const activePeriods = $derived.by(() => {
 		if (selected.state === 'current') {
 			let periodsShown = [...periods.current];
 			if (periods.current.some((p) => p.kind === 'Passing' || p.kind === 'BeforeSchool')) {
 				periodsShown.push(...periods.future);
 			}
 
-			return periodsShown.map((p) => p.friendly_name);
+			return periodsShown;
 		} else {
-			return [selected.state.friendly_name];
+			return [selected.state];
 		}
 	});
-	$inspect(periodNames);
+	$inspect(activePeriods);
 
 	const displayedLocations = $derived.by(() => {
 		let allLocations = [];
-		const normalizedPeriodNames = periodNames.map(stripPeriodSuffix);
+		const normalizedPeriodNames = activePeriods.map((p) => p.friendly_name).map(stripPeriodSuffix);
 		for (const teacher of peData) {
 			// 1. Get current classes for each teacher
 			// 2. Exclude periods not listed in the spreadsheet data
