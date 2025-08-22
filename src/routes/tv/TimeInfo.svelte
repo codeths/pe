@@ -1,8 +1,14 @@
 <script lang="ts">
-	import type { ScheduleDataState, CurrentPeriodsState } from '$lib/components/DataLoader.svelte';
+	import type { ScheduleDataState } from '$lib/components/DataLoader.svelte';
+	import type { Period } from '$lib/api';
 	import { getContext } from 'svelte';
 	import { prettyDate, getPeriodText } from '$lib/dateFormat';
 	import { time } from '$lib/sharedTime.svelte';
+
+	interface Props {
+		activePeriods: Period[];
+	}
+	const { activePeriods }: Props = $props();
 
 	const scheduleData = getContext('current-schedule') as ScheduleDataState | undefined;
 	const todayInfo = $derived.by(() => {
@@ -24,9 +30,6 @@
 			text: luma > 128 ? 'var(--color-black)' : 'var(--color-white)',
 		};
 	});
-
-	const currentPeriods = getContext('current-periods') as CurrentPeriodsState | undefined;
-	const periods = $derived(currentPeriods?.state.current || []);
 </script>
 
 <header
@@ -46,7 +49,7 @@
 		<h1 class="2k:mt-4 font-bold font-stretch-expanded">{todayInfo.friendly_name}</h1>
 	</div>
 	<div class="2k:text-5xl/normal text-right text-2xl">
-		{#each periods as period}
+		{#each activePeriods as period}
 			<p>{getPeriodText(period)}</p>
 		{/each}
 	</div>

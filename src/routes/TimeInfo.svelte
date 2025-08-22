@@ -8,10 +8,15 @@
 </script>
 
 <script lang="ts">
-	import type { ScheduleDataState, CurrentPeriodsState } from '$lib/components/DataLoader.svelte';
+	import type { ScheduleDataState } from '$lib/components/DataLoader.svelte';
 	import { getContext } from 'svelte';
 	import { prettyDate, getPeriodText } from '$lib/dateFormat';
 	import { time } from '$lib/sharedTime.svelte';
+
+	interface Props {
+		activePeriods: Period[];
+	}
+	const { activePeriods }: Props = $props();
 
 	const scheduleData = getContext('current-schedule') as ScheduleDataState | undefined;
 	const scheduledPeriods = $derived.by(() => {
@@ -22,9 +27,6 @@
 			typeof period.kind === 'string' ? period.kind === 'AMSupport' : true
 		);
 	});
-
-	const currentPeriods = getContext('current-periods') as CurrentPeriodsState | undefined;
-	const periods = $derived(currentPeriods?.state.current || []);
 </script>
 
 <div class="h-auto text-center sm:h-full sm:w-1/4">
@@ -57,7 +59,7 @@
 			{/each}
 		</select>
 		<div class="2k:text-5xl text-xl text-white">
-			{#each periods as period}
+			{#each activePeriods as period}
 				<p>{getPeriodText(period)}</p>
 			{/each}
 		</div>

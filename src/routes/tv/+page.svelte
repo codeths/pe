@@ -1,13 +1,29 @@
 <script lang="ts">
-	import type { PEDataState } from '$lib/components/DataLoader.svelte';
+	import type { PEDataState, CurrentPeriodsState } from '$lib/components/DataLoader.svelte';
+	import { getContext } from 'svelte';
 	import Legend from '$lib/components/Legend.svelte';
 	import TimeInfo from './TimeInfo.svelte';
 	import LocationsAdapter from './LocationsAdapter.svelte';
 	import BannerNotification from '$lib/components/BannerNotification.svelte';
-	import { getContext } from 'svelte';
+
+	const currentPeriods = getContext('current-periods') as CurrentPeriodsState | undefined;
+	const periods = $derived({
+		current: currentPeriods?.state.current || [],
+		future: currentPeriods?.state.future || [],
+	});
 
 	const peDataContext = getContext('board-data') as PEDataState | undefined;
 	const message = $derived(peDataContext?.state.message);
+
+	const activePeriods = $derived.by(() => {
+		let periodsShown = [...periods.current];
+		if (periods.current.some((p) => p.kind === 'Passing' || p.kind === 'BeforeSchool')) {
+			periodsShown.push(...periods.future);
+		}
+
+		return periodsShown;
+	});
+	$inspect(activePeriods);
 </script>
 
 <svelte:head>
@@ -15,7 +31,7 @@
 </svelte:head>
 
 <div class="flex h-screen flex-col">
-	<TimeInfo />
+	<TimeInfo {activePeriods} />
 	{#if message?.fullscreen}
 		<div class="flex grow flex-wrap place-content-center bg-red-400">
 			<h1
@@ -27,7 +43,7 @@
 	{:else}
 		<BannerNotification />
 		<main class="grow">
-			<LocationsAdapter />
+			<LocationsAdapter {activePeriods} />
 		</main>
 	{/if}
 	<footer class="2k:py-8 flex items-center bg-gray-300 py-4">
