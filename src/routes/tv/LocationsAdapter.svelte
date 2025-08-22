@@ -15,12 +15,17 @@
 
 	const displayedLocations = $derived.by(() => {
 		let allLocations = [];
-		const normalizedPeriodNames = activePeriods.map((p) => p.friendly_name).map(stripPeriodSuffix);
+
+		// using a Set ensures periods are unique
+		const normalizedPeriodNames = new Set(
+			activePeriods.map((p) => p.friendly_name).map(stripPeriodSuffix)
+		);
+
 		for (const teacher of peData) {
 			// 1. Get current classes for each teacher
 			// 2. Exclude periods not listed in the spreadsheet data
 			// 3. Also exclude classes where the location is blank or empty
-			const currentClasses = normalizedPeriodNames
+			const currentClasses = Array.from(normalizedPeriodNames)
 				.map((period) => ({
 					teacher: teacher.name,
 					period,
