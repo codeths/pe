@@ -36,7 +36,7 @@ const getDuration = (future: number) => {
 	const now = time.getTime() / 1000;
 	const timeLeft = Math.floor(future - now);
 	const hours = Math.floor(timeLeft / 60 / 60);
-	const minutes = Math.ceil((timeLeft / 60) % 60);
+	const minutes = dev ? Math.floor((timeLeft / 60) % 60) : Math.ceil((timeLeft / 60) % 60);
 	const seconds = timeLeft % 60;
 	const suffix = dev ? ` ${seconds}s` : ''; // only show seconds in dev mode
 
@@ -49,6 +49,10 @@ export const getPeriodText = (period: Period) => {
 	} else if (period.kind === 'AfterSchool') {
 		return "School's out!";
 	} else {
-		return `${period.friendly_name} ends in ${getDuration(period.end_timestamp)}`;
+		if (period.start_timestamp < time.getTime() / 1000) {
+			return `${period.friendly_name} ends in ${getDuration(period.end_timestamp)}`;
+		} else {
+			return `${period.friendly_name} starts in ${getDuration(period.start_timestamp)}`;
+		}
 	}
 };

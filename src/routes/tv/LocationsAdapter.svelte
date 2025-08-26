@@ -1,23 +1,31 @@
 <script lang="ts">
-	import type { CurrentPeriodsState, PEDataState } from '$lib/components/DataLoader.svelte';
+	import type { PEDataState } from '$lib/components/DataLoader.svelte';
+	import type { Period } from '$lib/api';
 	import { getContext } from 'svelte';
+	import { stripPeriodSuffix } from '$lib/utils';
 	import ClassLocations from '$lib/components/ClassLocations.svelte';
 
-	const currentPeriods = getContext('current-periods') as CurrentPeriodsState | undefined;
-	const periods = $derived(currentPeriods?.state.current || []);
+	interface Props {
+		activePeriods: Period[];
+	}
+	const { activePeriods }: Props = $props();
 
 	const peDataContext = getContext('board-data') as PEDataState | undefined;
 	const peData = $derived(peDataContext?.state.data || []);
 
-	const periodNames = $derived(periods.map((period) => period.friendly_name));
-
 	const displayedLocations = $derived.by(() => {
 		let allLocations = [];
+
+		// using a Set ensures periods are unique
+		const normalizedPeriodNames = new Set(
+			activePeriods.map((p) => p.friendly_name).map(stripPeriodSuffix)
+		);
+
 		for (const teacher of peData) {
 			// 1. Get current classes for each teacher
 			// 2. Exclude periods not listed in the spreadsheet data
 			// 3. Also exclude classes where the location is blank or empty
-			const currentClasses = periodNames
+			const currentClasses = Array.from(normalizedPeriodNames)
 				.map((period) => ({
 					teacher: teacher.name,
 					period,
